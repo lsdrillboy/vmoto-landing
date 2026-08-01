@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VMOTO — Electric Bikes on Samui &amp; Phangan</title>
+  <meta name="description" content="VMoto electric bikes for sale on Koh Samui and Koh Phangan. Test rides, delivery and service on the island.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css?v=80">
+  <link rel="preload" as="image" href="assets/seq/hero/f001.webp">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#hero" class="logo">VMOTO</a>
+      <nav class="nav" id="nav">
+        <a href="#benefits" data-i18n="nav.benefits">Benefits</a>
+        <a href="#models" data-i18n="nav.models">Models</a>
+        <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+        <a href="#stations" data-i18n="st.label">Infrastructure</a>
+        <a href="#business" data-i18n="b2b.label">For business</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contacts" data-i18n="nav.contacts">Contacts</a>
+      </nav>
+      <div class="header__right">
+        <!-- переключатель языка -->
+        <div class="lang" id="langSwitch">
+          <button class="lang__btn" type="button" aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="lang.aria" aria-label="Change language">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8c2.6 2.4 4 5.6 4 9.2s-1.4 6.8-4 9.2c-2.6-2.4-4-5.6-4-9.2s1.4-6.8 4-9.2z"/></svg>
+            <span class="lang__cur">EN</span>
+            <svg class="lang__chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="lang__list" role="listbox">
+            <li><button type="button" role="option" data-lang="en">EN</button></li>
+            <li><button type="button" role="option" data-lang="ru">RU</button></li>
+            <li><button type="button" role="option" data-lang="th">ไทย</button></li>
+            <li><button type="button" role="option" data-lang="zh">中文</button></li>
+          </ul>
+        </div>
+        <a class="header__social" href="#" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="header__social" href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 8.5V7c0-.8.7-1.5 1.5-1.5H17V2.6h-2.8C11.9 2.6 10 4.5 10 6.8v1.7H7.5V12H10v9.4h4V12h2.6l.6-3.5H14z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- плавающий бургер (появляется при скролле) -->
+  <button class="menu-fab" id="menuFab" data-i18n-aria="menu.aria" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+
+  <!-- полноэкранное меню -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <!-- фоновое видео на весь экран: проигрывается один раз и замирает на последнем кадре -->
+    <div class="menu-overlay__media" aria-hidden="true">
+      <video id="menuVideo" src="assets/video/menu.mp4" poster="assets/poster/menu.jpg" muted playsinline preload="auto"></video>
+    </div>
+    <div class="menu-overlay__inner">
+      <nav class="menu-overlay__nav">
+        <a href="#benefits"><b data-i18n="nav.benefits">Benefits</b></a>
+        <a href="#models"><b data-i18n="nav.models">Models</b></a>
+        <a href="#gallery"><b data-i18n="nav.gallery">Gallery</b></a>
+        <a href="#stations"><b data-i18n="st.label">Infrastructure</b></a>
+        <a href="#business"><b data-i18n="b2b.label">For business</b></a>
+        <a href="#faq"><b>FAQ</b></a>
+        <a href="#contacts"><b data-i18n="nav.contacts">Contacts</b></a>
+      </nav>
+      <div class="menu-overlay__aside">
+        <p class="label" data-i18n="menu.label">Samui — Phangan</p>
+        <div class="menu-overlay__lang" role="group" data-i18n-aria="lang.aria" aria-label="Change language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="ru">RU</button>
+          <button type="button" data-lang="th">ไทย</button>
+          <button type="button" data-lang="zh">中文</button>
+        </div>
+        <p class="menu-overlay__social">Instagram&ensp;·&ensp;<a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO (scroll-scrub: покадровая промотка по скроллу) ===== -->
+  <!-- Высота обёртки задаёт «длину» промотки кадров скроллом -->
+  <section class="hero-scroll" id="hero">
+    <div class="hero-sticky">
+      <div class="hero-frame">
+        <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-fallback" id="heroFallback" style="background-image:url('assets/poster/hero.jpg')"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-atmo" aria-hidden="true"></div>
+
+        <div class="hero-ui">
+          <!-- сцена 1: эмоция -->
+          <div class="hero-intro" id="heroIntro">
+            <p class="hero-kicker" data-i18n-html="hero.kicker">VMoto Electric Bikes&ensp;·&ensp;Samui — Phangan</p>
+            <h1 class="hero-title" data-i18n-html="hero.title">Hear<br>only the <em>ocean<i>.</i></em></h1>
+          </div>
+
+          <!-- сцена 2: чистый кадр -->
+          <div class="hero-mid" id="heroMid">
+            <p class="hero-mid__title" data-i18n="hero.midTitle">Design. Style. Silence.</p>
+            <p class="hero-mid__stats" data-i18n-html="hero.mid">0 noise&ensp;·&ensp;0 petrol&ensp;·&ensp;up to 107 km range</p>
+          </div>
+
+          <!-- сцена 3: оффер -->
+          <div class="hero-final" id="heroFinal">
+            <p class="hero-kicker" data-i18n-html="hero.kicker2">VMoto CITI&ensp;·&ensp;CPx</p>
+            <p class="hero-final__line" data-i18n="hero.offer">From ฿95,000 — 2-year warranty</p>
+            <a href="#models" class="link-arrow" data-i18n="hero.viewModels">View models</a>
+          </div>
+
+          <a href="#contacts" class="hero-cta">
+            <span data-i18n="hero.cta">Book a test ride</span>
+            <span class="hero-cta__icon" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BENEFITS: красная плитка ===== -->
+  <section class="feature" id="benefits">
+    <div class="feature__bg" aria-hidden="true"></div>
+    <div class="feature__inner">
+      <div class="feature__cols">
+        <div class="feature__left reveal">
+          <p class="feature__label" data-i18n="benefits.label">Why electric</p>
+          <h2 class="feature__title" data-i18n-html="benefits.title">This island was made<br>for electric</h2>
+          <span class="feature__dash" aria-hidden="true"></span>
+          <p class="feature__sub" data-i18n-html="benefits.sub">Every detail is built for island life.<br>Silence, freedom and energy<br>enough for everything.</p>
+        </div>
+
+        <ul class="feature__list">
+          <li class="feature-item reveal">
+            <span class="feature-item__tick" aria-hidden="true"></span>
+            <p class="feature-item__num"><b>107</b><span data-i18n="b1.unit">km</span></p>
+            <div class="feature-item__body">
+              <b data-i18n="b1.title">Range</b>
+              <p data-i18n="b1.text">Two batteries included. Enough for the whole day.</p>
+            </div>
+          </li>
+          <li class="feature-item reveal">
+            <span class="feature-item__tick" aria-hidden="true"></span>
+            <p class="feature-item__num"><b>15</b><span data-i18n="b2.unit">฿</span></p>
+            <div class="feature-item__body">
+              <b data-i18n="b2.title">Savings every day</b>
+              <p data-i18n="b2.text">About ฿15 vs ฿150–200 on petrol.</p>
+            </div>
+          </li>
+          <li class="feature-item reveal">
+            <span class="feature-item__tick" aria-hidden="true"></span>
+            <p class="feature-item__num"><b>0</b><span data-i18n="b3.unit">dB</span></p>
+            <div class="feature-item__body">
+              <b data-i18n="b3.title">Silence &amp; comfort</b>
+              <p data-i18n="b3.text">No engine roar, no petrol smell.</p>
+            </div>
+          </li>
+          <li class="feature-item reveal">
+            <span class="feature-item__tick" aria-hidden="true"></span>
+            <p class="feature-item__num"><b>2</b><span data-i18n="b4.unit">years</span></p>
+            <div class="feature-item__body">
+              <b data-i18n="b4.title">Warranty</b>
+              <p data-i18n="b4.text">Covers every part of the bike. Parts and service on the island.</p>
+            </div>
+          </li>
+          <li class="feature-item reveal">
+            <span class="feature-item__tick" aria-hidden="true"></span>
+            <p class="feature-item__num"><b>2</b><span data-i18n="b5.unit">×</span></p>
+            <div class="feature-item__body">
+              <b data-i18n="b5.title">Two batteries</b>
+              <p data-i18n="b5.text">Plus a charger. Top box and accessories available.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== MODELS: витрина с вращающимся байком ===== -->
+  <section class="showcase" id="models">
+    <article class="showcase__slide is-active">
+      <div class="showcase__info">
+        <p class="label" data-i18n="models.label">Model</p>
+        <h2 class="showcase__name">VMOTO CITI</h2>
+        <p class="showcase__price">95 000 ฿</p>
+        <p class="showcase__desc" data-i18n="citi.desc">A light city e-scooter. Two batteries and a charger included.</p>
+        <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
+          <span class="showcase__swatches-label" data-i18n="models.color">Color</span>
+          <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="assets/video/citi-360.mp4" data-poster="assets/poster/citi-360.jpg" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
+          <button type="button" class="swatch" style="--c:#a9adb0" data-video="assets/video/citi-360-grey.mp4" data-poster="assets/poster/citi-360-grey.jpg" data-i18n-aria="color.grey" aria-label="Grey" title="Grey"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/citi-360-white.mp4" data-poster="assets/poster/citi-360-white.jpg" data-i18n-aria="color.white" aria-label="White" title="White"></button>
+        </div>
+      </div>
+      <div class="showcase__media" aria-hidden="true">
+        <video src="assets/video/citi-360.mp4" poster="assets/poster/citi-360.jpg" autoplay muted loop playsinline></video>
+      </div>
+      <ul class="showcase__specs">
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="5" width="10" height="16" rx="2"/><path d="M10 2h4"/><path d="M12.8 9.5 10.5 13h3l-2.3 3.5"/></svg></span>
+          <div><b data-i18n="v.citi.range">107 km</b><i data-i18n="spec.range">Range</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.5 15.5a9 9 0 1 0-17 0"/><path d="m12 13 4-5"/><circle cx="12" cy="14" r="1.6"/></svg></span>
+          <div><b data-i18n="v.citi.speed">80 km/h</b><i data-i18n="spec.speed">Top speed</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2 5 13.5h6L10 22l8-11.5h-6L13 2z"/></svg></span>
+          <div><b data-i18n="v.citi.charge">3.5 h</b><i data-i18n="spec.charge">Charging</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l1.5 13h-15L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>
+          <div><b data-i18n="v.citi.weight">92 kg</b><i data-i18n="spec.weight">Weight</i></div>
+        </li>
+      </ul>
+    </article>
+
+    <article class="showcase__slide">
+      <div class="showcase__info">
+        <p class="label" data-i18n="models.label">Model</p>
+        <h2 class="showcase__name">VMOTO CPX</h2>
+        <p class="showcase__price">120 000 ฿</p>
+        <p class="showcase__desc" data-i18n="cpx.desc">The 125cc-class flagship: more power, more range, more comfort. Two batteries and a charger included.</p>
+        <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
+          <span class="showcase__swatches-label" data-i18n="models.color">Color</span>
+          <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="assets/video/cpx-360.mp4" data-poster="assets/poster/cpx-360.jpg" data-i18n-aria="color.black" aria-label="Black" title="Black"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/cpx-360-white.mp4" data-poster="assets/poster/cpx-360-white.jpg" data-i18n-aria="color.white" aria-label="White" title="White"></button>
+          <button type="button" class="swatch" style="--c:#d2311e" data-video="assets/video/cpx-360-red.mp4" data-poster="assets/poster/cpx-360-red.jpg" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
+        </div>
+      </div>
+      <div class="showcase__media" aria-hidden="true">
+        <video src="assets/video/cpx-360.mp4" poster="assets/poster/cpx-360.jpg" muted loop playsinline preload="metadata"></video>
+      </div>
+      <ul class="showcase__specs">
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="5" width="10" height="16" rx="2"/><path d="M10 2h4"/><path d="M12.8 9.5 10.5 13h3l-2.3 3.5"/></svg></span>
+          <div><b data-i18n="v.cpx.range">105 km</b><i data-i18n="spec.range">Range</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20.5 15.5a9 9 0 1 0-17 0"/><path d="m12 13 4-5"/><circle cx="12" cy="14" r="1.6"/></svg></span>
+          <div><b data-i18n="v.cpx.speed">90 km/h</b><i data-i18n="spec.speed">Top speed</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13 2 5 13.5h6L10 22l8-11.5h-6L13 2z"/></svg></span>
+          <div><b data-i18n="v.cpx.charge">5 h</b><i data-i18n="spec.charge">Charging</i></div>
+        </li>
+        <li>
+          <span class="spec-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 8h12l1.5 13h-15L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>
+          <div><b data-i18n="v.cpx.weight">107 kg</b><i data-i18n="spec.weight">Weight</i></div>
+        </li>
+      </ul>
+    </article>
+
+    <nav class="showcase__nav" data-i18n-aria="models.switchAria" aria-label="Model switcher">
+      <button class="showcase__arrow" type="button" data-dir="-1" data-i18n-aria="models.prev" aria-label="Previous model">←</button>
+      <span class="showcase__nav-label" data-i18n="models.prev">Previous model</span>
+      <div class="showcase__tabs">
+        <button type="button" class="is-active">CITI</button>
+        <button type="button">CPX</button>
+      </div>
+      <span class="showcase__nav-label" data-i18n="models.next">Next model</span>
+      <button class="showcase__arrow" type="button" data-dir="1" data-i18n-aria="models.next" aria-label="Next model">→</button>
+    </nav>
+  </section>
+
+  <!-- ===== PROMO VIDEO ===== -->
+  <section class="promo" id="promo">
+    <video id="promoVideo" src="assets/video/promo.mp4" poster="assets/poster/promo.jpg" muted loop playsinline preload="metadata"></video>
+    <button class="promo__sound" id="promoSound" type="button" data-i18n-aria="promo.soundOn" aria-label="Unmute">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 5 6.5 9H3v6h3.5L11 19V5z"/>
+        <path class="promo__wave" d="M15.5 8.5a5 5 0 0 1 0 7"/>
+        <path class="promo__slash" d="m15 9 6 6M21 9l-6 6"/>
+      </svg>
+    </button>
+  </section>
+
+  <!-- ===== GALLERY: галерея деталей ===== -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label" data-i18n="gallery.label">Details gallery</p>
+        <h2 class="section-title" data-i18n="gallery.title">Thought through to the smallest detail</h2>
+      </div>
+    </div>
+
+    <div class="gallery__track" id="galleryTrack">
+      <figure class="gallery__item">
+        <img src="assets/gallery/led.webp" alt="VMoto — LED lighting" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g1.t">LED lighting</b><span data-i18n="g1.s">Visible day and night.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g1.p1">Full LED all around: headlight, position lights, indicators and brake light. The daytime running light keeps the bike visible even at high noon.</p>
+          <p data-i18n="g1.p2">Unlit island roads at night are no problem — plenty of light for mountain switchbacks and the dirt track to your villa.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/top-box.webp" alt="VMoto CPx — top box on the rack" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g2.t">Rack as standard</b><span data-i18n="g2.s">40 L top box — fits two helmets.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g2.p1">The reinforced rack comes as standard and takes a top box, a bag or a pack of water from the store — everyday island cargo.</p>
+          <p data-i18n="g2.p2">The lockable 40 L box fits two open-face helmets. Waterproof and impact-resistant, installed in minutes — an add-on at purchase.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/windshield.webp" alt="VMoto — windshield" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g3.t">Windshield</b><span data-i18n="g3.s">Comfort at any speed.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g3.p1">The tall CPx screen takes the wind load off at up to 90 km/h — shoulders and neck stay fresh even on long runs between beaches.</p>
+          <p data-i18n="g3.p2">In the rainy season it also keeps the spray off — you arrive drier.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/batteries.webp" alt="VMoto — removable 74V batteries" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g4.t">Two removable batteries</b><span data-i18n="g4.s">Charge wherever you like.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g4.p1">Both batteries come out in seconds: charge them on the bike or take them home — a regular 220 V socket is enough.</p>
+          <p data-i18n="g4.p2">74V/30Ah and 74V/45Ah versions. A full charge takes from 3.5 hours and costs about ฿15 of electricity vs ฿150–200 on petrol.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/island.webp" alt="VMoto CITI — island format" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g5.t">Island format</b><span data-i18n="g5.s">CITI: 92 kg, made for life by the sea.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g5.p1">The CITI weighs 92 kg and is built for the island rhythm: market in the morning, beach at noon, sunset in the evening. It turns around in narrow sois and parks by any café.</p>
+          <p data-i18n="g5.p2">Perfect as a fleet bike for villas, hotels and retreat centres: guests handle it first try, maintenance is minimal.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/brakes.webp" alt="VMoto — CBS disc brakes" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g6.t">CBS brakes</b><span data-i18n="g6.s">Discs with combined braking.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g6.p1">Disc brakes with CBS: squeeze one lever and both wheels brake evenly and predictably.</p>
+          <p data-i18n="g6.p2">On wet asphalt after the rain, that is what separates a confident stop from a nervous one.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/phone-mount.webp" alt="VMoto — phone mount" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g7.t">Phone mount</b><span data-i18n="g7.s">Fits on the mirror stem.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g7.p1">Damps vibration, does not slip, rotates 360° — navigation always in sight.</p>
+          <p data-i18n="g7.p2">Installed as an add-on at purchase.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/cargo-box.webp" alt="VMoto — 98 L cargo box" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g8.t">98 L cargo box</b><span data-i18n="g8.s">For delivery and bigger loads.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g8.p1">A sealed 98-litre box — the working format for delivery: shrugs off downpours, drops and daily load.</p>
+          <p data-i18n="g8.p2">Mounts on the standard rack with no drilling or damage to the bike. Installed as an add-on at purchase.</p>
+        </div>
+      </figure>
+
+      <figure class="gallery__item">
+        <img src="assets/gallery/cover.webp" alt="VMoto — bike cover" loading="lazy">
+        <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
+        <figcaption><b data-i18n="g9.t">Bike cover</b><span data-i18n="g9.s">Rain, sun and dust stay out.</span></figcaption>
+        <div class="gallery__detail" hidden>
+          <p data-i18n="g9.p1">A heavy-duty cover with the VMoto logo: sits through downpours and midday sun without scratching the body.</p>
+          <p data-i18n="g9.p2">Folds into a compact pouch that fits under the seat.</p>
+        </div>
+      </figure>
+    </div>
+
+    <div class="container gallery__controls">
+      <div class="gallery__progress" aria-hidden="true"><i id="galleryProgress"></i></div>
+      <div class="gallery__arrows">
+        <button class="gallery__arrow" type="button" data-dir="-1" data-i18n-aria="gallery.back" aria-label="Back">←</button>
+        <button class="gallery__arrow" type="button" data-dir="1" data-i18n-aria="gallery.fwd" aria-label="Forward">→</button>
+      </div>
+    </div>
+
+    <!-- панель с подробностями -->
+    <div class="gallery-drawer" id="galleryDrawer" aria-hidden="true">
+      <div class="gallery-drawer__backdrop" data-close></div>
+      <aside class="gallery-drawer__panel" role="dialog" aria-modal="true">
+        <button class="gallery-drawer__close" type="button" data-close data-i18n-aria="drawer.close" aria-label="Close">×</button>
+        <div class="gallery-drawer__img"><img id="drawerImg" src="" alt=""></div>
+        <div class="gallery-drawer__body">
+          <p class="label" id="drawerLabel" data-i18n="drawer.label">Detail</p>
+          <h3 id="drawerTitle"></h3>
+          <div class="gallery-drawer__text" id="drawerText"></div>
+        </div>
+        <div class="gallery-drawer__nav">
+          <button class="gallery__arrow" type="button" data-nav="-1" data-i18n-aria="drawer.prev" aria-label="Previous">←</button>
+          <div class="gallery-drawer__dots" id="drawerDots"></div>
+          <button class="gallery__arrow" type="button" data-nav="1" data-i18n-aria="drawer.next" aria-label="Next">→</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== STATIONS: полноэкранная тёмная карта + стеклянная панель ===== -->
+  <section class="stations" id="stations">
+    <div id="stMap" class="stations__leaflet" aria-hidden="true"></div>
+    <div class="stations__vignette" aria-hidden="true"></div>
+
+    <span class="gmap__coord gmap__coord--tl" aria-hidden="true">9.800° N</span>
+    <span class="gmap__coord gmap__coord--br" aria-hidden="true">100.067° E</span>
+    <div class="gmap__zoom">
+      <button type="button" id="stZoomIn" aria-label="Zoom in">+</button>
+      <button type="button" id="stZoomOut" aria-label="Zoom out">−</button>
+    </div>
+    <span class="gmap__attr" aria-hidden="true">© OpenStreetMap · CARTO</span>
+
+    <div class="container stations__content">
+      <!-- стеклянная панель с текстом поверх карты -->
+      <div class="stations__info reveal">
+        <p class="label" data-i18n="st.label">Infrastructure</p>
+        <h2 class="section-title" data-i18n-html="st.title">Our own network<br>of charging stations</h2>
+        <p class="stations__sub" data-i18n="st.sub">We are building our own network of charging stations and quick battery-swap points across the key areas of Phangan and Samui. Charging your bike or swapping a battery will take just a few minutes.</p>
+        <div class="stations__points">
+          <ul>
+            <li><i aria-hidden="true"></i><span data-i18n="st.p1">Zen Beach</span></li>
+            <li><i aria-hidden="true"></i><span data-i18n="st.p2">Srithanu</span></li>
+            <li><i aria-hidden="true"></i><span data-i18n="st.p3">Thong Sala</span></li>
+            <li><i aria-hidden="true"></i><span data-i18n="st.p4">Haad Rin</span></li>
+            <li><i aria-hidden="true"></i><span data-i18n="st.p5">Chaloklum</span></li>
+          </ul>
+          <p class="stations__cap" data-i18n="st.mapCap">The first stations will open right here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== B2B: скролл-слайдер на весь экран + карточки ===== -->
+  <section class="b2b" id="business">
+    <!-- Business Solutions: закреплённая сцена, при скролле меняются сегменты бизнеса -->
+    <div class="b2b-scroll" id="b2bScroll">
+      <div class="b2b-sticky">
+
+        <div class="b2b-slide">
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/retreat.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__content">
+            <div class="b2b-slide__inner">
+              <h3 class="b2b-slide__title" data-i18n="bs1.t">Electric bikes as part of a premium guest experience</h3>
+              <ul class="b2b-checks">
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs1.c5">Completely silent — nothing breaks the calm</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs1.c1">Extra value for every stay</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs1.c2">New experiences for guests</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs1.c3">Eco-friendly image</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs1.c4">Dedicated terms</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="b2b-slide">
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/rental.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__content">
+            <div class="b2b-slide__inner">
+              <h3 class="b2b-slide__title" data-i18n="bs2.t">Launch your own rental fleet</h3>
+              <ul class="b2b-checks">
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs2.c1">Batch supply</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs2.c2">Launch support</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs2.c3">Training</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs2.c4">Marketing support</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs2.c5">Volume pricing</span></li>
+              </ul>
+              <div class="b2b-slide__cta">
+                <a class="btn" data-wa="msgr.fleet" href="https://wa.me/66962244666" target="_blank" rel="noopener"><span data-i18n="b2b.cta">Discuss a fleet</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="b2b-slide">
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/hotels.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__content">
+            <div class="b2b-slide__inner">
+              <h3 class="b2b-slide__title" data-i18n="bs3.t">Your guests get freedom right at check-in</h3>
+              <ul class="b2b-checks">
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs3.c1">No rental hunting</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs3.c2">Higher stay value</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs3.c3">Extra service</span></li>
+                <li><em aria-hidden="true">✓</em><span data-i18n="bs3.c4">Rental income</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- постоянный заголовок секции -->
+        <div class="b2b-head">
+          <div class="b2b-head__cats">
+            <p class="label is-active" data-i18n="bs1.cat">Retreats &amp; Wellness</p>
+            <p class="label" data-i18n="bs2.cat">Rental Business</p>
+            <p class="label" data-i18n="bs3.cat">Hotels &amp; Villas</p>
+          </div>
+          <h2 class="b2b-head__title" data-i18n="bs.title">Business Solutions</h2>
+          <p class="b2b-head__sub" data-i18n="bs.sub">Electric bikes for business of any scale.</p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== FAQ: вопросы перед покупкой ===== -->
+  <section class="faq" id="faq">
+    <div class="faq-scroll" id="faqScroll">
+    <div class="faq-sticky">
+    <div class="container faq__grid">
+      <div class="faq__intro reveal">
+        <p class="label" data-i18n="faq.label">FAQ</p>
+        <h2 class="section-title" data-i18n="faq.title">Questions before buying</h2>
+      </div>
+      <div class="faq__list reveal">
+        <!-- трек: байкер съезжает к открытому вопросу, оставляя красный след -->
+        <div class="faq__track" aria-hidden="true">
+          <i class="faq__trail"></i>
+          <span class="faq__rider" id="faqRider">
+            <img src="assets/img/rider.png" alt="" width="300" height="300">
+          </span>
+        </div>
+        <details class="faq__item">
+          <summary>
+            <i class="faq__num" aria-hidden="true">01</i>
+            <span data-i18n="faq.q1">Can foreigners buy a bike?</span>
+            <b class="faq__ico" aria-hidden="true">+</b>
+          </summary>
+          <p data-i18n="faq.a1">Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork.</p>
+        </details>
+        <details class="faq__item">
+          <summary>
+            <i class="faq__num" aria-hidden="true">02</i>
+            <span data-i18n="faq.q2">Registration and plates?</span>
+            <b class="faq__ico" aria-hidden="true">+</b>
+          </summary>
+          <p data-i18n="faq.a2">We take care of the registration and plates ourselves right after the purchase.</p>
+        </details>
+        <details class="faq__item">
+          <summary>
+            <i class="faq__num" aria-hidden="true">03</i>
+            <span data-i18n="faq.q3">Do I need a licence?</span>
+            <b class="faq__ico" aria-hidden="true">+</b>
+          </summary>
+          <p data-i18n="faq.a3">Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one.</p>
+        </details>
+        <details class="faq__item">
+          <summary>
+            <i class="faq__num" aria-hidden="true">04</i>
+            <span data-i18n="faq.q4">A colour to order?</span>
+            <b class="faq__ico" aria-hidden="true">+</b>
+          </summary>
+          <p data-i18n="faq.a4">Popular colours are in stock; the rest arrive in 1–4 weeks.</p>
+        </details>
+        <details class="faq__item">
+          <summary>
+            <i class="faq__num" aria-hidden="true">05</i>
+            <span data-i18n="faq.q5">Installments?</span>
+            <b class="faq__ico" aria-hidden="true">+</b>
+          </summary>
+          <p data-i18n="faq.a5">Bank financing is coming soon. For now — direct purchase at a fixed price.</p>
+        </details>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+        <!-- ===== CONTACTS: финал с промоткой и формой ===== -->
+  <section class="outro-scroll" id="contacts">
+    <div class="outro-sticky">
+      <canvas id="outroCanvas" class="outro-canvas" aria-hidden="true"></canvas>
+      <div class="outro-fallback" id="outroFallback" style="background-image:url('assets/poster/outro.jpg')"></div>
+      <div class="outro-overlay" aria-hidden="true"></div>
+
+      <div class="outro-form" id="outroForm">
+        <p class="label" data-i18n="contacts.label">Contacts</p>
+        <h2 class="section-title" data-i18n="contacts.title">See you on the island</h2>
+        <p class="outro-form__sub" data-i18n="contacts.sub">Leave your contact — we will reply in the messenger you prefer and arrange a meet-up.</p>
+        <form class="cta-form" id="leadForm">
+          <input type="text" name="name" data-i18n-ph="form.name" placeholder="Your name" required>
+          <input type="tel" name="phone" data-i18n-ph="form.phone" placeholder="Phone" required>
+          <select name="messenger" required>
+            <option value="" disabled selected data-i18n="form.messenger">Messenger</option>
+            <option value="Telegram">Telegram</option>
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="Call" data-i18n="form.call">Phone call</option>
+          </select>
+          <select name="location" id="locationSelect" required>
+            <option value="" disabled selected data-i18n="form.location">Location</option>
+            <option value="Samui" data-i18n="loc.samui">Samui</option>
+            <option value="Phangan" data-i18n="loc.phangan">Phangan</option>
+            <option value="Surat Thani" data-i18n="loc.surat">Surat Thani</option>
+            <option value="other" data-i18n="loc.other">Other</option>
+          </select>
+          <input type="text" name="locationOther" id="locationOther" data-i18n-ph="form.locationOther" placeholder="Your location" hidden>
+          <button type="submit" class="btn" data-i18n="form.send">Send</button>
+          <p class="note" data-i18n="form.note">By submitting this form you consent to the processing of personal data and accept the privacy policy.</p>
+        </form>
+        <p class="outro-form__or" data-i18n="contacts.direct">or message us directly</p>
+        <div class="outro-msgr">
+          <a class="msgr-btn" data-wa="msgr.hello" href="https://wa.me/66962244666" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+            WhatsApp
+          </a>
+          <a class="msgr-btn" href="https://t.me/+66962244666" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 2.9 11.7c-.9.4-.9 1.7.1 2l4.8 1.5 1.8 5.6c.3.9 1.4 1 2 .4l2.6-2.5 4.9 3.6c.7.5 1.7.1 1.9-.8l3-15.4c.2-1-.8-1.8-1.7-1.4l-.4.1zM8.5 14.9l9.4-6.8c.2-.2.5.1.3.3l-7.5 7.2-.3 3-1.9-3.7z"/></svg>
+            Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__brand reveal">
+        <a href="#hero" class="logo">VMOTO</a>
+        <p class="footer__tag">Electric Mobility<br>Made for Island Life</p>
+      </div>
+
+      <div class="footer__grid">
+        <div class="footer__col reveal">
+          <p class="footer__label" data-i18n="footer.locations">Locations</p>
+          <ul>
+            <li data-i18n="loc.samui">Samui</li>
+            <li data-i18n="loc.phangan">Phangan</li>
+          </ul>
+        </div>
+        <div class="footer__col reveal">
+          <p class="footer__label" data-i18n="footer.contacts">Contacts</p>
+          <ul>
+            <li><a href="tel:+66962244666">+66 96 224 4666</a></li>
+            <li><a href="mailto:hello@vmoto.co">hello@vmoto.co</a></li>
+            <li data-i18n="footer.hours">Mon – Sun: 9:00 – 20:00</li>
+          </ul>
+        </div>
+        <div class="footer__col reveal">
+          <p class="footer__label" data-i18n="footer.messengers">Messengers</p>
+          <ul>
+            <li><a href="https://t.me/+66962244666" target="_blank" rel="noopener">Telegram&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a data-wa="msgr.hello" href="https://wa.me/66962244666" target="_blank" rel="noopener">WhatsApp&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook&ensp;<i aria-hidden="true">↗</i></a></li>
+          </ul>
+        </div>
+        <div class="footer__col reveal">
+          <p class="footer__label" data-i18n="footer.navigation">Navigation</p>
+          <ul>
+            <li><a href="#models" data-i18n="nav.models">Models</a></li>
+            <li><a href="#gallery" data-i18n="nav.gallery">Gallery</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#business" data-i18n="b2b.label">For business</a></li>
+          </ul>
+        </div>
+        <div class="footer__col footer__col--credit reveal">
+          <p class="footer__label">Crafted by</p>
+          <a class="footer__ig" href="https://www.instagram.com/buyanluu" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            @buyanluu
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy" data-i18n="footer.copy">© 2026 VMoto — Thailand</p>
+        <div class="footer__end">
+          <p class="footer__slogan">Silent. Electric. Free.</p>
+          <a class="footer__up" href="#hero" data-i18n-aria="footer.top" aria-label="Back to top">↑</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="i18n.js?v=13"></script>
+  <script src="main.js?v=52"></script>
+</body>
+</html>
