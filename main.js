@@ -20,7 +20,11 @@
 
   const FRAME_COUNT = 162; // секвенция обрезана на 9-й секунде исходника
   const SMOOTH_TAU = 0.11; // сек: постоянная времени доводки
-  const framePath = (i) => 'assets/seq/hero/f' + String(i + 1).padStart(3, '0') + '.webp';
+  // телефонам — комплект 960px (вдвое меньше трафика и декода);
+  // порог по физическим пикселям канвы, dpr капнут как в resize()
+  const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
+    ? 'assets/seq/hero-m/' : 'assets/seq/hero/';
+  const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
   // управляет кэшем декода — вкладка не падает по памяти. Для плавного
@@ -225,7 +229,9 @@
 
   const FRAME_COUNT = 271;
   const SMOOTH_TAU = 0.11;
-  const framePath = (i) => 'assets/seq/outro/f' + String(i + 1).padStart(3, '0') + '.webp';
+  const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
+    ? 'assets/seq/outro-m/' : 'assets/seq/outro/';
+  const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // та же схема, что в hero: <img> — источник, битмапы — окно-ускоритель
   // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
