@@ -33,10 +33,15 @@
   const imgs = new Array(FRAME_COUNT);
   const bmps = new Array(FRAME_COUNT);
   const decoding = new Set();
-  const AHEAD = 12; // декод в обе стороны от кадра-цели
-  const KEEP = 18;  // за этими пределами битмапы выселяются
+  const AHEAD_F = 24; // запас декода по ходу движения
+  const AHEAD_B = 8;  // и против хода
+  const CULL = 34;    // дальше от кадра — битмап выселяется
+  const MAX_FPS = 90; // потолок скорости показа (кадров/с)
+  const DECODE_PAR = 6; // одновременных декодов
   const supportsBitmap = typeof createImageBitmap === 'function';
   let winCenter = 0;
+  let scrubDir = 1;   // направление скролла: 1 вниз, -1 вверх
+  let prevTarget = 0;
   let displayFrame = 0;   // дробный номер кадра (сглаженный)
   let drawnKey = -1;      // что сейчас нарисовано (кэш)
   let rafId = null;
@@ -49,8 +54,8 @@
     img.decoding = 'async';
     img.onload = () => {
       imgs[i] = img;
-      if (Math.abs(i - winCenter) <= AHEAD) decodeFrame(i);
-      if (i === Math.round(displayFrame)) { drawnKey = -1; kick(); }
+      if (i >= winCenter - AHEAD_B && i <= winCenter + AHEAD_F) decodeFrame(i);
+      kick();
       done && done();
     };
     img.onerror = () => { done && done(); };
@@ -58,21 +63,31 @@
   }
   function decodeFrame(i) {
     if (!supportsBitmap || bmps[i] || decoding.has(i)) return;
+    if (decoding.size >= DECODE_PAR) return;
     const img = imgs[i];
     if (!img || !img.naturalWidth) return;
     decoding.add(i);
     createImageBitmap(img)
-      .then((bmp) => { bmps[i] = bmp; decoding.delete(i); })
+      .then((bmp) => {
+        bmps[i] = bmp;
+        decoding.delete(i);
+        kick();                  // кадр готов — можно рисовать
+        ensureWindow(winCenter); // и занять освободившийся слот декода
+      })
       .catch(() => decoding.delete(i));
   }
+  // окно декода вытянуто по ходу движения; ближние кадры — первыми
   function ensureWindow(center) {
     if (!supportsBitmap) return;
     winCenter = center;
-    const from = Math.max(0, center - AHEAD);
-    const to = Math.min(FRAME_COUNT - 1, center + AHEAD);
-    for (let i = from; i <= to; i++) decodeFrame(i);
+    const fwd = scrubDir >= 0 ? AHEAD_F : AHEAD_B;
+    const back = scrubDir >= 0 ? AHEAD_B : AHEAD_F;
+    for (let d = 0; d <= Math.max(fwd, back); d++) {
+      if (d <= fwd && center + d < FRAME_COUNT) decodeFrame(center + d);
+      if (d && d <= back && center - d >= 0) decodeFrame(center - d);
+    }
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (bmps[i] && (i < center - KEEP || i > center + KEEP)) {
+      if (bmps[i] && (i < center - CULL || i > center + CULL)) {
         if (bmps[i].close) bmps[i].close();
         bmps[i] = null;
       }
@@ -112,31 +127,53 @@
   }
   window.addEventListener('resize', resize, { passive: true });
 
-  function hasFrame(i) {
-    return !!(imgs[i] && imgs[i].naturalWidth);
-  }
-  function nearestLoaded(index) {
-    index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-    if (hasFrame(index)) return index;
-    for (let d = 1; d < FRAME_COUNT; d++) {
-      if (index - d >= 0 && hasFrame(index - d)) return index - d;
-      if (index + d < FRAME_COUNT && hasFrame(index + d)) return index + d;
-    }
-    return -1;
-  }
-
-  // рисуем точный кадр: битмап из окна, иначе прямо <img> (object-fit: cover)
-  function draw(frameFloat) {
-    let i = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
-    if (!bmps[i] && !hasFrame(i)) i = nearestLoaded(i);
-    if (i < 0 || i === drawnKey) return;
-    const src = bmps[i] || imgs[i];
+  function blit(src) {
     const iw = src.naturalWidth || src.width;
     const ih = src.naturalHeight || src.height;
     const cw = canvas.width, ch = canvas.height;
     const scale = Math.max(cw / iw, ch / ih);
     const dw = iw * scale, dh = ih * scale;
     ctx.drawImage(src, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+  function nearestImg(index) {
+    for (let d = 0; d < FRAME_COUNT; d++) {
+      if (index - d >= 0 && imgs[index - d] && imgs[index - d].naturalWidth) return index - d;
+      if (index + d < FRAME_COUNT && imgs[index + d] && imgs[index + d].naturalWidth) return index + d;
+    }
+    return -1;
+  }
+  // Рисуем только готовые битмапы — ноль синхронного декода в главном
+  // потоке. Если точный кадр ещё декодируется, берём лучший готовый по
+  // ходу движения и никогда не откатываемся назад (нет дёрганий).
+  function draw(frameFloat) {
+    const want = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
+    if (!supportsBitmap) { // старые браузеры: рисуем <img> напрямую
+      const j = nearestImg(want);
+      if (j >= 0 && j !== drawnKey) { blit(imgs[j]); drawnKey = j; }
+      return;
+    }
+    let i = -1;
+    if (bmps[want]) i = want;
+    else if (drawnKey >= 0) {
+      if (scrubDir >= 0) {
+        for (let j = want; j > drawnKey; j--) if (bmps[j]) { i = j; break; }
+      } else {
+        for (let j = want; j < drawnKey; j++) if (bmps[j]) { i = j; break; }
+      }
+      if (i < 0) return; // дождёмся декода — он уже в пути
+    } else {
+      for (let d = 0; d < FRAME_COUNT && i < 0; d++) {
+        if (want - d >= 0 && bmps[want - d]) i = want - d;
+        else if (want + d < FRAME_COUNT && bmps[want + d]) i = want + d;
+      }
+      if (i < 0) { // самый первый показ: битмапов ещё нет вовсе
+        const j = nearestImg(want);
+        if (j >= 0) { blit(imgs[j]); drawnKey = j; }
+        return;
+      }
+    }
+    if (i === drawnKey) return;
+    blit(bmps[i]);
     drawnKey = i;
   }
 
@@ -179,11 +216,18 @@
     updateScenes(progress);
 
     const targetFrame = progress * (FRAME_COUNT - 1);
-    // независимое от fps экспоненциальное сглаживание
+    if (targetFrame > prevTarget + 0.01) scrubDir = 1;
+    else if (targetFrame < prevTarget - 0.01) scrubDir = -1;
+    prevTarget = targetFrame;
+    // независимое от fps сглаживание + потолок скорости показа:
+    // спрос на кадры всегда ниже скорости декода — рывков нет
     const k = 1 - Math.exp(-dt / SMOOTH_TAU);
-    displayFrame += (targetFrame - displayFrame) * k;
+    let step = (targetFrame - displayFrame) * k;
+    const maxStep = MAX_FPS * dt;
+    if (step > maxStep) step = maxStep; else if (step < -maxStep) step = -maxStep;
+    displayFrame += step;
     if (Math.abs(targetFrame - displayFrame) < 0.25) displayFrame = targetFrame;
-    ensureWindow(Math.round(targetFrame));
+    ensureWindow(Math.round(displayFrame));
     draw(displayFrame);
     updateCounter();
     return displayFrame !== targetFrame; // ещё доводим?
@@ -214,6 +258,12 @@
   });
   io.observe(wrapper);
 
+  window.__vmotoScrub = window.__vmotoScrub || {};
+  window.__vmotoScrub.hero = {
+    get frame() { return drawnKey; },
+    get decoded() { let n = 0; for (let i = 0; i < FRAME_COUNT; i++) if (bmps[i]) n++; return n; },
+  };
+
   lastTime = performance.now();
   resize();
 })();
@@ -241,10 +291,15 @@
   const imgs = new Array(FRAME_COUNT);
   const bmps = new Array(FRAME_COUNT);
   const decoding = new Set();
-  const AHEAD = 12; // декод в обе стороны от кадра-цели
-  const KEEP = 18;  // за этими пределами битмапы выселяются
+  const AHEAD_F = 24; // запас декода по ходу движения
+  const AHEAD_B = 8;  // и против хода
+  const CULL = 34;    // дальше от кадра — битмап выселяется
+  const MAX_FPS = 90; // потолок скорости показа (кадров/с)
+  const DECODE_PAR = 6; // одновременных декодов
   const supportsBitmap = typeof createImageBitmap === 'function';
   let winCenter = 0;
+  let scrubDir = 1;   // направление скролла: 1 вниз, -1 вверх
+  let prevTarget = 0;
   let displayFrame = 0;
   let drawnKey = -1;
   let rafId = null;
@@ -258,8 +313,8 @@
     img.decoding = 'async';
     img.onload = () => {
       imgs[i] = img;
-      if (Math.abs(i - winCenter) <= AHEAD) decodeFrame(i);
-      if (i === Math.round(displayFrame)) { drawnKey = -1; kick(); }
+      if (i >= winCenter - AHEAD_B && i <= winCenter + AHEAD_F) decodeFrame(i);
+      kick();
       done && done();
     };
     img.onerror = () => { done && done(); };
@@ -267,21 +322,31 @@
   }
   function decodeFrame(i) {
     if (!supportsBitmap || bmps[i] || decoding.has(i)) return;
+    if (decoding.size >= DECODE_PAR) return;
     const img = imgs[i];
     if (!img || !img.naturalWidth) return;
     decoding.add(i);
     createImageBitmap(img)
-      .then((bmp) => { bmps[i] = bmp; decoding.delete(i); })
+      .then((bmp) => {
+        bmps[i] = bmp;
+        decoding.delete(i);
+        kick();                  // кадр готов — можно рисовать
+        ensureWindow(winCenter); // и занять освободившийся слот декода
+      })
       .catch(() => decoding.delete(i));
   }
+  // окно декода вытянуто по ходу движения; ближние кадры — первыми
   function ensureWindow(center) {
     if (!supportsBitmap) return;
     winCenter = center;
-    const from = Math.max(0, center - AHEAD);
-    const to = Math.min(FRAME_COUNT - 1, center + AHEAD);
-    for (let i = from; i <= to; i++) decodeFrame(i);
+    const fwd = scrubDir >= 0 ? AHEAD_F : AHEAD_B;
+    const back = scrubDir >= 0 ? AHEAD_B : AHEAD_F;
+    for (let d = 0; d <= Math.max(fwd, back); d++) {
+      if (d <= fwd && center + d < FRAME_COUNT) decodeFrame(center + d);
+      if (d && d <= back && center - d >= 0) decodeFrame(center - d);
+    }
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (bmps[i] && (i < center - KEEP || i > center + KEEP)) {
+      if (bmps[i] && (i < center - CULL || i > center + CULL)) {
         if (bmps[i].close) bmps[i].close();
         bmps[i] = null;
       }
@@ -322,31 +387,53 @@
   }
   window.addEventListener('resize', resize, { passive: true });
 
-  function hasFrame(i) {
-    return !!(imgs[i] && imgs[i].naturalWidth);
-  }
-  function nearestLoaded(index) {
-    index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-    if (hasFrame(index)) return index;
-    for (let d = 1; d < FRAME_COUNT; d++) {
-      if (index - d >= 0 && hasFrame(index - d)) return index - d;
-      if (index + d < FRAME_COUNT && hasFrame(index + d)) return index + d;
-    }
-    return -1;
-  }
-
-  // рисуем точный кадр: битмап из окна, иначе прямо <img> (object-fit: cover)
-  function draw(frameFloat) {
-    let i = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
-    if (!bmps[i] && !hasFrame(i)) i = nearestLoaded(i);
-    if (i < 0 || i === drawnKey) return;
-    const src = bmps[i] || imgs[i];
+  function blit(src) {
     const iw = src.naturalWidth || src.width;
     const ih = src.naturalHeight || src.height;
     const cw = canvas.width, ch = canvas.height;
     const scale = Math.max(cw / iw, ch / ih);
     const dw = iw * scale, dh = ih * scale;
     ctx.drawImage(src, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  }
+  function nearestImg(index) {
+    for (let d = 0; d < FRAME_COUNT; d++) {
+      if (index - d >= 0 && imgs[index - d] && imgs[index - d].naturalWidth) return index - d;
+      if (index + d < FRAME_COUNT && imgs[index + d] && imgs[index + d].naturalWidth) return index + d;
+    }
+    return -1;
+  }
+  // Рисуем только готовые битмапы — ноль синхронного декода в главном
+  // потоке. Если точный кадр ещё декодируется, берём лучший готовый по
+  // ходу движения и никогда не откатываемся назад (нет дёрганий).
+  function draw(frameFloat) {
+    const want = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
+    if (!supportsBitmap) { // старые браузеры: рисуем <img> напрямую
+      const j = nearestImg(want);
+      if (j >= 0 && j !== drawnKey) { blit(imgs[j]); drawnKey = j; }
+      return;
+    }
+    let i = -1;
+    if (bmps[want]) i = want;
+    else if (drawnKey >= 0) {
+      if (scrubDir >= 0) {
+        for (let j = want; j > drawnKey; j--) if (bmps[j]) { i = j; break; }
+      } else {
+        for (let j = want; j < drawnKey; j++) if (bmps[j]) { i = j; break; }
+      }
+      if (i < 0) return; // дождёмся декода — он уже в пути
+    } else {
+      for (let d = 0; d < FRAME_COUNT && i < 0; d++) {
+        if (want - d >= 0 && bmps[want - d]) i = want - d;
+        else if (want + d < FRAME_COUNT && bmps[want + d]) i = want + d;
+      }
+      if (i < 0) { // самый первый показ: битмапов ещё нет вовсе
+        const j = nearestImg(want);
+        if (j >= 0) { blit(imgs[j]); drawnKey = j; }
+        return;
+      }
+    }
+    if (i === drawnKey) return;
+    blit(bmps[i]);
     drawnKey = i;
   }
 
@@ -370,10 +457,16 @@
     const progress = getProgress();
     updateScenes(progress);
     const targetFrame = progress * (FRAME_COUNT - 1);
+    if (targetFrame > prevTarget + 0.01) scrubDir = 1;
+    else if (targetFrame < prevTarget - 0.01) scrubDir = -1;
+    prevTarget = targetFrame;
     const k = 1 - Math.exp(-dt / SMOOTH_TAU);
-    displayFrame += (targetFrame - displayFrame) * k;
+    let step = (targetFrame - displayFrame) * k;
+    const maxStep = MAX_FPS * dt;
+    if (step > maxStep) step = maxStep; else if (step < -maxStep) step = -maxStep;
+    displayFrame += step;
     if (Math.abs(targetFrame - displayFrame) < 0.25) displayFrame = targetFrame;
-    if (loadingStarted) ensureWindow(Math.round(targetFrame));
+    if (loadingStarted) ensureWindow(Math.round(displayFrame));
     draw(displayFrame);
     return displayFrame !== targetFrame;
   }
@@ -408,6 +501,12 @@
     { rootMargin: '150% 0px' }
   );
   io.observe(wrapper);
+
+  window.__vmotoScrub = window.__vmotoScrub || {};
+  window.__vmotoScrub.outro = {
+    get frame() { return drawnKey; },
+    get decoded() { let n = 0; for (let i = 0; i < FRAME_COUNT; i++) if (bmps[i]) n++; return n; },
+  };
 
   lastTime = performance.now();
   resize();
