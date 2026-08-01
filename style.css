@@ -1399,7 +1399,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 /* координаты по углам, как в референсе */
 .gmap__coord {
   position: absolute;
-  z-index: 700;
+  z-index: 3;
   font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 500;
@@ -1412,7 +1412,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 /* кнопки зума */
 .gmap__zoom {
   position: absolute;
-  z-index: 700;
+  z-index: 3;
   top: 24px;
   right: 26px;
   display: grid;
@@ -1436,7 +1436,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 /* атрибуция тайлов */
 .gmap__attr {
   position: absolute;
-  z-index: 700;
+  z-index: 3;
   left: 30px;
   bottom: 24px;
   font-size: 9px;
