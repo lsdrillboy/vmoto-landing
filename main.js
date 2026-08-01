@@ -18,12 +18,12 @@
   const frameNow = document.getElementById('frameNow');
   const frameLine = document.getElementById('frameLine');
 
-  const FRAME_COUNT = 162; // секвенция обрезана на 9-й секунде исходника
+  const FRAME_COUNT = 216; // 9 c исходника в родные 24 fps — ровный шаг движения
   const SMOOTH_TAU = 0.11; // сек: постоянная времени доводки
   // телефонам — комплект 960px (вдвое меньше трафика и декода);
   // порог по физическим пикселям канвы, dpr капнут как в resize()
   const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
-    ? 'assets/seq/hero-m/' : 'assets/seq/hero/';
+    ? 'assets/seq/hero24-m/' : 'assets/seq/hero24/';
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам

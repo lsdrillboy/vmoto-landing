@@ -25,8 +25,8 @@ python3 -m http.server 8734
 ```
 assets/
 ├── seq/            покадровые секвенции для скролл-промоток
-│   ├── hero/       f001–f162.webp — хиро (CPX в студии), 1920px
-│   ├── hero-m/     тот же ряд 960px q75 — телефонам (выбор в main.js)
+│   ├── hero24/     f001–f216.webp — хиро (CPX в студии), 1920px, 24 fps
+│   ├── hero24-m/   тот же ряд 960px q75 — телефонам (выбор в main.js)
 │   ├── outro/      f001–f271.webp — финал (райдер уезжает в туман), 1920px
 │   └── outro-m/    тот же ряд 960px q75
 ├── video/          mp4: citi-360*, cpx-360* (вертушки цветов), promo, menu
@@ -40,7 +40,8 @@ assets/
 ## Пайплайн секвенций
 
 ```bash
-ffmpeg -i video.mp4 -vf "fps=18,scale=1920:-2" f%03d.png
+# fps берите РОДНОЙ для видео (у hero.mp4 — 24): пересэмплирование даёт рваный шаг
+ffmpeg -i video.mp4 -vf "fps=24,scale=1920:-2" f%03d.png
 for f in f*.png; do cwebp -q 80 "$f" -o "${f%.png}.webp"; done
 # мобильный комплект (960px) из готовых кадров:
 for f in f*.webp; do dwebp "$f" -o t.png && cwebp -q 75 -resize 960 0 t.png -o "../hero-m/$f"; done; rm t.png
