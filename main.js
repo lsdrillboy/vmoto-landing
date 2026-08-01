@@ -3,9 +3,9 @@
    Кадры assets/seq/hero/f001…f162.webp нарезаны из видео
    (18 fps, 1920px, WebP q80 — пайплайн описан в README.md).
    Прогресс скролла -> номер кадра -> canvas.
-   Против лагов: кадры декодируются заранее в ImageBitmap
-   (вне главного потока), отрисовка — дешёвый блит; обновление
-   коалесцируется в один draw на кадр дисплея через rAF.
+   Против лагов: окно ImageBitmap вокруг кадра-цели (декод вне
+   главного потока), точный кадр всегда доступен из <img>;
+   обновление коалесцируется в один draw на кадр дисплея через rAF.
    ============================================================ */
 (function heroScrub() {
   const wrapper = document.querySelector('.hero-scroll');
@@ -22,14 +22,17 @@
   const SMOOTH_TAU = 0.11; // сек: постоянная времени доводки
   const framePath = (i) => 'assets/seq/hero/f' + String(i + 1).padStart(3, '0') + '.webp';
 
-  // сжатые кадры держим все (~10 МБ), декодируем только окно вокруг
-  // текущего кадра — иначе 162 растровых кадра съедают >1 ГБ и вкладка падает
-  const blobs = new Array(FRAME_COUNT);
-  const frames = new Array(FRAME_COUNT); // декодированное окно
+  // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
+  // управляет кэшем декода — вкладка не падает по памяти. Для плавного
+  // скраба поверх — окно ImageBitmap вокруг текущего кадра; при отсутствии
+  // битмапа рисуем точный кадр прямо из <img> (без пропусков кадров).
+  const imgs = new Array(FRAME_COUNT);
+  const bmps = new Array(FRAME_COUNT);
   const decoding = new Set();
-  const AHEAD = 10; // декод в обе стороны
-  const KEEP = 16;  // за этими пределами кадры выселяются
+  const AHEAD = 12; // декод в обе стороны от кадра-цели
+  const KEEP = 18;  // за этими пределами битмапы выселяются
   const supportsBitmap = typeof createImageBitmap === 'function';
+  let winCenter = 0;
   let displayFrame = 0;   // дробный номер кадра (сглаженный)
   let drawnKey = -1;      // что сейчас нарисовано (кэш)
   let rafId = null;
@@ -37,62 +40,50 @@
   let lastTime = 0;
   let lastRafTime = 0;
 
-  // --- загрузка: качаем сжатые blob'ы, декод по требованию ---
-  function loadFrameImg(i, done) {
+  function loadImg(i, done) {
     const img = new Image();
     img.decoding = 'async';
-    img.onload = () => { frames[i] = img; done && done(); };
+    img.onload = () => {
+      imgs[i] = img;
+      if (Math.abs(i - winCenter) <= AHEAD) decodeFrame(i);
+      if (i === Math.round(displayFrame)) { drawnKey = -1; kick(); }
+      done && done();
+    };
     img.onerror = () => { done && done(); };
     img.src = framePath(i);
   }
-  function loadBlob(i, done) {
-    if (!supportsBitmap) return loadFrameImg(i, done);
-    fetch(framePath(i))
-      .then((r) => (r.ok ? r.blob() : Promise.reject()))
-      .then((b) => { blobs[i] = b; done && done(); })
-      .catch(() => { done && done(); });
-  }
   function decodeFrame(i) {
-    if (frames[i] || !blobs[i] || decoding.has(i)) return;
+    if (!supportsBitmap || bmps[i] || decoding.has(i)) return;
+    const img = imgs[i];
+    if (!img || !img.naturalWidth) return;
     decoding.add(i);
-    createImageBitmap(blobs[i])
-      .then((bmp) => { frames[i] = bmp; decoding.delete(i); drawnKey = -1; kick(); })
+    createImageBitmap(img)
+      .then((bmp) => { bmps[i] = bmp; decoding.delete(i); })
       .catch(() => decoding.delete(i));
   }
-  // окно декодированных кадров вокруг позиции + выселение дальних
   function ensureWindow(center) {
     if (!supportsBitmap) return;
+    winCenter = center;
     const from = Math.max(0, center - AHEAD);
     const to = Math.min(FRAME_COUNT - 1, center + AHEAD);
     for (let i = from; i <= to; i++) decodeFrame(i);
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (frames[i] && (i < center - KEEP || i > center + KEEP)) {
-        if (frames[i].close) frames[i].close();
-        frames[i] = null;
+      if (bmps[i] && (i < center - KEEP || i > center + KEEP)) {
+        if (bmps[i].close) bmps[i].close();
+        bmps[i] = null;
       }
     }
   }
   function freeAll() {
-    if (!supportsBitmap) return;
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (frames[i]) { if (frames[i].close) frames[i].close(); frames[i] = null; }
+      if (bmps[i]) { if (bmps[i].close) bmps[i].close(); bmps[i] = null; }
     }
   }
-  loadBlob(0, () => {
-    if (!supportsBitmap) {
-      canvas.classList.add('is-ready');
-      fallback.classList.add('is-hidden');
-      drawnKey = -1;
-      kick();
-      return;
-    }
-    createImageBitmap(blobs[0]).then((bmp) => {
-      frames[0] = bmp;
-      canvas.classList.add('is-ready');
-      fallback.classList.add('is-hidden');
-      drawnKey = -1;
-      kick();
-    });
+  loadImg(0, () => {
+    canvas.classList.add('is-ready');
+    fallback.classList.add('is-hidden');
+    drawnKey = -1;
+    kick();
   });
   // ограниченная параллельность, чтобы кадры приходили по порядку
   (function loadQueue() {
@@ -100,7 +91,7 @@
     const CONCURRENCY = 8;
     function pump() {
       if (next >= FRAME_COUNT) return;
-      loadBlob(next++, pump);
+      loadImg(next++, pump);
     }
     for (let k = 0; k < CONCURRENCY; k++) pump();
   })();
@@ -117,27 +108,31 @@
   }
   window.addEventListener('resize', resize, { passive: true });
 
-  // ближайший декодированный кадр в обе стороны
+  function hasFrame(i) {
+    return !!(imgs[i] && imgs[i].naturalWidth);
+  }
   function nearestLoaded(index) {
     index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-    if (frames[index]) return index;
+    if (hasFrame(index)) return index;
     for (let d = 1; d < FRAME_COUNT; d++) {
-      if (index - d >= 0 && frames[index - d]) return index - d;
-      if (index + d < FRAME_COUNT && frames[index + d]) return index + d;
+      if (index - d >= 0 && hasFrame(index - d)) return index - d;
+      if (index + d < FRAME_COUNT && hasFrame(index + d)) return index + d;
     }
     return -1;
   }
 
-  // рисуем ближайший загруженный кадр (object-fit: cover)
+  // рисуем точный кадр: битмап из окна, иначе прямо <img> (object-fit: cover)
   function draw(frameFloat) {
-    const i = nearestLoaded(Math.round(frameFloat));
+    let i = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
+    if (!bmps[i] && !hasFrame(i)) i = nearestLoaded(i);
     if (i < 0 || i === drawnKey) return;
-    const img = frames[i];
-    const iw = img.width, ih = img.height;
+    const src = bmps[i] || imgs[i];
+    const iw = src.naturalWidth || src.width;
+    const ih = src.naturalHeight || src.height;
     const cw = canvas.width, ch = canvas.height;
     const scale = Math.max(cw / iw, ch / ih);
     const dw = iw * scale, dh = ih * scale;
-    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    ctx.drawImage(src, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
     drawnKey = i;
   }
 
@@ -184,7 +179,7 @@
     const k = 1 - Math.exp(-dt / SMOOTH_TAU);
     displayFrame += (targetFrame - displayFrame) * k;
     if (Math.abs(targetFrame - displayFrame) < 0.25) displayFrame = targetFrame;
-    ensureWindow(Math.round(displayFrame));
+    ensureWindow(Math.round(targetFrame));
     draw(displayFrame);
     updateCounter();
     return displayFrame !== targetFrame; // ещё доводим?
@@ -232,13 +227,18 @@
   const SMOOTH_TAU = 0.11;
   const framePath = (i) => 'assets/seq/outro/f' + String(i + 1).padStart(3, '0') + '.webp';
 
-  // как и в hero: blob'ы храним все, декодируем только окно кадров
-  const blobs = new Array(FRAME_COUNT);
-  const frames = new Array(FRAME_COUNT);
+  // та же схема, что в hero: <img> — источник, битмапы — окно-ускоритель
+  // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
+  // управляет кэшем декода — вкладка не падает по памяти. Для плавного
+  // скраба поверх — окно ImageBitmap вокруг текущего кадра; при отсутствии
+  // битмапа рисуем точный кадр прямо из <img> (без пропусков кадров).
+  const imgs = new Array(FRAME_COUNT);
+  const bmps = new Array(FRAME_COUNT);
   const decoding = new Set();
-  const AHEAD = 10;
-  const KEEP = 16;
+  const AHEAD = 12; // декод в обе стороны от кадра-цели
+  const KEEP = 18;  // за этими пределами битмапы выселяются
   const supportsBitmap = typeof createImageBitmap === 'function';
+  let winCenter = 0;
   let displayFrame = 0;
   let drawnKey = -1;
   let rafId = null;
@@ -247,70 +247,60 @@
   let lastRafTime = 0;
   let loadingStarted = false;
 
-  function loadFrameImg(i, done) {
+  function loadImg(i, done) {
     const img = new Image();
     img.decoding = 'async';
-    img.onload = () => { frames[i] = img; done && done(); };
+    img.onload = () => {
+      imgs[i] = img;
+      if (Math.abs(i - winCenter) <= AHEAD) decodeFrame(i);
+      if (i === Math.round(displayFrame)) { drawnKey = -1; kick(); }
+      done && done();
+    };
     img.onerror = () => { done && done(); };
     img.src = framePath(i);
   }
-  function loadBlob(i, done) {
-    if (!supportsBitmap) return loadFrameImg(i, done);
-    fetch(framePath(i))
-      .then((r) => (r.ok ? r.blob() : Promise.reject()))
-      .then((b) => { blobs[i] = b; done && done(); })
-      .catch(() => { done && done(); });
-  }
   function decodeFrame(i) {
-    if (frames[i] || !blobs[i] || decoding.has(i)) return;
+    if (!supportsBitmap || bmps[i] || decoding.has(i)) return;
+    const img = imgs[i];
+    if (!img || !img.naturalWidth) return;
     decoding.add(i);
-    createImageBitmap(blobs[i])
-      .then((bmp) => { frames[i] = bmp; decoding.delete(i); drawnKey = -1; kick(); })
+    createImageBitmap(img)
+      .then((bmp) => { bmps[i] = bmp; decoding.delete(i); })
       .catch(() => decoding.delete(i));
   }
   function ensureWindow(center) {
     if (!supportsBitmap) return;
+    winCenter = center;
     const from = Math.max(0, center - AHEAD);
     const to = Math.min(FRAME_COUNT - 1, center + AHEAD);
     for (let i = from; i <= to; i++) decodeFrame(i);
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (frames[i] && (i < center - KEEP || i > center + KEEP)) {
-        if (frames[i].close) frames[i].close();
-        frames[i] = null;
+      if (bmps[i] && (i < center - KEEP || i > center + KEEP)) {
+        if (bmps[i].close) bmps[i].close();
+        bmps[i] = null;
       }
     }
   }
   function freeAll() {
-    if (!supportsBitmap) return;
     for (let i = 0; i < FRAME_COUNT; i++) {
-      if (frames[i]) { if (frames[i].close) frames[i].close(); frames[i] = null; }
+      if (bmps[i]) { if (bmps[i].close) bmps[i].close(); bmps[i] = null; }
     }
   }
   // кадры не грузим при открытии страницы — только когда секция близко
   function startLoading() {
     if (loadingStarted) return;
     loadingStarted = true;
-    loadBlob(0, () => {
-      if (!supportsBitmap) {
-        canvas.classList.add('is-ready');
-        fallback.classList.add('is-hidden');
-        drawnKey = -1;
-        kick();
-        return;
-      }
-      createImageBitmap(blobs[0]).then((bmp) => {
-        frames[0] = bmp;
-        canvas.classList.add('is-ready');
-        fallback.classList.add('is-hidden');
-        drawnKey = -1;
-        kick();
-      });
+    loadImg(0, () => {
+      canvas.classList.add('is-ready');
+      fallback.classList.add('is-hidden');
+      drawnKey = -1;
+      kick();
     });
     let next = 1;
     const CONCURRENCY = 8;
     function pump() {
       if (next >= FRAME_COUNT) return;
-      loadBlob(next++, pump);
+      loadImg(next++, pump);
     }
     for (let k = 0; k < CONCURRENCY; k++) pump();
   }
@@ -326,24 +316,31 @@
   }
   window.addEventListener('resize', resize, { passive: true });
 
+  function hasFrame(i) {
+    return !!(imgs[i] && imgs[i].naturalWidth);
+  }
   function nearestLoaded(index) {
     index = Math.max(0, Math.min(FRAME_COUNT - 1, index));
-    if (frames[index]) return index;
+    if (hasFrame(index)) return index;
     for (let d = 1; d < FRAME_COUNT; d++) {
-      if (index - d >= 0 && frames[index - d]) return index - d;
-      if (index + d < FRAME_COUNT && frames[index + d]) return index + d;
+      if (index - d >= 0 && hasFrame(index - d)) return index - d;
+      if (index + d < FRAME_COUNT && hasFrame(index + d)) return index + d;
     }
     return -1;
   }
+
+  // рисуем точный кадр: битмап из окна, иначе прямо <img> (object-fit: cover)
   function draw(frameFloat) {
-    const i = nearestLoaded(Math.round(frameFloat));
+    let i = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
+    if (!bmps[i] && !hasFrame(i)) i = nearestLoaded(i);
     if (i < 0 || i === drawnKey) return;
-    const img = frames[i];
-    const iw = img.width, ih = img.height;
+    const src = bmps[i] || imgs[i];
+    const iw = src.naturalWidth || src.width;
+    const ih = src.naturalHeight || src.height;
     const cw = canvas.width, ch = canvas.height;
     const scale = Math.max(cw / iw, ch / ih);
     const dw = iw * scale, dh = ih * scale;
-    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    ctx.drawImage(src, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
     drawnKey = i;
   }
 
@@ -370,7 +367,7 @@
     const k = 1 - Math.exp(-dt / SMOOTH_TAU);
     displayFrame += (targetFrame - displayFrame) * k;
     if (Math.abs(targetFrame - displayFrame) < 0.25) displayFrame = targetFrame;
-    if (loadingStarted) ensureWindow(Math.round(displayFrame));
+    if (loadingStarted) ensureWindow(Math.round(targetFrame));
     draw(displayFrame);
     return displayFrame !== targetFrame;
   }
