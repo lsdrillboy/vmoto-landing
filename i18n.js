@@ -12,7 +12,7 @@
   const DICT = {
     /* ---------------- ENGLISH (default) ---------------- */
     en: {
-      'meta.title': 'VMOTO — Electric Bikes on Samui & Phangan',
+      'meta.title': 'VMOTO — Electric Bikes on Koh Samui & Koh Phangan',
       'meta.desc': 'VMoto electric bikes for sale on Koh Samui and Koh Phangan. Test rides, delivery and service on the island.',
       'nav.benefits': 'Benefits', 'nav.models': 'Models', 'nav.gallery': 'Gallery', 'nav.contacts': 'Contacts',
       'menu.aria': 'Menu', 'menu.label': 'Samui — Phangan', 'lang.aria': 'Change language',
