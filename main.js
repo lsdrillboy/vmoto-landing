@@ -277,10 +277,10 @@
   const fallback = document.getElementById('outroFallback');
   const formBlock = document.getElementById('outroForm');
 
-  const FRAME_COUNT = 271;
+  const FRAME_COUNT = 361; // весь исходник в родные 24 fps (см. hero)
   const SMOOTH_TAU = 0.11;
   const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
-    ? 'assets/seq/outro-m/' : 'assets/seq/outro/';
+    ? 'assets/seq/outro24-m/' : 'assets/seq/outro24/';
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // та же схема, что в hero: <img> — источник, битмапы — окно-ускоритель
