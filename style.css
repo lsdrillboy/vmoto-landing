@@ -130,6 +130,16 @@ ul { list-style: none; }
   font-size: 19px;
   letter-spacing: 0.12em;
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.14em;
+}
+/* фирменный знак вместо буквы V */
+.logo__mark {
+  height: 0.82em;
+  width: auto;
+  display: block;
+  transform: translateY(0.02em);
 }
 .nav {
   display: flex;
