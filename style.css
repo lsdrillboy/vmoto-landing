@@ -125,21 +125,22 @@ ul { list-style: none; }
   padding: 26px 0;
 }
 .logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 19px;
-  letter-spacing: 0.12em;
+  /* фирменная гарнитура надписи VMOTO (Eurostile-стилистика) */
+  font-family: 'Michroma', var(--font-display);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.16em;
   justify-self: start;
   display: inline-flex;
   align-items: center;
-  gap: 0.14em;
+  gap: 0.5em;
 }
-/* фирменный знак вместо буквы V */
+/* фирменный знак перед надписью */
 .logo__mark {
-  height: 0.82em;
+  height: 1.15em;
   width: auto;
   display: block;
-  transform: translateY(0.02em);
+  transform: translateY(-0.04em);
 }
 .nav {
   display: flex;
@@ -1765,7 +1766,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
   flex-wrap: wrap;
   margin-bottom: clamp(60px, 7.5vw, 100px);
 }
-.footer__brand .logo { font-size: 22px; }
+.footer__brand .logo { font-size: 17px; }
 .footer__tag {
   text-align: right;
   font-family: var(--font-ui);
