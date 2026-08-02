@@ -1,3 +1,11 @@
+/* При перезагрузке всегда открываем страницу с начала: скролл-сцены
+   рассчитаны на просмотр сверху, восстановление позиции ломает их. */
+(function startAtTop() {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo({ top: 0, behavior: 'instant' });
+})();
+
 /* ============================================================
    HERO: покадровая промотка по скроллу (image sequence)
    Кадры assets/seq/hero/f001…f162.webp нарезаны из видео
