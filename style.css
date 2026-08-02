@@ -125,11 +125,13 @@ ul { list-style: none; }
   padding: 26px 0;
 }
 .logo {
-  /* фирменная гарнитура надписи VMOTO (Eurostile-стилистика) */
+  /* фирменная гарнитура надписи VMOTO (Eurostile-стилистика);
+     штрих добирает жирность оригинального леттеринга */
   font-family: 'Michroma', var(--font-display);
   font-weight: 400;
   font-size: 15px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
+  -webkit-text-stroke: 0.028em currentColor;
   justify-self: start;
   display: inline-flex;
   align-items: center;
@@ -150,11 +152,10 @@ ul { list-style: none; }
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--text);
   transition: color 0.2s;
 }
-.nav a:hover { color: var(--text); }
-.nav a.is-current { color: var(--accent); }
+.nav a:hover { color: var(--accent); }
 .header__right {
   justify-self: end;
   display: flex;
