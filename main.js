@@ -112,13 +112,24 @@
     drawnKey = -1;
     kick();
   });
-  // ограниченная параллельность, чтобы кадры приходили по порядку
+  // Волновая загрузка: первой волной каждый 4-й кадр — вся линия времени
+  // становится просматриваемой за секунды (промотка рисует ближайший
+  // готовый кадр), второй волной добираем остальные до полной плавности.
   (function loadQueue() {
-    let next = 1;
+    const order = [];
+    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 === 0) order.push(i);
+    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 !== 0) order.push(i);
+    let next = 0;
+    let doneCount = 0;
     const CONCURRENCY = 8;
     function pump() {
-      if (next >= FRAME_COUNT) return;
-      loadImg(next++, pump);
+      if (next >= order.length) return;
+      loadImg(order[next++], () => {
+        doneCount++;
+        // хиро докачан — финальная секция может начинать качаться фоном
+        if (doneCount === order.length) window.dispatchEvent(new Event('vmoto:hero-frames-done'));
+        pump();
+      });
     }
     for (let k = 0; k < CONCURRENCY; k++) pump();
   })();
@@ -365,7 +376,8 @@
       if (bmps[i]) { if (bmps[i].close) bmps[i].close(); bmps[i] = null; }
     }
   }
-  // кадры не грузим при открытии страницы — только когда секция близко
+  // кадры не грузим при открытии страницы: старт — когда секция близко
+  // ИЛИ когда hero докачался (фоном, пока пользователь читает середину)
   function startLoading() {
     if (loadingStarted) return;
     loadingStarted = true;
@@ -375,14 +387,18 @@
       drawnKey = -1;
       kick();
     });
-    let next = 1;
+    const order = [];
+    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 === 0) order.push(i);
+    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 !== 0) order.push(i);
+    let next = 0;
     const CONCURRENCY = 8;
     function pump() {
-      if (next >= FRAME_COUNT) return;
-      loadImg(next++, pump);
+      if (next >= order.length) return;
+      loadImg(order[next++], pump);
     }
     for (let k = 0; k < CONCURRENCY; k++) pump();
   }
+  window.addEventListener('vmoto:hero-frames-done', startLoading);
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
