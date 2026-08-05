@@ -955,6 +955,7 @@
       })
       .then((d) => {
         if (!d || !d.result) throw new Error((d && d.error_description) || 'deal failed');
+        if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
         btn.textContent = t('form.sent', 'Request sent');
         form.querySelectorAll('input, select').forEach((el) => { el.disabled = true; });
       })
@@ -963,6 +964,13 @@
         btn.textContent = t('form.send', 'Send');
         status.textContent = t('form.error', 'Could not send — please message us on WhatsApp');
       });
+  });
+})();
+
+/* ==== Meta Pixel: клик по мессенджеру — событие Contact ==== */
+(function pixelContacts() {
+  document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach((a) => {
+    a.addEventListener('click', () => { if (window.fbq) fbq('track', 'Contact'); });
   });
 })();
 
