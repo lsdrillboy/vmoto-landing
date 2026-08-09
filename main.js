@@ -30,8 +30,10 @@
   const SMOOTH_TAU = 0.11; // сек: постоянная времени доводки
   // телефонам — комплект 960px (вдвое меньше трафика и декода);
   // порог по физическим пикселям канвы, dpr капнут как в resize()
-  const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
-    ? 'assets/seq/hero24-m/' : 'assets/seq/hero24/';
+  const SMALL_SET = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100;
+  const SEQ_DIR = SMALL_SET ? 'assets/seq/hero24-m/' : 'assets/seq/hero24/';
+  const SRC_W = SMALL_SET ? 960 : 1920; // размер кадра комплекта
+  const SRC_H = SMALL_SET ? 540 : 1080;
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
@@ -137,10 +139,16 @@
   // --- канвас под размер вьюпорта (с учётом retina) ---
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * dpr);
-    canvas.height = Math.round(canvas.clientHeight * dpr);
+    // Канвас не крупнее исходного кадра: блит идёт без апскейла (в разы
+    // дешевле на ретине), финальное растяжение до вьюпорта бесплатно
+    // делает композитор. Пропорции вьюпорта сохраняем — без искажений.
+    const vw = canvas.clientWidth * dpr;
+    const vh = canvas.clientHeight * dpr;
+    const s = Math.min(1, 1 / Math.max(vw / SRC_W, vh / SRC_H));
+    canvas.width = Math.round(vw * s);
+    canvas.height = Math.round(vh * s);
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
+    ctx.imageSmoothingQuality = 'medium'; // масштаб ~1:1 — 'high' не нужен
     drawnKey = -1; // перерисовать
     kick();
   }
@@ -204,7 +212,10 @@
   // 0 -> 1 на отрезке [a, b]
   const ramp = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
 
+  let lastScenesP = -1;
   function updateScenes(progress) {
+    if (Math.abs(progress - lastScenesP) < 0.0005) return; // без изменений
+    lastScenesP = progress;
     // сцена 1: заголовок гаснет и уезжает вверх, уступая кадр продукту
     const introOut = ramp(progress, 0.05, 0.3);
     intro.style.opacity = String(1 - introOut);
@@ -298,8 +309,10 @@
 
   const FRAME_COUNT = 361; // весь исходник в родные 24 fps (см. hero)
   const SMOOTH_TAU = 0.11;
-  const SEQ_DIR = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100
-    ? 'assets/seq/outro24-m/' : 'assets/seq/outro24/';
+  const SMALL_SET = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100;
+  const SEQ_DIR = SMALL_SET ? 'assets/seq/outro24-m/' : 'assets/seq/outro24/';
+  const SRC_W = SMALL_SET ? 960 : 1920;
+  const SRC_H = SMALL_SET ? 540 : 1080;
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
 
   // та же схема, что в hero: <img> — источник, битмапы — окно-ускоритель
@@ -402,11 +415,17 @@
 
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * dpr);
-    canvas.height = Math.round(canvas.clientHeight * dpr);
+    // Канвас не крупнее исходного кадра: блит идёт без апскейла (в разы
+    // дешевле на ретине), финальное растяжение до вьюпорта бесплатно
+    // делает композитор. Пропорции вьюпорта сохраняем — без искажений.
+    const vw = canvas.clientWidth * dpr;
+    const vh = canvas.clientHeight * dpr;
+    const s = Math.min(1, 1 / Math.max(vw / SRC_W, vh / SRC_H));
+    canvas.width = Math.round(vw * s);
+    canvas.height = Math.round(vh * s);
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    drawnKey = -1;
+    ctx.imageSmoothingQuality = 'medium'; // масштаб ~1:1 — 'high' не нужен
+    drawnKey = -1; // перерисовать
     kick();
   }
   window.addEventListener('resize', resize, { passive: true });
@@ -467,7 +486,10 @@
   }
   const ramp = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
 
+  let lastScenesP = -1;
   function updateScenes(progress) {
+    if (Math.abs(progress - lastScenesP) < 0.0005) return;
+    lastScenesP = progress;
     // форма плавно проявляется на финальных кадрах
     const f = ramp(progress, 0.66, 0.86);
     formBlock.style.opacity = String(f);
