@@ -559,6 +559,45 @@
   maybeStartLoading();
 })();
 
+/* ==== Якорь Contacts: сразу к форме (конец кино-секции), а не к её началу ==== */
+(function contactsAnchor() {
+  const outro = document.querySelector('.outro-scroll');
+  if (!outro) return;
+  document.querySelectorAll('a[href="#contacts"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const total = outro.offsetHeight - window.innerHeight;
+      window.scrollTo({ top: outro.offsetTop + total * 0.92, behavior: 'smooth' });
+    });
+  });
+})();
+
+/* ==== Страховка якорей: раскрываем reveal-элементы секции назначения,
+   даже если пользователь попал туда без «правильного» скролла ==== */
+(function anchorReveal() {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      setTimeout(() => {
+        target.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+      }, 700);
+    });
+  });
+})();
+
+/* ==== Плавающий WhatsApp: появляется после первого экрана ==== */
+(function waFab() {
+  const fab = document.getElementById('waFab');
+  if (!fab) return;
+  function toggle() {
+    fab.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.6);
+  }
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
+
 /* ============ Header: при скролле уезжает, остаётся бургер ============ */
 (function headerScroll() {
   const header = document.getElementById('header');
@@ -994,6 +1033,7 @@
       .then((d) => {
         if (!d || !d.result) throw new Error((d && d.error_description) || 'deal failed');
         if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
+        if (window.gtag) gtag('event', 'generate_lead');
         // форма уступает место экрану успеха
         form.hidden = true;
         const ok = document.getElementById('formSuccess');
@@ -1013,7 +1053,13 @@
 /* ==== Meta Pixel: клик по мессенджеру — событие Contact ==== */
 (function pixelContacts() {
   document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"], a[href*="m.me"]').forEach((a) => {
-    a.addEventListener('click', () => { if (window.fbq) fbq('track', 'Contact'); });
+    a.addEventListener('click', () => {
+      if (window.fbq) fbq('track', 'Contact');
+      if (window.gtag) {
+        const via = a.href.includes('wa.me') ? 'whatsapp' : a.href.includes('t.me') ? 'telegram' : 'messenger';
+        gtag('event', 'contact_click', { method: via });
+      }
+    });
   });
 })();
 
@@ -1039,6 +1085,13 @@
 (function stationsMap() {
   const el = document.getElementById('stMap');
   if (!el || !window.L) return;
+  // Leaflet и тайлы не грузим при открытии страницы — только когда
+  // секция станций на подходе (минус ~1–2 МБ у первой загрузки)
+  let inited = false;
+  function initMap() {
+    if (inited) return;
+    inited = true;
+
 
   const map = L.map(el, {
     center: [9.7385, 100.018],
@@ -1099,6 +1152,19 @@
 
   document.getElementById('stZoomIn')?.addEventListener('click', () => map.zoomIn());
   document.getElementById('stZoomOut')?.addEventListener('click', () => map.zoomOut());
+  }
+  const lazyIo = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { initMap(); lazyIo.disconnect(); }
+  }, { rootMargin: '900px 0px' });
+  const section = document.getElementById('stations') || el;
+  lazyIo.observe(section);
+  // страховка на случай молчащего IntersectionObserver
+  function maybeInit() {
+    const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+    if (!inited && section.getBoundingClientRect().top < vh * 2) initMap();
+  }
+  window.addEventListener('scroll', maybeInit, { passive: true });
+  maybeInit();
 })();
 
 /* ============ Business Solutions: закреплённые сцены по сегментам ============ */

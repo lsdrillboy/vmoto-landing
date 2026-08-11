@@ -487,7 +487,16 @@
   const CODE = { en: 'EN', ru: 'RU', th: 'ไทย', zh: '中文' };
 
   let current = localStorage.getItem('vmoto-lang');
-  if (!LANGS.includes(current)) current = 'en';
+  if (!LANGS.includes(current)) {
+    // первый визит: язык по браузеру, уважая порядок предпочтений (EN — дефолт)
+    const prefs = (navigator.languages && navigator.languages.length)
+      ? navigator.languages : [navigator.language || 'en'];
+    current = 'en';
+    for (const l of prefs) {
+      const p = String(l).slice(0, 2).toLowerCase();
+      if (LANGS.includes(p)) { current = p; break; }
+    }
+  }
 
   function t(key) {
     const d = DICT[current] || DICT.en;

@@ -34,6 +34,15 @@
 
   <meta name="facebook-domain-verification" content="u7atqlx79842csdufgdwshbuczog1s">
 
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-76MRL44BDC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-76MRL44BDC');
+  </script>
+
   <!-- Meta Pixel -->
   <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -95,6 +104,19 @@
           "brand": { "@type": "Brand", "name": "VMoto" }
         }
       }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Can foreigners buy a bike?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork." } },
+      { "@type": "Question", "name": "Registration and plates?", "acceptedAnswer": { "@type": "Answer", "text": "We take care of the registration and plates ourselves right after the purchase." } },
+      { "@type": "Question", "name": "Do I need a licence?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one." } },
+      { "@type": "Question", "name": "A colour to order?", "acceptedAnswer": { "@type": "Answer", "text": "Popular colours are in stock; the rest arrive in 1–4 weeks." } },
+      { "@type": "Question", "name": "Installments?", "acceptedAnswer": { "@type": "Answer", "text": "Bank financing is coming soon. For now — direct purchase at a fixed price." } }
     ]
   }
   </script>
@@ -798,8 +820,13 @@
     </div>
   </footer>
 
+  <!-- плавающий WhatsApp: появляется после первого экрана -->
+  <a class="wa-fab" id="waFab" data-wa="msgr.hello" href="https://wa.me/66962244666" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+  </a>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="i18n.js?v=21"></script>
-  <script src="main.js?v=65"></script>
+  <script src="i18n.js?v=22"></script>
+  <script src="main.js?v=66"></script>
 </body>
 </html>

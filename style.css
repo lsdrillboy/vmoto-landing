@@ -273,9 +273,11 @@ ul { list-style: none; }
   position: fixed;
   inset: 0;
   z-index: 310;
+  /* постер виден мгновенно, пока видео меню догружается; сверху — затемнение */
   background:
     radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, 0.08), transparent 65%),
-    rgba(8, 9, 8, 0.94);
+    linear-gradient(rgba(8, 9, 8, 0.82), rgba(8, 9, 8, 0.82)),
+    #080908 url('assets/poster/menu.jpg') center / cover no-repeat;
   backdrop-filter: blur(18px);
   clip-path: circle(0px at calc(100% - 47px) 49px);
   visibility: hidden;
@@ -1427,7 +1429,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 .gmap__zoom {
   position: absolute;
   z-index: 3;
-  top: 24px;
+  top: 96px; /* ниже кнопки меню, чтобы не перекрывались */
   right: 26px;
   display: grid;
   gap: 6px;
@@ -1931,14 +1933,17 @@ html[lang="th"] .section-title { line-height: 1.35; }
   }
 }
 
+@media (max-width: 880px) {
+  /* семь пунктов навигации не помещаются — уходим в бургер раньше */
+  .nav, .header__social { display: none; }
+  .header__inner { grid-template-columns: auto 1fr; }
+  .header__right { grid-column: 2; justify-self: end; margin-right: 52px; }
+  .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+}
+
 @media (max-width: 640px) {
   .feature { min-height: auto; }
   .feature-item__body b { font-size: 20px; }
-
-  .nav, .header__social { display: none; }
-  /* язык — без рамки, вплотную к бургеру */
-  .header__inner { grid-template-columns: auto 1fr; }
-  .header__right { grid-column: 2; justify-self: end; margin-right: 52px; }
   .stations { min-height: auto; }
     .b2b-slide__bg { background-position: 72% center; }
   .faq__grid { grid-template-columns: 1fr; }
@@ -1956,8 +1961,6 @@ html[lang="th"] .section-title { line-height: 1.35; }
     padding-left: 0;
     padding-top: 8px;
   }
-  /* на мобильных бургер виден всегда */
-  .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
   /* крестик панели деталей — слева, чтобы не пересекался с бургером */
   .gallery-drawer__close { right: auto; left: 16px; }
 
@@ -2088,3 +2091,41 @@ html[lang="th"] .section-title { line-height: 1.35; }
   transition: color 0.2s;
 }
 .footer__legal a:hover { color: var(--text); }
+
+/* тёмная стеклянная подложка: форма читается на любом кадре видео */
+.cta-form,
+.form-success {
+  background: rgba(8, 9, 8, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  backdrop-filter: blur(14px);
+  padding: 26px;
+}
+
+/* плавающий WhatsApp */
+.wa-fab {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 250;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 11, 10, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  color: #43d854;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s, transform 0.3s, border-color 0.2s, visibility 0s linear 0.3s;
+}
+.wa-fab.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
+}
+.wa-fab:hover { border-color: #43d854; }
