@@ -2136,3 +2136,16 @@ html[lang="th"] .section-title { line-height: 1.35; }
   transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
 }
 .wa-fab:hover { border-color: #43d854; }
+
+/* цена сразу под CTA в hero: «что и почём» с первого экрана */
+.hero-price {
+  margin-top: 16px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 238, 0.62);
+}
+
+/* CTA в карточке модели */
+.showcase__cta { margin-top: 22px; display: inline-flex; }

@@ -566,6 +566,9 @@
   document.querySelectorAll('a[href="#contacts"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
+      // кнопка из карточки модели предзаполняет форму
+      const lead = document.getElementById('leadForm');
+      if (a.dataset.model && lead && lead.model) lead.model.value = a.dataset.model;
       const total = outro.offsetHeight - window.innerHeight;
       window.scrollTo({ top: outro.offsetTop + total * 0.92, behavior: 'smooth' });
     });
@@ -1006,7 +1009,8 @@
     const messenger = form.elements.messenger.value;
     let location = form.elements.location.value;
     if (location === 'other') location = form.elements.locationOther.value.trim() || 'Other';
-    const comments = 'Мессенджер: ' + messenger + '\nЛокация: ' + location +
+    const model = form.model && form.model.value ? form.model.value : '—';
+    const comments = 'Модель: ' + model + '\nМессенджер: ' + messenger + '\nЛокация: ' + location +
       '\nЯзык сайта: ' + document.documentElement.lang.toUpperCase();
 
     btn.disabled = true;
