@@ -2054,6 +2054,8 @@ html[lang="th"] .section-title { line-height: 1.35; }
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .form-success.is-on { opacity: 1; transform: translateY(0); }
+/* display:flex выше перебивает атрибут hidden — возвращаем скрытие явно */
+.form-success[hidden] { display: none; }
 .form-success__icon {
   width: 64px;
   height: 64px;
@@ -2099,8 +2101,13 @@ html[lang="th"] .section-title { line-height: 1.35; }
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 22px;
   backdrop-filter: blur(14px);
-  padding: 26px;
+  padding: 16px 22px;
 }
+/* компактная вертикаль: блок целиком помещается в невысокие экраны */
+.cta-form input,
+.cta-form select { padding-top: 13px; padding-bottom: 13px; }
+.outro-form__sub { margin-bottom: 22px; }
+.outro-form__or { margin-top: 18px; }
 
 /* плавающий WhatsApp */
 .wa-fab {
