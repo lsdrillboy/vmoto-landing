@@ -994,8 +994,13 @@
       .then((d) => {
         if (!d || !d.result) throw new Error((d && d.error_description) || 'deal failed');
         if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
-        btn.textContent = t('form.sent', 'Request sent');
-        form.querySelectorAll('input, select').forEach((el) => { el.disabled = true; });
+        // форма уступает место экрану успеха
+        form.hidden = true;
+        const ok = document.getElementById('formSuccess');
+        if (ok) {
+          ok.hidden = false;
+          requestAnimationFrame(() => ok.classList.add('is-on'));
+        }
       })
       .catch(() => {
         btn.disabled = false;

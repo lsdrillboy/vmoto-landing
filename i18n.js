@@ -121,6 +121,10 @@
       'contacts.direct': 'or message us directly',
       'msgr.hello': 'Hi! I’m interested in VMoto electric bikes.',
       'fb.copied': 'Greeting copied — paste it in the chat',
+      'form.consent': 'I agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="terms.html" target="_blank" rel="noopener">Terms of Use</a>',
+      'form.successTitle': 'Request sent!',
+      'form.successText': 'We’ll get back to you shortly — usually within an hour.',
+      'footer.privacy': 'Privacy Policy', 'footer.terms': 'Terms of Use',
       'msgr.fleet': 'Hi! I’d like to discuss a VMoto fleet for my business.'
     },
 
@@ -235,6 +239,10 @@
       'contacts.direct': 'или напишите нам напрямую',
       'msgr.hello': 'Здравствуйте! Интересуют электробайки VMoto.',
       'fb.copied': 'Приветствие скопировано — вставьте его в чат',
+      'form.consent': 'Соглашаюсь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и <a href="terms.html" target="_blank" rel="noopener">пользовательским соглашением</a>',
+      'form.successTitle': 'Заявка отправлена!',
+      'form.successText': 'Мы свяжемся с вами в ближайшее время — обычно в течение часа.',
+      'footer.privacy': 'Политика конфиденциальности', 'footer.terms': 'Пользовательское соглашение',
       'msgr.fleet': 'Здравствуйте! Хочу обсудить парк байков VMoto для бизнеса.'
     },
 
@@ -349,6 +357,10 @@
       'contacts.direct': 'หรือทักหาเราโดยตรง',
       'msgr.hello': 'สวัสดีครับ/ค่ะ สนใจมอเตอร์ไซค์ไฟฟ้า VMoto',
       'fb.copied': 'คัดลอกข้อความแล้ว — วางในแชทได้เลย',
+      'form.consent': 'ยอมรับ<a href="privacy.html" target="_blank" rel="noopener">นโยบายความเป็นส่วนตัว</a>และ<a href="terms.html" target="_blank" rel="noopener">ข้อกำหนดการใช้งาน</a>',
+      'form.successTitle': 'ส่งคำขอแล้ว!',
+      'form.successText': 'เราจะติดต่อกลับโดยเร็ว โดยปกติภายใน 1 ชั่วโมง',
+      'footer.privacy': 'นโยบายความเป็นส่วนตัว', 'footer.terms': 'ข้อกำหนดการใช้งาน',
       'msgr.fleet': 'สวัสดีครับ/ค่ะ สนใจฟลีต VMoto สำหรับธุรกิจ'
     },
 
@@ -463,6 +475,10 @@
       'contacts.direct': '或直接联系我们',
       'msgr.hello': '您好！我对 VMoto 电动摩托感兴趣。',
       'fb.copied': '问候语已复制——粘贴到聊天中即可',
+      'form.consent': '我同意<a href="privacy.html" target="_blank" rel="noopener">隐私政策</a>和<a href="terms.html" target="_blank" rel="noopener">使用条款</a>',
+      'form.successTitle': '已收到您的请求！',
+      'form.successText': '我们会尽快与您联系，通常在一小时内。',
+      'footer.privacy': '隐私政策', 'footer.terms': '使用条款',
       'msgr.fleet': '您好！想洽谈 VMoto 商用车队。'
     }
   };
