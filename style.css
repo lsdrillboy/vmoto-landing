@@ -1970,3 +1970,27 @@ html[lang="th"] .section-title { line-height: 1.35; }
   .hero-cta { left: 24px; bottom: 26px; }
   .hero-counter { right: 20px; bottom: 96px; }
 }
+
+/* тост «приветствие скопировано» у кнопки Messenger */
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%) translateY(12px);
+  z-index: 400;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: rgba(16, 17, 16, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  max-width: 86vw;
+  text-align: center;
+}
+.copy-toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }

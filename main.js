@@ -1007,8 +1007,26 @@
 
 /* ==== Meta Pixel: клик по мессенджеру — событие Contact ==== */
 (function pixelContacts() {
-  document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"]').forEach((a) => {
+  document.querySelectorAll('a[href*="wa.me"], a[href*="t.me"], a[href*="m.me"]').forEach((a) => {
     a.addEventListener('click', () => { if (window.fbq) fbq('track', 'Contact'); });
+  });
+})();
+
+/* ==== Messenger: m.me не умеет готовый текст в ссылке — копируем
+   локализованное приветствие в буфер и подсказываем вставить ==== */
+(function fbGreeting() {
+  const btn = document.getElementById('msgrFb');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const t = window.i18nT;
+    const text = t ? t('msgr.hello') : 'Hi! I’m interested in VMoto electric bikes.';
+    if (navigator.clipboard) navigator.clipboard.writeText(text).catch(() => {});
+    const toast = document.createElement('div');
+    toast.className = 'copy-toast';
+    toast.textContent = t ? t('fb.copied') : 'Greeting copied — paste it in the chat';
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('is-on'));
+    setTimeout(() => { toast.classList.remove('is-on'); setTimeout(() => toast.remove(), 400); }, 2600);
   });
 })();
 

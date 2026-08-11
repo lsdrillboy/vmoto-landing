@@ -120,6 +120,7 @@
       'faq.q5': 'Installments?', 'faq.a5': 'Bank financing is coming soon. For now — direct purchase at a fixed price.',
       'contacts.direct': 'or message us directly',
       'msgr.hello': 'Hi! I’m interested in VMoto electric bikes.',
+      'fb.copied': 'Greeting copied — paste it in the chat',
       'msgr.fleet': 'Hi! I’d like to discuss a VMoto fleet for my business.'
     },
 
@@ -233,6 +234,7 @@
       'faq.q5': 'Рассрочка?', 'faq.a5': 'Банковский кредит скоро появится. Пока — прямая покупка по фиксированной цене.',
       'contacts.direct': 'или напишите нам напрямую',
       'msgr.hello': 'Здравствуйте! Интересуют электробайки VMoto.',
+      'fb.copied': 'Приветствие скопировано — вставьте его в чат',
       'msgr.fleet': 'Здравствуйте! Хочу обсудить парк байков VMoto для бизнеса.'
     },
 
@@ -346,6 +348,7 @@
       'faq.q5': 'ผ่อนชำระได้ไหม?', 'faq.a5': 'สินเชื่อธนาคารกำลังจะเปิดให้บริการ ตอนนี้ซื้อตรงในราคาคงที่',
       'contacts.direct': 'หรือทักหาเราโดยตรง',
       'msgr.hello': 'สวัสดีครับ/ค่ะ สนใจมอเตอร์ไซค์ไฟฟ้า VMoto',
+      'fb.copied': 'คัดลอกข้อความแล้ว — วางในแชทได้เลย',
       'msgr.fleet': 'สวัสดีครับ/ค่ะ สนใจฟลีต VMoto สำหรับธุรกิจ'
     },
 
@@ -459,6 +462,7 @@
       'faq.q5': '能分期吗？', 'faq.a5': '银行贷款即将推出。目前为固定价格直购。',
       'contacts.direct': '或直接联系我们',
       'msgr.hello': '您好！我对 VMoto 电动摩托感兴趣。',
+      'fb.copied': '问候语已复制——粘贴到聊天中即可',
       'msgr.fleet': '您好！想洽谈 VMoto 商用车队。'
     }
   };
