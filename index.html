@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Michroma&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=93">
+  <link rel="stylesheet" href="style.css?v=97">
   <link rel="preload" as="image" href="assets/seq/hero24/f001.webp" media="(min-width: 701px)">
   <link rel="preload" as="image" href="assets/seq/hero24-m/f001.webp" media="(max-width: 700px)">
 
@@ -121,7 +121,7 @@
       { "@type": "Question", "name": "Can I charge at home?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — each battery charges from a regular outlet with the included charger. A fast charge at our stations takes about 20 minutes." } },
       { "@type": "Question", "name": "Where is the bike serviced?", "acceptedAnswer": { "@type": "Answer", "text": "On the island: our own service, parts in stock and a mobile team for Samui and Phangan. An electric drive needs no oil, belts or spark plugs." } },
       { "@type": "Question", "name": "Do you deliver?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — across Samui and Phangan, and to Surat Thani by arrangement. Usually within 1–2 days." } },
-      { "@type": "Question", "name": "How does a test ride work?", "acceptedAnswer": { "@type": "Answer", "text": "Leave a request — we bring the bike to you on Samui or Phangan. 15–20 minutes, free, no obligations." } }
+      { "@type": "Question", "name": "How does a test ride work?", "acceptedAnswer": { "@type": "Answer", "text": "We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations." } }
     ]
   }
   </script>
@@ -232,7 +232,6 @@
             <span data-i18n="hero.cta">Book a test ride</span>
             <span class="hero-cta__icon" aria-hidden="true">→</span>
           </a>
-          <p class="hero-price" data-i18n="hero.price">from ฿95,000 · two batteries · 3-year warranty</p>
         </div>
       </div>
     </div>
@@ -313,7 +312,6 @@
         <h2 class="showcase__name">VMOTO CITI</h2>
         <p class="showcase__price">95 000 ฿</p>
         <p class="showcase__desc" data-i18n="citi.desc">A light city e-scooter. Two batteries and a charger included.</p>
-        <a href="#contacts" class="btn showcase__cta" data-model="CITI"><span data-i18n="models.ctaCiti">Book a test ride on CITI</span></a>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
           <span class="showcase__swatches-label" data-i18n="models.color">Color</span>
           <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="assets/video/citi-360.mp4" data-poster="assets/poster/citi-360.jpg" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
@@ -350,7 +348,6 @@
         <h2 class="showcase__name">VMOTO CPX</h2>
         <p class="showcase__price">120 000 ฿</p>
         <p class="showcase__desc" data-i18n="cpx.desc">The 125cc-class flagship: more power, more range, more comfort. Two batteries and a charger included.</p>
-        <a href="#contacts" class="btn showcase__cta" data-model="CPx"><span data-i18n="models.ctaCpx">Book a test ride on CPx</span></a>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
           <span class="showcase__swatches-label" data-i18n="models.color">Color</span>
           <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="assets/video/cpx-360.mp4" data-poster="assets/poster/cpx-360.jpg" data-i18n-aria="color.black" aria-label="Black" title="Black"></button>
@@ -734,7 +731,7 @@
             <span data-i18n="faq.q10">How does a test ride work?</span>
             <b class="faq__ico" aria-hidden="true">+</b>
           </summary>
-          <p data-i18n="faq.a10">Leave a request — we bring the bike to you on Samui or Phangan. 15–20 minutes, free, no obligations.</p>
+          <p data-i18n="faq.a10">We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations.</p>
         </details>
       </div>
     </div>
@@ -756,26 +753,36 @@
         <form class="cta-form" id="leadForm">
           <input type="text" name="name" data-i18n-ph="form.name" placeholder="Your name" required>
           <input type="tel" name="phone" data-i18n-ph="form.phone" placeholder="Phone" required>
-          <select name="model">
-            <option value="" selected data-i18n="form.model">Model (optional)</option>
-            <option value="CITI">CITI</option>
-            <option value="CPx">CPx</option>
-            <option value="undecided" data-i18n="form.modelAny">Not sure yet</option>
-          </select>
-          <select name="messenger" required>
-            <option value="" disabled selected data-i18n="form.messenger">Messenger</option>
-            <option value="Telegram">Telegram</option>
-            <option value="WhatsApp">WhatsApp</option>
-            <option value="Call" data-i18n="form.call">Phone call</option>
-          </select>
-          <select name="location" id="locationSelect" required>
-            <option value="" disabled selected data-i18n="form.location">Location</option>
-            <option value="Samui" data-i18n="loc.samui">Samui</option>
-            <option value="Phangan" data-i18n="loc.phangan">Phangan</option>
-            <option value="Surat Thani" data-i18n="loc.surat">Surat Thani</option>
-            <option value="other" data-i18n="loc.other">Other</option>
-          </select>
-          <input type="text" name="locationOther" id="locationOther" data-i18n-ph="form.locationOther" placeholder="Your location" hidden>
+          <div class="form-picks">
+          <div class="pick" id="pickMessenger">
+            <span class="pick__label" data-i18n="form.messenger">Messenger</span>
+            <div class="pick__row">
+              <button type="button" class="pick__btn" data-value="WhatsApp">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
+                WhatsApp
+              </button>
+              <button type="button" class="pick__btn" data-value="Telegram">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 2.9 11.7c-.9.4-.9 1.7.1 2l4.8 1.5 1.8 5.6c.3.9 1.4 1 2 .4l2.6-2.5 4.9 3.6c.7.5 1.7.1 1.9-.8l3-15.4c.2-1-.8-1.8-1.7-1.4l-.4.1zM8.5 14.9l9.4-6.8c.2-.2.5.1.3.3l-7.5 7.2-.3 3-1.9-3.7z"/></svg>
+                Telegram
+              </button>
+              <button type="button" class="pick__btn" data-value="Call">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8.1 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.6 1.9z"/></svg>
+                <span data-i18n="form.call">Phone call</span>
+              </button>
+            </div>
+            <input type="hidden" name="messenger" value="">
+          </div>
+          <div class="pick" id="pickLocation">
+            <span class="pick__label" data-i18n="form.location">Location</span>
+            <div class="pick__row">
+              <button type="button" class="pick__btn" data-value="Phangan"><span data-i18n="loc.phangan">Phangan</span></button>
+              <button type="button" class="pick__btn" data-value="Samui"><span data-i18n="loc.samui">Samui</span></button>
+              <button type="button" class="pick__btn" data-value="other"><span data-i18n="loc.other">Other</span></button>
+            </div>
+            <input type="hidden" name="location" value="">
+            <input type="text" name="locationOther" id="locationOther" data-i18n-ph="form.locationOther" placeholder="Your location" hidden>
+          </div>
+          </div>
           <label class="consent">
             <input type="checkbox" name="consent" required>
             <span class="consent__box" aria-hidden="true">
@@ -874,13 +881,8 @@
     </div>
   </footer>
 
-  <!-- плавающий WhatsApp: появляется после первого экрана -->
-  <a class="wa-fab" id="waFab" data-wa="msgr.hello" href="https://wa.me/66962244666" target="_blank" rel="noopener" aria-label="WhatsApp">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.1-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/></svg>
-  </a>
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="i18n.js?v=23"></script>
-  <script src="main.js?v=67"></script>
+  <script src="i18n.js?v=24"></script>
+  <script src="main.js?v=68"></script>
 </body>
 </html>

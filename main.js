@@ -566,9 +566,6 @@
   document.querySelectorAll('a[href="#contacts"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
-      // кнопка из карточки модели предзаполняет форму
-      const lead = document.getElementById('leadForm');
-      if (a.dataset.model && lead && lead.model) lead.model.value = a.dataset.model;
       const total = outro.offsetHeight - window.innerHeight;
       window.scrollTo({ top: outro.offsetTop + total * 0.92, behavior: 'smooth' });
     });
@@ -588,17 +585,6 @@
       }, 700);
     });
   });
-})();
-
-/* ==== Плавающий WhatsApp: появляется после первого экрана ==== */
-(function waFab() {
-  const fab = document.getElementById('waFab');
-  if (!fab) return;
-  function toggle() {
-    fab.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.6);
-  }
-  window.addEventListener('scroll', toggle, { passive: true });
-  toggle();
 })();
 
 /* ============ Header: при скролле уезжает, остаётся бургер ============ */
@@ -971,15 +957,24 @@
 (function leadForm() {
   const form = document.getElementById('leadForm');
 
-  // «Другое» в локации — раскрывает поле для своего варианта
-  const locSelect = document.getElementById('locationSelect');
+  // чипы «мессенджер» и «локация»: клик пишет значение в hidden-поле
   const locOther = document.getElementById('locationOther');
-  locSelect.addEventListener('change', () => {
-    const isOther = locSelect.value === 'other';
-    locOther.hidden = !isOther;
-    locOther.required = isOther;
-    if (isOther) locOther.focus();
-    else locOther.value = '';
+  form.querySelectorAll('.pick').forEach((group) => {
+    const hidden = group.querySelector('input[type="hidden"]');
+    const btns = group.querySelectorAll('.pick__btn');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        hidden.value = btn.dataset.value;
+        btns.forEach((b) => b.classList.toggle('is-active', b === btn));
+        if (hidden.name === 'location') {
+          const isOther = hidden.value === 'other';
+          locOther.hidden = !isOther;
+          locOther.required = isOther;
+          if (isOther) locOther.focus();
+          else locOther.value = '';
+        }
+      });
+    });
   });
 
   // отправка заявки в Битрикс24: контакт + сделка в воронке VMOTO
@@ -1008,9 +1003,12 @@
     const phone = form.elements.phone.value.trim();
     const messenger = form.elements.messenger.value;
     let location = form.elements.location.value;
+    if (!messenger || !location) {
+      status.textContent = t('form.choose', 'Please choose a messenger and location');
+      return;
+    }
     if (location === 'other') location = form.elements.locationOther.value.trim() || 'Other';
-    const model = form.model && form.model.value ? form.model.value : '—';
-    const comments = 'Модель: ' + model + '\nМессенджер: ' + messenger + '\nЛокация: ' + location +
+    const comments = 'Мессенджер: ' + messenger + '\nЛокация: ' + location +
       '\nЯзык сайта: ' + document.documentElement.lang.toUpperCase();
 
     btn.disabled = true;

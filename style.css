@@ -2101,51 +2101,72 @@ html[lang="th"] .section-title { line-height: 1.35; }
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 22px;
   backdrop-filter: blur(14px);
-  padding: 16px 22px;
+  padding: 13px 20px;
 }
 /* компактная вертикаль: блок целиком помещается в невысокие экраны */
 .cta-form input,
 .cta-form select { padding-top: 13px; padding-bottom: 13px; }
-.outro-form__sub { margin-bottom: 22px; }
+.outro-form__sub { margin-bottom: 12px; }
 .outro-form__or { margin-top: 18px; }
 
-/* плавающий WhatsApp */
-.wa-fab {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  z-index: 250;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(10, 11, 10, 0.74);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(8px);
-  color: #43d854;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s, border-color 0.2s, visibility 0s linear 0.3s;
-}
-.wa-fab.is-on {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition: opacity 0.3s, transform 0.3s, border-color 0.2s;
-}
-.wa-fab:hover { border-color: #43d854; }
 
-/* цена сразу под CTA в hero: «что и почём» с первого экрана */
-.hero-price {
-  margin-top: 16px;
+
+
+/* чипы выбора в форме (мессенджер, локация) */
+.form-picks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 20px;
+  align-items: start;
+}
+@media (max-width: 560px) {
+  .form-picks { grid-template-columns: 1fr; }
+}
+.pick { text-align: left; padding: 5px 0 0; }
+.pick__label {
+  display: block;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(242, 241, 238, 0.62);
+  color: rgba(242, 241, 238, 0.5);
+  margin-bottom: 8px;
+}
+.pick__row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pick__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: rgba(242, 241, 238, 0.85);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.pick__btn:hover { border-color: rgba(255, 255, 255, 0.5); }
+.pick__btn.is-active {
+  border-color: var(--accent);
+  background: rgba(217, 79, 61, 0.14);
+  color: #fff;
 }
 
-/* CTA в карточке модели */
-.showcase__cta { margin-top: 22px; display: inline-flex; }
+/* воздух между мессенджерами и следующим блоком */
+.outro-form { padding-bottom: 48px; }
+@media (max-height: 780px) {
+  .outro-form { padding-bottom: 32px; }
+}
+
+/* компактная форма на телефонах: блок целиком в экран */
+@media (max-width: 560px) {
+  .outro-form { padding-bottom: 40px; }
+  .outro-form > .label { display: none; }
+  .outro-form__sub { font-size: 13px; margin-bottom: 12px; }
+  .cta-form input, .cta-form select { padding-top: 11px; padding-bottom: 11px; }
+  .pick__btn { padding: 7px 11px; font-size: 12px; }
+  .outro-form__or { margin-top: 12px; }
+  .msgr-btn { padding: 8px 14px; font-size: 12px; }
+}
