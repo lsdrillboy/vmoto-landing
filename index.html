@@ -33,9 +33,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Michroma&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css?v=102">
-  <link rel="preload" as="image" href="assets/seq/hero24/f001.webp" media="(min-width: 701px)">
-  <link rel="preload" as="image" href="assets/seq/hero24-m/f001.webp" media="(max-width: 700px)">
+  <link rel="stylesheet" href="style.css?v=103">
+  <link rel="preload" as="image" href="assets/img/hero-bg.webp" media="(min-width: 701px)">
+  <link rel="preload" as="image" href="assets/img/hero-bg-m.webp" media="(max-width: 700px)">
 
   <meta name="facebook-domain-verification" content="u7atqlx79842csdufgdwshbuczog1s">
 
@@ -216,41 +216,25 @@
 
   <!-- ===== HERO (scroll-scrub: покадровая промотка по скроллу) ===== -->
   <!-- Высота обёртки задаёт «длину» промотки кадров скроллом -->
-  <section class="hero-scroll" id="hero">
-    <div class="hero-sticky">
-      <div class="hero-frame">
-        <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-fallback" id="heroFallback" style="background-image:url('assets/poster/hero.jpg')"></div>
-        <div class="hero-overlay"></div>
+  <section class="hero-static" id="hero">
+    <picture class="hero-static__bg" aria-hidden="true">
+      <source media="(max-width: 700px)" srcset="assets/img/hero-bg-m.webp">
+      <img src="assets/img/hero-bg.webp" alt="" fetchpriority="high">
+    </picture>
+    <div class="hero-static__shade" aria-hidden="true"></div>
 
-        <div class="hero-atmo" aria-hidden="true"></div>
-
-        <div class="hero-ui">
-          <!-- сцена 1: эмоция -->
-          <div class="hero-intro" id="heroIntro">
-            <p class="hero-kicker" data-i18n-html="hero.kicker">VMoto Electric Bikes&ensp;·&ensp;Samui — Phangan</p>
-            <h1 class="hero-title" data-i18n-html="hero.title">Hear<br>only the <em>ocean<i>.</i></em></h1>
-          </div>
-
-          <!-- сцена 2: чистый кадр -->
-          <div class="hero-mid" id="heroMid">
-            <p class="hero-mid__title" data-i18n="hero.midTitle">Design. Style. Silence.</p>
-            <p class="hero-mid__stats" data-i18n-html="hero.mid">0 noise&ensp;·&ensp;0 petrol&ensp;·&ensp;up to 130 km range</p>
-          </div>
-
-          <!-- сцена 3: оффер -->
-          <div class="hero-final" id="heroFinal">
-            <p class="hero-kicker" data-i18n-html="hero.kicker2">VMoto CITI&ensp;·&ensp;CPx</p>
-            <p class="hero-final__line" data-i18n="hero.offer">From ฿95,000 — 3-year warranty</p>
-            <a href="#models" class="link-arrow" data-i18n="hero.viewModels">View models</a>
-          </div>
-
-          <a href="#contacts" class="hero-cta">
-            <span data-i18n="hero.cta">Book a test ride</span>
-            <span class="hero-cta__icon" aria-hidden="true">→</span>
-          </a>
-        </div>
+    <div class="container hero-static__content">
+      <p class="hero-kicker" data-i18n-html="hero.kicker">VMoto Electric Bikes&ensp;·&ensp;Samui — Phangan</p>
+      <h1 class="hero-static__title" data-i18n-html="hero.title2">The island.<br>Electrified<i>.</i></h1>
+      <span class="hero-static__dash" aria-hidden="true"></span>
+      <p class="hero-static__sub" data-i18n="hero.sub">Your everyday ride, reimagined.</p>
+      <div class="hero-static__actions">
+        <a href="#contacts" class="btn btn--accent">
+          <span data-i18n="hero.cta">Book a test ride</span>&ensp;<span aria-hidden="true">→</span>
+        </a>
+        <a href="#models" class="btn btn--ghost" data-i18n="hero.explore">Explore models</a>
       </div>
+      <p class="hero-static__from" data-i18n-html="hero.from">from&ensp;<b>฿95,000</b></p>
     </div>
   </section>
 
@@ -866,7 +850,7 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="i18n.js?v=30"></script>
-  <script src="main.js?v=75"></script>
+  <script src="i18n.js?v=31"></script>
+  <script src="main.js?v=76"></script>
 </body>
 </html>

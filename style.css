@@ -2222,3 +2222,89 @@ html[lang="th"] .section-title { line-height: 1.35; }
   font-size: 11px;
   color: rgba(242, 241, 238, 0.35);
 }
+
+/* ===== HERO: статичный кадр, всё по-простому ===== */
+.hero-static {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero-static__bg,
+.hero-static__bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% center; /* закат и байк — справа */
+}
+.hero-static__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(7, 8, 8, 0.82) 0%, rgba(7, 8, 8, 0.55) 34%, rgba(7, 8, 8, 0.12) 62%, rgba(7, 8, 8, 0) 80%),
+    linear-gradient(0deg, rgba(7, 8, 8, 0.55) 0%, transparent 26%),
+    linear-gradient(180deg, rgba(7, 8, 8, 0.5) 0%, transparent 18%);
+}
+.hero-static__content {
+  position: relative;
+  z-index: 1;
+  padding-top: 72px;
+}
+.hero-static__title {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 7.2vw, 104px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.hero-static__title i {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero-static__dash {
+  display: block;
+  width: 84px;
+  height: 4px;
+  margin: 26px 0 22px;
+  background: var(--accent);
+}
+.hero-static__sub {
+  font-size: 17px;
+  color: rgba(242, 241, 238, 0.82);
+}
+.hero-static__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+.btn--accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn--accent:hover { filter: brightness(1.08); }
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+.btn--ghost:hover { border-color: #fff; }
+.hero-static__from {
+  margin-top: 44px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 238, 0.6);
+}
+.hero-static__from b { color: var(--accent); font-size: 17px; letter-spacing: 0.06em; }
+@media (max-width: 640px) {
+  .hero-static__content { padding-top: 40px; }
+  .hero-static__from { margin-top: 30px; }
+  .hero-static__bg img { object-position: 58% center; }
+}
