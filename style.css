@@ -746,6 +746,8 @@ html[lang="th"] .section-title { line-height: 1.35; }
 .feature-item__num {
   display: flex;
   align-items: baseline;
+  justify-content: flex-end; /* цифры прижаты к описаниям — ровный правый край */
+  text-align: right;
   gap: 10px;
   font-family: var(--font-display);
   color: #fff;
@@ -762,8 +764,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-/* приставка «от» перед числом: две модели — разный запас хода */
-.feature-item__from { color: rgba(255, 255, 255, 0.75); }
+
 .feature-item__body b {
   display: block;
   font-size: 15px;
