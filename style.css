@@ -2215,3 +2215,10 @@ html[lang="th"] .section-title { line-height: 1.35; }
 
 /* ровный правый край у описаний плиток */
 .feature-item__body p { text-align: justify; }
+
+/* юрлицо в подвале */
+.footer__law {
+  margin-top: 4px;
+  font-size: 11px;
+  color: rgba(242, 241, 238, 0.35);
+}
