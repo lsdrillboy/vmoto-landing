@@ -993,6 +993,20 @@
     form.appendChild(status);
   }
 
+  // закрытие модального окна успеха
+  const successModal = document.getElementById('formSuccess');
+  function closeSuccess() {
+    if (!successModal || successModal.hidden) return;
+    successModal.classList.remove('is-on');
+    setTimeout(() => { successModal.hidden = true; }, 350);
+  }
+  if (successModal) {
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal || e.target.closest('.success-modal__close')) closeSuccess();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSuccess(); });
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
@@ -1026,13 +1040,19 @@
         if (!httpOk || !data || !data.ok) throw new Error((data && data.error) || 'submit failed');
         if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
         if (window.gtag) gtag('event', 'generate_lead');
-        // форма уступает место экрану успеха
-        form.hidden = true;
+        // модальное окно успеха + сброс формы под ним
         const ok = document.getElementById('formSuccess');
         if (ok) {
           ok.hidden = false;
           requestAnimationFrame(() => ok.classList.add('is-on'));
         }
+        form.reset();
+        form.querySelectorAll('.pick__btn').forEach((b) => b.classList.remove('is-active'));
+        form.querySelectorAll('.pick input[type="hidden"]').forEach((i) => { i.value = ''; });
+        locOther.hidden = true;
+        locOther.required = false;
+        btn.disabled = false;
+        btn.textContent = t('form.send', 'Send');
       })
       .catch(() => {
         btn.disabled = false;

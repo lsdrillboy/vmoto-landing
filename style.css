@@ -1304,6 +1304,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
   text-align: center;
 }
 .cta-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+.cta-form[hidden] { display: none; }
 .cta-form > .form-picks,
 .cta-form > .consent,
 .cta-form > .btn,
@@ -2048,20 +2049,50 @@ html[lang="th"] .section-title { line-height: 1.35; }
 }
 .consent__text a:hover { color: var(--accent); }
 
-/* экран успешной отправки */
-.form-success {
+/* модальное окно «заявка отправлена» */
+.success-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 330;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 7, 8, 0.72);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.success-modal.is-on { opacity: 1; }
+.success-modal[hidden] { display: none; }
+.success-modal__card {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 34px 20px 26px;
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  width: min(420px, 100%);
+  padding: 44px 32px 34px;
+  border-radius: 26px;
+  background: rgba(14, 15, 14, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  transform: translateY(14px) scale(0.97);
+  transition: transform 0.35s ease;
 }
-.form-success.is-on { opacity: 1; transform: translateY(0); }
-/* display:flex выше перебивает атрибут hidden — возвращаем скрытие явно */
-.form-success[hidden] { display: none; }
+.success-modal.is-on .success-modal__card { transform: none; }
+.success-modal__close {
+  margin-top: 26px;
+  padding: 12px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.success-modal__close:hover { border-color: var(--accent); color: var(--accent); }
 .form-success__icon {
   width: 64px;
   height: 64px;

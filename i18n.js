@@ -125,6 +125,7 @@
       'form.choose': 'Please choose a messenger and location', 'form.consent': 'I agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="terms.html" target="_blank" rel="noopener">Terms of Use</a>',
       'form.successTitle': 'Request sent!',
       'form.successText': 'We’ll get back to you shortly — usually within an hour.',
+      'form.close': 'Close',
       'footer.privacy': 'Privacy Policy', 'footer.terms': 'Terms of Use',
       'msgr.fleet': 'Hi! I’d like to discuss a VMoto fleet for my business.'
     },
@@ -244,6 +245,7 @@
       'form.choose': 'Выберите способ связи и локацию', 'form.consent': 'Соглашаюсь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и <a href="terms.html" target="_blank" rel="noopener">пользовательским соглашением</a>',
       'form.successTitle': 'Заявка отправлена!',
       'form.successText': 'Мы свяжемся с вами в ближайшее время — обычно в течение часа.',
+      'form.close': 'Закрыть',
       'footer.privacy': 'Политика конфиденциальности', 'footer.terms': 'Пользовательское соглашение',
       'msgr.fleet': 'Здравствуйте! Хочу обсудить парк байков VMoto для бизнеса.'
     },
@@ -363,6 +365,7 @@
       'form.choose': 'กรุณาเลือกช่องทางติดต่อและสถานที่', 'form.consent': 'ยอมรับ<a href="privacy.html" target="_blank" rel="noopener">นโยบายความเป็นส่วนตัว</a>และ<a href="terms.html" target="_blank" rel="noopener">ข้อกำหนดการใช้งาน</a>',
       'form.successTitle': 'ส่งคำขอแล้ว!',
       'form.successText': 'เราจะติดต่อกลับโดยเร็ว โดยปกติภายใน 1 ชั่วโมง',
+      'form.close': 'ปิด',
       'footer.privacy': 'นโยบายความเป็นส่วนตัว', 'footer.terms': 'ข้อกำหนดการใช้งาน',
       'msgr.fleet': 'สวัสดีครับ/ค่ะ สนใจฟลีต VMoto สำหรับธุรกิจ'
     },
@@ -482,6 +485,7 @@
       'form.choose': '请选择联系方式和所在位置', 'form.consent': '我同意<a href="privacy.html" target="_blank" rel="noopener">隐私政策</a>和<a href="terms.html" target="_blank" rel="noopener">使用条款</a>',
       'form.successTitle': '已收到您的请求！',
       'form.successText': '我们会尽快与您联系，通常在一小时内。',
+      'form.close': '关闭',
       'footer.privacy': '隐私政策', 'footer.terms': '使用条款',
       'msgr.fleet': '您好！想洽谈 VMoto 商用车队。'
     }
