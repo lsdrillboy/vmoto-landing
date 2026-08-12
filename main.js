@@ -982,9 +982,8 @@
     });
   });
 
-  // отправка заявки в Битрикс24: контакт + сделка в воронке VMOTO
-  const B24_WEBHOOK = 'https://b24-rdq24l.bitrix24.com/rest/1/9i2i9qvtic4ffp80/';
-  const B24_PIPELINE_VMOTO = 2; // ID воронки VMOTO
+  // отправка заявки через серверный прокси /api/lead:
+  // вебхук Битрикс24 живёт в env Vercel и в браузер не попадает
   const t = (key, fallback) => (window.i18nT ? i18nT(key) : fallback);
 
   let status = form.querySelector('.cta-form__status');
@@ -993,13 +992,6 @@
     status.className = 'cta-form__status';
     form.appendChild(status);
   }
-
-  const b24 = (method, fields) =>
-    fetch(B24_WEBHOOK + method + '.json', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fields })
-    }).then((r) => r.json());
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1013,32 +1005,25 @@
       return;
     }
     if (location === 'other') location = form.elements.locationOther.value.trim() || 'Other';
-    const comments = 'Мессенджер: ' + messenger + '\nЛокация: ' + location +
-      '\nЯзык сайта: ' + document.documentElement.lang.toUpperCase();
 
     btn.disabled = true;
     btn.textContent = t('form.sending', 'Sending…');
     status.textContent = '';
 
-    b24('crm.contact.add', {
-      NAME: name,
-      PHONE: [{ VALUE: phone, VALUE_TYPE: 'WORK' }],
-      SOURCE_ID: 'WEB',
-      COMMENTS: comments
-    })
-      .then((c) => {
-        if (!c || !c.result) throw new Error((c && c.error_description) || 'contact failed');
-        return b24('crm.deal.add', {
-          TITLE: 'Заявка с сайта — ' + name,
-          CATEGORY_ID: B24_PIPELINE_VMOTO,
-          CONTACT_ID: c.result,
-          SOURCE_ID: 'WEB',
-          SOURCE_DESCRIPTION: 'Форма на лендинге',
-          COMMENTS: comments
-        });
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        messenger: messenger,
+        location: location,
+        lang: document.documentElement.lang
       })
-      .then((d) => {
-        if (!d || !d.result) throw new Error((d && d.error_description) || 'deal failed');
+    })
+      .then((r) => r.json().catch(() => null).then((data) => ({ httpOk: r.ok, data })))
+      .then(({ httpOk, data }) => {
+        if (!httpOk || !data || !data.ok) throw new Error((data && data.error) || 'submit failed');
         if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
         if (window.gtag) gtag('event', 'generate_lead');
         // форма уступает место экрану успеха
