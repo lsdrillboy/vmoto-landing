@@ -957,22 +957,27 @@
 (function leadForm() {
   const form = document.getElementById('leadForm');
 
-  // чипы «мессенджер» и «локация»: клик пишет значение в hidden-поле
+  // чипы: мессенджеров можно выбрать несколько, локация — одна
   const locOther = document.getElementById('locationOther');
   form.querySelectorAll('.pick').forEach((group) => {
     const hidden = group.querySelector('input[type="hidden"]');
-    const btns = group.querySelectorAll('.pick__btn');
+    const multi = group.id === 'pickMessenger';
+    const btns = [...group.querySelectorAll('.pick__btn')];
     btns.forEach((btn) => {
       btn.addEventListener('click', () => {
+        if (multi) {
+          btn.classList.toggle('is-active');
+          hidden.value = btns.filter((b) => b.classList.contains('is-active'))
+            .map((b) => b.dataset.value).join(', ');
+          return;
+        }
         hidden.value = btn.dataset.value;
         btns.forEach((b) => b.classList.toggle('is-active', b === btn));
-        if (hidden.name === 'location') {
-          const isOther = hidden.value === 'other';
-          locOther.hidden = !isOther;
-          locOther.required = isOther;
-          if (isOther) locOther.focus();
-          else locOther.value = '';
-        }
+        const isOther = hidden.value === 'other';
+        locOther.hidden = !isOther;
+        locOther.required = isOther;
+        if (isOther) locOther.focus();
+        else locOther.value = '';
       });
     });
   });
