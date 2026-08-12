@@ -47,6 +47,14 @@ for f in f*.png; do cwebp -q 80 "$f" -o "${f%.png}.webp"; done
 for f in f*.webp; do dwebp "$f" -o t.png && cwebp -q 75 -resize 960 0 t.png -o "../hero-m/$f"; done; rm t.png
 ```
 
+## Языковые версии
+
+`/ru/` `/th/` `/zh/` — статические копии, которые генерирует
+`node scripts/build-i18n.mjs` из index.html и словаря i18n.js
+(hreflang проставляется на всех четырёх страницах). После правок
+index.html или словаря перезапустите генератор и закоммитьте
+обновлённые страницы.
+
 ## Интеграции
 
 - **Форма → Битрикс24**: вебхук в `main.js` (`B24_WEBHOOK`), создаёт контакт

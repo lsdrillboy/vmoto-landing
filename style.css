@@ -746,8 +746,6 @@ html[lang="th"] .section-title { line-height: 1.35; }
 .feature-item__num {
   display: flex;
   align-items: baseline;
-  justify-content: flex-end; /* цифры прижаты к описаниям — ровный правый край */
-  text-align: right;
   gap: 10px;
   font-family: var(--font-display);
   color: #fff;
@@ -2183,3 +2181,6 @@ html[lang="th"] .section-title { line-height: 1.35; }
   .outro-form__or { margin-top: 12px; }
   .msgr-btn { padding: 8px 14px; font-size: 12px; }
 }
+
+/* ровный правый край у описаний плиток */
+.feature-item__body p { text-align: justify; }

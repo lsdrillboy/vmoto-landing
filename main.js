@@ -31,7 +31,7 @@
   // телефонам — комплект 960px (вдвое меньше трафика и декода);
   // порог по физическим пикселям канвы, dpr капнут как в resize()
   const SMALL_SET = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100;
-  const SEQ_DIR = SMALL_SET ? 'assets/seq/hero24-m/' : 'assets/seq/hero24/';
+  const SEQ_DIR = SMALL_SET ? '/assets/seq/hero24-m/' : '/assets/seq/hero24/';
   const SRC_W = SMALL_SET ? 960 : 1920; // размер кадра комплекта
   const SRC_H = SMALL_SET ? 540 : 1080;
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
@@ -310,7 +310,7 @@
   const FRAME_COUNT = 361; // весь исходник в родные 24 fps (см. hero)
   const SMOOTH_TAU = 0.11;
   const SMALL_SET = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100;
-  const SEQ_DIR = SMALL_SET ? 'assets/seq/outro24-m/' : 'assets/seq/outro24/';
+  const SEQ_DIR = SMALL_SET ? '/assets/seq/outro24-m/' : '/assets/seq/outro24/';
   const SRC_W = SMALL_SET ? 960 : 1920;
   const SRC_H = SMALL_SET ? 540 : 1080;
   const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';

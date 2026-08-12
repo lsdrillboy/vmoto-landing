@@ -116,15 +116,11 @@
       'faq.q1': 'Can foreigners buy a bike?', 'faq.a1': 'Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork.',
       'faq.q2': 'Registration and plates?', 'faq.a2': 'We take care of the registration and plates ourselves right after the purchase.',
       'faq.q3': 'Do I need a licence?', 'faq.a3': 'Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one.',
-      'faq.q4': 'A colour to order?', 'faq.a4': 'Popular colours are in stock; the rest arrive in 1–4 weeks.',
-      'faq.q5': 'Installments?', 'faq.a5': 'Bank financing is coming soon. For now — direct purchase at a fixed price.',
       'contacts.direct': 'or message us directly',
       'msgr.hello': 'Hi! I’m interested in VMoto electric bikes.',
       'fb.copied': 'Greeting copied — paste it in the chat',
-      'faq.q6': 'Can I ride in the rain?', 'faq.a6': 'Yes. The battery compartment and electronics are protected from rain and splashes — ride like on any scooter, just mind wet roads.',
       'faq.q7': 'Can I charge at home?', 'faq.a7': 'Yes — each battery charges from a regular outlet with the included charger. A fast charge at our stations takes about 20 minutes.',
       'faq.q8': 'Where is the bike serviced?', 'faq.a8': 'On the island: our own service, parts in stock and a mobile team for Samui and Phangan. An electric drive needs no oil, belts or spark plugs.',
-      'faq.q9': 'Do you deliver?', 'faq.a9': 'Yes — across Samui and Phangan, and to Surat Thani by arrangement. Usually within 1–2 days.',
       'faq.q10': 'How does a test ride work?', 'faq.a10': 'We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations.',
       'form.choose': 'Please choose a messenger and location', 'form.consent': 'I agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="terms.html" target="_blank" rel="noopener">Terms of Use</a>',
       'form.successTitle': 'Request sent!',
@@ -239,15 +235,11 @@
       'faq.q1': 'Могут ли иностранцы купить байк?', 'faq.a1': 'Да — иностранцы официально покупают и владеют VMoto. Все документы оформляем мы.',
       'faq.q2': 'Регистрация и номера?', 'faq.a2': 'Регистрацию и номера делаем сами сразу после покупки.',
       'faq.q3': 'Нужны ли права?', 'faq.a3': 'Да, как на обычный скутер: тайские или международные права категории «мотоцикл». Подскажем, как получить местные.',
-      'faq.q4': 'Цвет под заказ?', 'faq.a4': 'Ходовые цвета в наличии, остальные привозим за 1–4 недели.',
-      'faq.q5': 'Рассрочка?', 'faq.a5': 'Банковский кредит скоро появится. Пока — прямая покупка по фиксированной цене.',
       'contacts.direct': 'или напишите нам напрямую',
       'msgr.hello': 'Здравствуйте! Интересуют электробайки VMoto.',
       'fb.copied': 'Приветствие скопировано — вставьте его в чат',
-      'faq.q6': 'Можно ли ездить в дождь?', 'faq.a6': 'Да. Батарейный отсек и электроника защищены от дождя и брызг — ездите как на обычном скутере, просто аккуратнее на мокрой дороге.',
       'faq.q7': 'Можно ли заряжать дома?', 'faq.a7': 'Да — каждая батарея заряжается от обычной розетки комплектным зарядным. Быстрая зарядка на наших станциях — около 20 минут.',
       'faq.q8': 'Где обслуживать байк?', 'faq.a8': 'На острове: свой сервис, запчасти в наличии и выездная бригада для Самуи и Пангана. Электроприводу не нужны масло, ремни и свечи.',
-      'faq.q9': 'Есть ли доставка?', 'faq.a9': 'Да — по Самуи и Пангану, в Сураттани по договорённости. Обычно 1–2 дня.',
       'faq.q10': 'Как проходит тест-драйв?', 'faq.a10': 'Встреча на Пангане: вы подъезжаете к нам, либо договариваемся об удобном месте. 15–20 минут, бесплатно и ни к чему не обязывает.',
       'form.choose': 'Выберите способ связи и локацию', 'form.consent': 'Соглашаюсь с <a href="privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a> и <a href="terms.html" target="_blank" rel="noopener">пользовательским соглашением</a>',
       'form.successTitle': 'Заявка отправлена!',
@@ -362,15 +354,11 @@
       'faq.q1': 'ชาวต่างชาติซื้อได้ไหม?', 'faq.a1': 'ได้ — ชาวต่างชาติซื้อและเป็นเจ้าของ VMoto ได้อย่างถูกต้อง เราจัดการเอกสารให้ทั้งหมด',
       'faq.q2': 'ทะเบียนและป้าย?', 'faq.a2': 'เราดำเนินการจดทะเบียนและทำป้ายให้เองทันทีหลังการซื้อ',
       'faq.q3': 'ต้องมีใบขับขี่ไหม?', 'faq.a3': 'ต้องมี เหมือนสกู๊ตเตอร์ทั่วไป: ใบขับขี่มอเตอร์ไซค์ไทยหรือสากล เราแนะนำวิธีทำใบขับขี่ท้องถิ่นได้',
-      'faq.q4': 'สั่งสีพิเศษได้ไหม?', 'faq.a4': 'สียอดนิยมมีพร้อมส่ง สีอื่นรอ 1–4 สัปดาห์',
-      'faq.q5': 'ผ่อนชำระได้ไหม?', 'faq.a5': 'สินเชื่อธนาคารกำลังจะเปิดให้บริการ ตอนนี้ซื้อตรงในราคาคงที่',
       'contacts.direct': 'หรือทักหาเราโดยตรง',
       'msgr.hello': 'สวัสดีครับ/ค่ะ สนใจมอเตอร์ไซค์ไฟฟ้า VMoto',
       'fb.copied': 'คัดลอกข้อความแล้ว — วางในแชทได้เลย',
-      'faq.q6': 'ขับตอนฝนตกได้ไหม?', 'faq.a6': 'ได้ ช่องแบตเตอรี่และระบบไฟฟ้าป้องกันฝนและละอองน้ำ — ขับได้เหมือนสกู๊ตเตอร์ทั่วไป เพียงระวังถนนลื่น',
       'faq.q7': 'ชาร์จที่บ้านได้ไหม?', 'faq.a7': 'ได้ — แบตเตอรี่แต่ละก้อนชาร์จจากปลั๊กไฟบ้านด้วยที่ชาร์จที่ให้มา ชาร์จเร็วที่สถานีของเราใช้เวลาราว 20 นาที',
       'faq.q8': 'ซ่อมบำรุงที่ไหน?', 'faq.a8': 'บนเกาะ: ศูนย์บริการของเรา อะไหล่พร้อม และทีมเคลื่อนที่สำหรับสมุยและพะงัน มอเตอร์ไฟฟ้าไม่ต้องใช้น้ำมันเครื่อง สายพาน หรือหัวเทียน',
-      'faq.q9': 'มีบริการส่งไหม?', 'faq.a9': 'มี — ทั่วสมุยและพะงัน ส่งสุราษฎร์ธานีได้ตามตกลง ปกติ 1–2 วัน',
       'faq.q10': 'ทดลองขับเป็นอย่างไร?', 'faq.a10': 'นัดพบกันที่เกาะพะงัน — คุณมาหาเรา หรือนัดสถานที่ตามสะดวก ใช้เวลา 15–20 นาที ฟรี ไม่มีข้อผูกมัด',
       'form.choose': 'กรุณาเลือกช่องทางติดต่อและสถานที่', 'form.consent': 'ยอมรับ<a href="privacy.html" target="_blank" rel="noopener">นโยบายความเป็นส่วนตัว</a>และ<a href="terms.html" target="_blank" rel="noopener">ข้อกำหนดการใช้งาน</a>',
       'form.successTitle': 'ส่งคำขอแล้ว!',
@@ -485,15 +473,11 @@
       'faq.q1': '外国人能买吗？', 'faq.a1': '能——外国人可合法购买并拥有 VMoto，全部手续我们代办。',
       'faq.q2': '注册和车牌？', 'faq.a2': '购车后注册和上牌由我们直接办理。',
       'faq.q3': '需要驾照吗？', 'faq.a3': '需要，与普通踏板车一样：泰国或国际摩托车驾照。我们可指导办理本地驾照。',
-      'faq.q4': '想定制颜色？', 'faq.a4': '热门颜色有现货，其余 1–4 周到货。',
-      'faq.q5': '能分期吗？', 'faq.a5': '银行贷款即将推出。目前为固定价格直购。',
       'contacts.direct': '或直接联系我们',
       'msgr.hello': '您好！我对 VMoto 电动摩托感兴趣。',
       'fb.copied': '问候语已复制——粘贴到聊天中即可',
-      'faq.q6': '雨天能骑吗？', 'faq.a6': '可以。电池仓和电子系统防雨防溅，像普通摩托一样骑行，雨天路滑注意安全即可。',
       'faq.q7': '能在家充电吗？', 'faq.a7': '可以 — 每块电池用随车充电器插普通插座充电。在我们的充电站快充约 20 分钟。',
       'faq.q8': '在哪里保养维修？', 'faq.a8': '就在岛上：自营服务点、原厂配件现货，苏梅与帕岸均有上门服务团队。电驱无需机油、皮带和火花塞。',
-      'faq.q9': '送车上门吗？', 'faq.a9': '送 — 苏梅岛和帕岸岛全境，素叻他尼可协商。通常 1–2 天。',
       'faq.q10': '试驾流程是怎样的？', 'faq.a10': '在帕岸岛见面——您到店试驾，或另行约定地点。15–20 分钟，免费且无任何义务。',
       'form.choose': '请选择联系方式和所在位置', 'form.consent': '我同意<a href="privacy.html" target="_blank" rel="noopener">隐私政策</a>和<a href="terms.html" target="_blank" rel="noopener">使用条款</a>',
       'form.successTitle': '已收到您的请求！',
@@ -506,7 +490,14 @@
   const LANGS = ['en', 'ru', 'th', 'zh'];
   const CODE = { en: 'EN', ru: 'RU', th: 'ไทย', zh: '中文' };
 
+  window.__DICT = DICT; // словарь читает генератор статических языковых страниц
+
   let current = localStorage.getItem('vmoto-lang');
+  if (!LANGS.includes(current)) {
+    // статическая языковая страница (/ru/ и т.п.) задаёт свой язык по умолчанию
+    const pageLang = document.documentElement.getAttribute('data-lang-default');
+    if (LANGS.includes(pageLang)) current = pageLang;
+  }
   if (!LANGS.includes(current)) {
     // первый визит: язык по браузеру, уважая порядок предпочтений (EN — дефолт)
     const prefs = (navigator.languages && navigator.languages.length)
