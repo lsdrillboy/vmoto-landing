@@ -1304,7 +1304,14 @@ html[lang="th"] .section-title { line-height: 1.35; }
   justify-self: stretch;
   text-align: center;
 }
-.cta-form { display: grid; gap: 8px; }
+.cta-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; }
+.cta-form > .form-picks,
+.cta-form > .consent,
+.cta-form > .btn,
+.cta-form > .cta-form__status { grid-column: 1 / -1; }
+@media (max-width: 560px) {
+  .cta-form { grid-template-columns: 1fr; }
+}
 .cta-form input,
 .cta-form select {
   width: 100%;
@@ -2101,7 +2108,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 22px;
   backdrop-filter: blur(14px);
-  padding: 13px 20px;
+  padding: 20px 24px;
 }
 /* компактная вертикаль: блок целиком помещается в невысокие экраны */
 .cta-form input,
@@ -2115,14 +2122,10 @@ html[lang="th"] .section-title { line-height: 1.35; }
 /* чипы выбора в форме (мессенджер, локация) */
 .form-picks {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px 20px;
-  align-items: start;
+  grid-template-columns: 1fr;
+  gap: 2px;
 }
-@media (max-width: 560px) {
-  .form-picks { grid-template-columns: 1fr; }
-}
-.pick { text-align: left; padding: 5px 0 0; }
+.pick { text-align: left; padding: 7px 0 0; }
 .pick__label {
   display: block;
   font-family: var(--font-ui);
@@ -2132,12 +2135,15 @@ html[lang="th"] .section-title { line-height: 1.35; }
   color: rgba(242, 241, 238, 0.5);
   margin-bottom: 8px;
 }
-.pick__row { display: flex; gap: 8px; flex-wrap: wrap; }
+.pick__row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .pick__btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
-  padding: 8px 13px;
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.04);
+  white-space: nowrap;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: transparent;
@@ -2148,6 +2154,12 @@ html[lang="th"] .section-title { line-height: 1.35; }
   transition: border-color 0.2s, background 0.2s, color 0.2s;
 }
 .pick__btn:hover { border-color: rgba(255, 255, 255, 0.5); }
+.cta-form input:focus,
+.cta-form select:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+}
+#locationOther { margin-top: 8px; }
 .pick__btn.is-active {
   border-color: var(--accent);
   background: rgba(217, 79, 61, 0.14);
