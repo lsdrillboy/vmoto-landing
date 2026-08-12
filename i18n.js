@@ -500,12 +500,11 @@
 
   window.__DICT = DICT; // словарь читает генератор статических языковых страниц
 
-  let current = localStorage.getItem('vmoto-lang');
-  if (!LANGS.includes(current)) {
-    // статическая языковая страница (/ru/ и т.п.) задаёт свой язык по умолчанию
-    const pageLang = document.documentElement.getAttribute('data-lang-default');
-    if (LANGS.includes(pageLang)) current = pageLang;
-  }
+  // Приоритет: язык страницы (/ru/ /th/ /zh/ — в т.ч. рекламные ссылки)
+  // > сохранённый выбор > язык браузера. Пользователь всегда может
+  // переключить язык вручную — выбор сохранится для корневой страницы.
+  let current = document.documentElement.getAttribute('data-lang-default');
+  if (!LANGS.includes(current)) current = localStorage.getItem('vmoto-lang');
   if (!LANGS.includes(current)) {
     // первый визит: язык по браузеру, уважая порядок предпочтений (EN — дефолт)
     const prefs = (navigator.languages && navigator.languages.length)
