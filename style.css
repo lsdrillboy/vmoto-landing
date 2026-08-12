@@ -2332,7 +2332,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
   inset: 0;
   background:
     linear-gradient(270deg, rgba(7, 8, 8, 0.55) 0%, rgba(7, 8, 8, 0.15) 40%, transparent 62%),
-    linear-gradient(0deg, rgba(7, 8, 8, 0.6) 0%, transparent 34%);
+    linear-gradient(0deg, rgba(7, 8, 8, 0.86) 0%, rgba(7, 8, 8, 0.45) 20%, transparent 44%);
 }
 .contacts__inner {
   position: relative;
