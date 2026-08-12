@@ -189,7 +189,7 @@
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <!-- фоновое видео на весь экран: проигрывается один раз и замирает на последнем кадре -->
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="/assets/video/menu.mp4" poster="assets/poster/menu.jpg" muted playsinline preload="metadata"></video>
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.jpg" muted playsinline preload="metadata"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">
@@ -220,7 +220,7 @@
     <div class="hero-sticky">
       <div class="hero-frame">
         <canvas id="heroCanvas" class="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero-fallback" id="heroFallback" style="background-image:url('assets/poster/hero.jpg')"></div>
+        <div class="hero-fallback" id="heroFallback" style="background-image:url('/assets/poster/hero.jpg')"></div>
         <div class="hero-overlay"></div>
 
         <div class="hero-atmo" aria-hidden="true"></div>
@@ -331,13 +331,13 @@
         <p class="showcase__desc" data-i18n="citi.desc">轻巧的城市电动踏板车，标配两块电池与充电器。</p>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="选择颜色">
           <span class="showcase__swatches-label" data-i18n="models.color">颜色</span>
-          <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="assets/video/citi-360.mp4" data-poster="assets/poster/citi-360.jpg" data-i18n-aria="color.red" aria-label="红色" title="Red"></button>
-          <button type="button" class="swatch" style="--c:#a9adb0" data-video="assets/video/citi-360-grey.mp4" data-poster="assets/poster/citi-360-grey.jpg" data-i18n-aria="color.grey" aria-label="灰色" title="Grey"></button>
-          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/citi-360-white.mp4" data-poster="assets/poster/citi-360-white.jpg" data-i18n-aria="color.white" aria-label="白色" title="White"></button>
+          <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="/assets/video/citi-360.mp4" data-poster="/assets/poster/citi-360.jpg" data-i18n-aria="color.red" aria-label="红色" title="Red"></button>
+          <button type="button" class="swatch" style="--c:#a9adb0" data-video="/assets/video/citi-360-grey.mp4" data-poster="/assets/poster/citi-360-grey.jpg" data-i18n-aria="color.grey" aria-label="灰色" title="Grey"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="/assets/video/citi-360-white.mp4" data-poster="/assets/poster/citi-360-white.jpg" data-i18n-aria="color.white" aria-label="白色" title="White"></button>
         </div>
       </div>
       <div class="showcase__media" aria-hidden="true">
-        <video src="/assets/video/citi-360.mp4" poster="assets/poster/citi-360.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="/assets/video/citi-360.mp4" poster="/assets/poster/citi-360.jpg" muted loop playsinline preload="metadata"></video>
       </div>
       <ul class="showcase__specs">
         <li>
@@ -367,13 +367,13 @@
         <p class="showcase__desc" data-i18n="cpx.desc">125cc 级旗舰：更强、更远、更舒适。标配两块电池与充电器。</p>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="选择颜色">
           <span class="showcase__swatches-label" data-i18n="models.color">颜色</span>
-          <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="assets/video/cpx-360.mp4" data-poster="assets/poster/cpx-360.jpg" data-i18n-aria="color.black" aria-label="黑色" title="Black"></button>
-          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/cpx-360-white.mp4" data-poster="assets/poster/cpx-360-white.jpg" data-i18n-aria="color.white" aria-label="白色" title="White"></button>
-          <button type="button" class="swatch" style="--c:#d2311e" data-video="assets/video/cpx-360-red.mp4" data-poster="assets/poster/cpx-360-red.jpg" data-i18n-aria="color.red" aria-label="红色" title="Red"></button>
+          <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="/assets/video/cpx-360.mp4" data-poster="/assets/poster/cpx-360.jpg" data-i18n-aria="color.black" aria-label="黑色" title="Black"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="/assets/video/cpx-360-white.mp4" data-poster="/assets/poster/cpx-360-white.jpg" data-i18n-aria="color.white" aria-label="白色" title="White"></button>
+          <button type="button" class="swatch" style="--c:#d2311e" data-video="/assets/video/cpx-360-red.mp4" data-poster="/assets/poster/cpx-360-red.jpg" data-i18n-aria="color.red" aria-label="红色" title="Red"></button>
         </div>
       </div>
       <div class="showcase__media" aria-hidden="true">
-        <video src="/assets/video/cpx-360.mp4" poster="assets/poster/cpx-360.jpg" muted loop playsinline preload="metadata"></video>
+        <video src="/assets/video/cpx-360.mp4" poster="/assets/poster/cpx-360.jpg" muted loop playsinline preload="metadata"></video>
       </div>
       <ul class="showcase__specs">
         <li>
@@ -409,7 +409,7 @@
 
   <!-- ===== PROMO VIDEO ===== -->
   <section class="promo" id="promo">
-    <video id="promoVideo" src="/assets/video/promo.mp4" poster="assets/poster/promo.jpg" muted loop playsinline preload="metadata"></video>
+    <video id="promoVideo" src="/assets/video/promo.mp4" poster="/assets/poster/promo.jpg" muted loop playsinline preload="metadata"></video>
     <button class="promo__sound" id="promoSound" type="button" data-i18n-aria="promo.soundOn" aria-label="开启声音">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M11 5 6.5 9H3v6h3.5L11 19V5z"/>
@@ -588,7 +588,7 @@
       <div class="b2b-sticky">
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/retreat.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('/assets/business/retreat.webp')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs1.t">让电动摩托成为宾客尊享服务的一部分</h3>
@@ -604,7 +604,7 @@
         </div>
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/rental.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('/assets/business/rental.webp')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs2.t">开启您自己的租赁车队</h3>
@@ -623,7 +623,7 @@
         </div>
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/hotels.webp')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('/assets/business/hotels.webp')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs3.t">宾客入住即刻享受出行自由</h3>
@@ -728,7 +728,7 @@
   <section class="outro-scroll" id="contacts">
     <div class="outro-sticky">
       <canvas id="outroCanvas" class="outro-canvas" aria-hidden="true"></canvas>
-      <div class="outro-fallback" id="outroFallback" style="background-image:url('assets/poster/outro.jpg')"></div>
+      <div class="outro-fallback" id="outroFallback" style="background-image:url('/assets/poster/outro.jpg')"></div>
       <div class="outro-overlay" aria-hidden="true"></div>
 
       <div class="outro-form" id="outroForm">
@@ -874,6 +874,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="/i18n.js?v=29"></script>
-  <script src="/main.js?v=73"></script>
+  <script src="/main.js?v=74"></script>
 </body>
 </html>

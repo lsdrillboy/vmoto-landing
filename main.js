@@ -576,15 +576,15 @@ function enableFleetMode() {
   const wantsFleet = location.pathname.replace(/\/$/, '') === '/fleet'
     || /[?&]fleet=1/.test(location.search);
   if (!wantsFleet) return;
-  window.addEventListener('load', () => {
-    enableFleetMode();
-    const biz = document.getElementById('business');
-    if (biz) {
-      window.scrollTo({ top: biz.offsetTop, behavior: 'instant' });
-      window.dispatchEvent(new Event('scroll'));
-      biz.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
-    }
-  });
+  // скрипт подключён в конце body: DOM и i18n уже готовы, ждать load
+  // нельзя — на проде он наступает только после загрузки сотен кадров
+  enableFleetMode();
+  const biz = document.getElementById('business');
+  if (biz) {
+    window.scrollTo({ top: biz.offsetTop, behavior: 'instant' });
+    window.dispatchEvent(new Event('scroll'));
+    biz.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+  }
 })();
 
 /* ==== Якорь Contacts: сразу к форме (конец кино-секции), а не к её началу ==== */

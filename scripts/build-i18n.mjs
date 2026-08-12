@@ -38,7 +38,10 @@ const HREFLANG = `  <link rel="alternate" hreflang="en" href="${SITE}/">
 
 function absolutify(html) {
   return html
-    .replace(/(src|href)="assets\//g, '$1="/assets/')
+    .replace(/(src|href|poster|data-video|data-poster)="assets\//g, '$1="/assets/')
+    .replace(/url\('assets\//g, "url('/assets/")
+    .replace(/url\("assets\//g, 'url("/assets/')
+    .replace(/url\(assets\//g, 'url(/assets/')
     .replace(/href="(style\.css[^"]*)"/g, 'href="/$1"')
     .replace(/src="(main\.js[^"]*)"/g, 'src="/$1"')
     .replace(/src="(i18n\.js[^"]*)"/g, 'src="/$1"')
