@@ -45,7 +45,6 @@ function absolutify(html) {
     .replace(/href="(style\.css[^"]*)"/g, 'href="/$1"')
     .replace(/src="(main\.js[^"]*)"/g, 'src="/$1"')
     .replace(/src="(i18n\.js[^"]*)"/g, 'src="/$1"')
-    .replace(/href="(privacy\.html|terms\.html)"/g, 'href="/$1"')
     .replace(/href="#/g, 'href="#'); // якоря не трогаем
 }
 
