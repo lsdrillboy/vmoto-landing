@@ -573,7 +573,7 @@ function enableFleetMode() {
   if (sub) { sub.setAttribute('data-i18n', 'fleet.formSub'); sub.textContent = t('fleet.formSub'); }
 }
 (function fleetEntry() {
-  const wantsFleet = location.pathname.replace(/\/$/, '') === '/fleet'
+  const wantsFleet = /\/fleet\/?$/.test(location.pathname)
     || /[?&]fleet=1/.test(location.search);
   if (!wantsFleet) return;
   // скрипт подключён в конце body: DOM и i18n уже готовы, ждать load

@@ -14,6 +14,18 @@
     {
       "source": "/fleet",
       "destination": "/index.html"
+    },
+    {
+      "source": "/ru/fleet",
+      "destination": "/ru/index.html"
+    },
+    {
+      "source": "/th/fleet",
+      "destination": "/th/index.html"
+    },
+    {
+      "source": "/zh/fleet",
+      "destination": "/zh/index.html"
     }
   ]
 }
