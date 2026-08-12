@@ -30,6 +30,9 @@ function enableFleetMode() {
   // скрипт подключён в конце body: DOM и i18n уже готовы, ждать load
   // нельзя — на проде он наступает только после загрузки сотен кадров
   enableFleetMode();
+  // убираем /fleet и ?fleet=1 из адресной строки — режим уже применён
+  const clean = location.pathname.replace(/fleet\/?$/, '');
+  history.replaceState(null, '', (clean || '/') + location.hash);
   const biz = document.getElementById('business');
   if (biz) {
     window.scrollTo({ top: biz.offsetTop, behavior: 'instant' });
@@ -49,12 +52,18 @@ function enableFleetMode() {
 
 /* ==== Страховка якорей: раскрываем reveal-элементы секции назначения,
    даже если пользователь попал туда без «правильного» скролла ==== */
-(function anchorReveal() {
+(function anchorNav() {
+  const padding = 92; // высота шапки, как scroll-padding-top в CSS
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', () => {
+    a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
       const target = document.getElementById(id);
       if (!target) return;
+      // прокручиваем сами: браузер иначе допишет #якорь в адресную строку
+      e.preventDefault();
+      const top = id === 'hero' ? 0 : target.getBoundingClientRect().top + window.scrollY - padding;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      // контент секции показываем, даже если пользователь «телепортировался»
       setTimeout(() => {
         target.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
       }, 700);
