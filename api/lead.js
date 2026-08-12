@@ -20,11 +20,13 @@ module.exports = async (req, res) => {
   const messenger = clip(body.messenger, 80);
   const location = clip(body.location, 120);
   const lang = clip(body.lang, 5).toUpperCase();
+  const fleet = body.fleet === true;
   if (!name || !phone || !messenger || !location) {
     return res.status(400).json({ ok: false, error: 'Missing fields' });
   }
 
-  const comments = 'Мессенджер: ' + messenger + '\nЛокация: ' + location +
+  const comments = (fleet ? 'Тип: МОТОПАРК (B2B)\n' : '') +
+    'Мессенджер: ' + messenger + '\nЛокация: ' + location +
     '\nЯзык сайта: ' + lang;
 
   const baseUrl = base.replace(/\/?$/, '/');
@@ -50,7 +52,7 @@ module.exports = async (req, res) => {
     });
     if (!c.result) throw new Error('contact failed');
     const d = await b24('crm.deal.add', {
-      TITLE: 'Заявка с сайта — ' + name,
+      TITLE: (fleet ? 'Мотопарк (B2B) — ' : 'Заявка с сайта — ') + name,
       CATEGORY_ID: PIPELINE,
       CONTACT_ID: c.result,
       SOURCE_ID: 'WEB',

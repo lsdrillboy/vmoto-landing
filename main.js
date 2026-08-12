@@ -559,6 +559,34 @@
   maybeStartLoading();
 })();
 
+/* ==== B2B-режим «мотопарк»: заголовки формы и пометка заявки ====
+   Включается ссылкой из бизнес-секции, путём /fleet или параметром ?fleet=1
+   (рекламные кампании ведут владельцев бизнеса именно сюда). */
+window.__fleetMode = false;
+function enableFleetMode() {
+  window.__fleetMode = true;
+  const t = window.i18nT;
+  if (!t) return;
+  const title = document.querySelector('#outroForm [data-i18n="contacts.title"]');
+  const sub = document.querySelector('#outroForm [data-i18n="contacts.sub"]');
+  if (title) { title.setAttribute('data-i18n', 'fleet.formTitle'); title.textContent = t('fleet.formTitle'); }
+  if (sub) { sub.setAttribute('data-i18n', 'fleet.formSub'); sub.textContent = t('fleet.formSub'); }
+}
+(function fleetEntry() {
+  const wantsFleet = location.pathname.replace(/\/$/, '') === '/fleet'
+    || /[?&]fleet=1/.test(location.search);
+  if (!wantsFleet) return;
+  window.addEventListener('load', () => {
+    enableFleetMode();
+    const biz = document.getElementById('business');
+    if (biz) {
+      window.scrollTo({ top: biz.offsetTop, behavior: 'instant' });
+      window.dispatchEvent(new Event('scroll'));
+      biz.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+    }
+  });
+})();
+
 /* ==== Якорь Contacts: сразу к форме (конец кино-секции), а не к её началу ==== */
 (function contactsAnchor() {
   const outro = document.querySelector('.outro-scroll');
@@ -566,6 +594,7 @@
   document.querySelectorAll('a[href="#contacts"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
+      if (a.hasAttribute('data-fleet')) enableFleetMode();
       const total = outro.offsetHeight - window.innerHeight;
       window.scrollTo({ top: outro.offsetTop + total * 0.92, behavior: 'smooth' });
     });
@@ -1032,14 +1061,16 @@
         phone: phone,
         messenger: messenger,
         location: location,
-        lang: document.documentElement.lang
+        lang: document.documentElement.lang,
+        fleet: window.__fleetMode === true
       })
     })
       .then((r) => r.json().catch(() => null).then((data) => ({ httpOk: r.ok, data })))
       .then(({ httpOk, data }) => {
         if (!httpOk || !data || !data.ok) throw new Error((data && data.error) || 'submit failed');
-        if (window.fbq) fbq('track', 'Lead'); // конверсия для рекламы Meta
-        if (window.gtag) gtag('event', 'generate_lead');
+        const leadType = window.__fleetMode ? 'fleet' : 'retail';
+        if (window.fbq) fbq('track', 'Lead', { content_category: leadType });
+        if (window.gtag) gtag('event', 'generate_lead', { lead_type: leadType });
         // модальное окно успеха + сброс формы под ним
         const ok = document.getElementById('formSuccess');
         if (ok) {

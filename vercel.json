@@ -9,5 +9,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/fleet",
+      "destination": "/index.html"
+    }
   ]
 }
