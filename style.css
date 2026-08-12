@@ -2308,3 +2308,147 @@ html[lang="th"] .section-title { line-height: 1.35; }
   .hero-static__from { margin-top: 30px; }
   .hero-static__bg img { object-position: 58% center; }
 }
+
+/* ===== CONTACTS: фото слева, карточка формы справа ===== */
+.contacts {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 80px 0;
+}
+.contacts__bg,
+.contacts__bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 30% center; /* байк с райдершей — слева */
+}
+.contacts__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(270deg, rgba(7, 8, 8, 0.55) 0%, rgba(7, 8, 8, 0.15) 40%, transparent 62%),
+    linear-gradient(0deg, rgba(7, 8, 8, 0.6) 0%, transparent 34%);
+}
+.contacts__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1240px, 100% - 48px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr minmax(400px, 520px);
+  gap: 40px;
+  align-items: end;
+}
+.contacts__aside { padding-bottom: 18px; }
+.contacts__place {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 238, 0.9);
+}
+.contacts__pin { color: var(--accent); font-size: 11px; }
+.contacts__claim {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.06;
+  text-transform: uppercase;
+}
+.contacts__dash {
+  display: block;
+  width: 300px;
+  max-width: 60%;
+  height: 2px;
+  margin: 14px 0 16px;
+  background: var(--accent);
+}
+.contacts__note {
+  font-size: 15px;
+  color: rgba(242, 241, 238, 0.75);
+}
+
+/* карточка формы */
+.contacts__card {
+  background: rgba(16, 17, 16, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 26px;
+  backdrop-filter: blur(16px);
+  padding: 34px 34px 30px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.contacts__card .label { color: var(--accent); }
+.contacts__title {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.04;
+}
+.contacts__title i { font-style: normal; color: var(--accent); }
+.contacts__sub {
+  margin-top: 16px;
+  font-size: 15px;
+  color: rgba(242, 241, 238, 0.72);
+}
+/* внутри карточки форма без собственной подложки */
+.contacts__card .cta-form {
+  background: none;
+  border: none;
+  backdrop-filter: none;
+  padding: 22px 0 0;
+}
+.contacts__card .outro-form__or { margin-top: 20px; text-align: center; }
+.contacts__card .outro-msgr { margin-top: 12px; }
+
+@media (max-width: 900px) {
+  .contacts { padding: 64px 0; align-items: flex-end; }
+  .contacts__inner { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .contacts__aside { padding-bottom: 0; }
+  .contacts__bg img { object-position: 42% center; }
+  .contacts__shade {
+    background:
+      linear-gradient(0deg, rgba(7, 8, 8, 0.9) 0%, rgba(7, 8, 8, 0.55) 42%, rgba(7, 8, 8, 0.2) 100%);
+  }
+  .contacts__card { padding: 26px 22px 24px; }
+}
+
+/* отправка: широкая акцентная кнопка и строка доверия */
+.cta-form__send {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 8px;
+  text-align: center;
+}
+.cta-form__trust {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: rgba(242, 241, 238, 0.5);
+}
+.cta-form__trust svg { color: var(--accent); flex: 0 0 auto; }
+
+/* карточка не должна распирать сетку на узких экранах */
+.contacts__card, .contacts__aside { min-width: 0; }
+.contacts__card .cta-form { min-width: 0; }
+@media (max-width: 560px) {
+  /* три чипа в ряд не помещаются — раскладываем автоматически */
+  .pick__row { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); }
+  .pick__btn { min-width: 0; padding: 8px 6px; font-size: 11.5px; }
+  .pick__btn svg { display: none; }
+  .contacts__card .outro-msgr { gap: 8px; }
+  .msgr-btn { padding: 8px 12px; font-size: 11.5px; }
+}

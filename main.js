@@ -6,268 +6,6 @@
   window.scrollTo({ top: 0, behavior: 'instant' });
 })();
 
-/* ============ OUTRO: промотка + появление формы заявки ============ */
-(function outroScrub() {
-  const wrapper = document.querySelector('.outro-scroll');
-  if (!wrapper) return;
-  const canvas = document.getElementById('outroCanvas');
-  const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
-  const fallback = document.getElementById('outroFallback');
-  const formBlock = document.getElementById('outroForm');
-
-  const FRAME_COUNT = 361; // весь исходник в родные 24 fps (см. hero)
-  const SMOOTH_TAU = 0.11;
-  const SMALL_SET = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) <= 1100;
-  const SEQ_DIR = SMALL_SET ? '/assets/seq/outro24-m/' : '/assets/seq/outro24/';
-  const SRC_W = SMALL_SET ? 960 : 1920;
-  const SRC_H = SMALL_SET ? 540 : 1080;
-  const framePath = (i) => SEQ_DIR + 'f' + String(i + 1).padStart(3, '0') + '.webp';
-
-  // та же схема, что в hero: <img> — источник, битмапы — окно-ускоритель
-  // Кадры держим как <img>: браузер хранит сжатые данные (~10 МБ) и сам
-  // управляет кэшем декода — вкладка не падает по памяти. Для плавного
-  // скраба поверх — окно ImageBitmap вокруг текущего кадра; при отсутствии
-  // битмапа рисуем точный кадр прямо из <img> (без пропусков кадров).
-  const imgs = new Array(FRAME_COUNT);
-  const bmps = new Array(FRAME_COUNT);
-  const decoding = new Set();
-  const AHEAD_F = 24; // запас декода по ходу движения
-  const AHEAD_B = 8;  // и против хода
-  const CULL = 34;    // дальше от кадра — битмап выселяется
-  const MAX_FPS = 90; // потолок скорости показа (кадров/с)
-  const DECODE_PAR = 6; // одновременных декодов
-  const supportsBitmap = typeof createImageBitmap === 'function';
-  let winCenter = 0;
-  let scrubDir = 1;   // направление скролла: 1 вниз, -1 вверх
-  let prevTarget = 0;
-  let displayFrame = 0;
-  let drawnKey = -1;
-  let rafId = null;
-  let inView = true;
-  let lastTime = 0;
-  let lastRafTime = 0;
-  let loadingStarted = false;
-
-  function loadImg(i, done) {
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = () => {
-      imgs[i] = img;
-      if (i >= winCenter - AHEAD_B && i <= winCenter + AHEAD_F) decodeFrame(i);
-      kick();
-      done && done();
-    };
-    img.onerror = () => { done && done(); };
-    img.src = framePath(i);
-  }
-  function decodeFrame(i) {
-    if (!supportsBitmap || bmps[i] || decoding.has(i)) return;
-    if (decoding.size >= DECODE_PAR) return;
-    const img = imgs[i];
-    if (!img || !img.naturalWidth) return;
-    decoding.add(i);
-    createImageBitmap(img)
-      .then((bmp) => {
-        bmps[i] = bmp;
-        decoding.delete(i);
-        kick();                  // кадр готов — можно рисовать
-        ensureWindow(winCenter); // и занять освободившийся слот декода
-      })
-      .catch(() => decoding.delete(i));
-  }
-  // окно декода вытянуто по ходу движения; ближние кадры — первыми
-  function ensureWindow(center) {
-    if (!supportsBitmap) return;
-    winCenter = center;
-    const fwd = scrubDir >= 0 ? AHEAD_F : AHEAD_B;
-    const back = scrubDir >= 0 ? AHEAD_B : AHEAD_F;
-    for (let d = 0; d <= Math.max(fwd, back); d++) {
-      if (d <= fwd && center + d < FRAME_COUNT) decodeFrame(center + d);
-      if (d && d <= back && center - d >= 0) decodeFrame(center - d);
-    }
-    for (let i = 0; i < FRAME_COUNT; i++) {
-      if (bmps[i] && (i < center - CULL || i > center + CULL)) {
-        if (bmps[i].close) bmps[i].close();
-        bmps[i] = null;
-      }
-    }
-  }
-  function freeAll() {
-    for (let i = 0; i < FRAME_COUNT; i++) {
-      if (bmps[i]) { if (bmps[i].close) bmps[i].close(); bmps[i] = null; }
-    }
-  }
-  // кадры не грузим при открытии страницы: старт — когда секция близко
-  // ИЛИ когда hero докачался (фоном, пока пользователь читает середину)
-  function startLoading() {
-    if (loadingStarted) return;
-    loadingStarted = true;
-    loadImg(0, () => {
-      canvas.classList.add('is-ready');
-      fallback.classList.add('is-hidden');
-      drawnKey = -1;
-      kick();
-    });
-    const order = [];
-    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 === 0) order.push(i);
-    for (let i = 1; i < FRAME_COUNT; i++) if (i % 4 !== 0) order.push(i);
-    let next = 0;
-    const CONCURRENCY = 8;
-    function pump() {
-      if (next >= order.length) return;
-      loadImg(order[next++], pump);
-    }
-    for (let k = 0; k < CONCURRENCY; k++) pump();
-  }
-  // hero-промотки больше нет — финал догружаем фоном вскоре после старта
-  window.addEventListener('load', () => setTimeout(startLoading, 1500));
-
-  function resize() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    // Канвас не крупнее исходного кадра: блит идёт без апскейла (в разы
-    // дешевле на ретине), финальное растяжение до вьюпорта бесплатно
-    // делает композитор. Пропорции вьюпорта сохраняем — без искажений.
-    const vw = canvas.clientWidth * dpr;
-    const vh = canvas.clientHeight * dpr;
-    const s = Math.min(1, 1 / Math.max(vw / SRC_W, vh / SRC_H));
-    canvas.width = Math.round(vw * s);
-    canvas.height = Math.round(vh * s);
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'medium'; // масштаб ~1:1 — 'high' не нужен
-    drawnKey = -1; // перерисовать
-    kick();
-  }
-  window.addEventListener('resize', resize, { passive: true });
-
-  function blit(src) {
-    const iw = src.naturalWidth || src.width;
-    const ih = src.naturalHeight || src.height;
-    const cw = canvas.width, ch = canvas.height;
-    const scale = Math.max(cw / iw, ch / ih);
-    const dw = iw * scale, dh = ih * scale;
-    ctx.drawImage(src, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-  }
-  function nearestImg(index) {
-    for (let d = 0; d < FRAME_COUNT; d++) {
-      if (index - d >= 0 && imgs[index - d] && imgs[index - d].naturalWidth) return index - d;
-      if (index + d < FRAME_COUNT && imgs[index + d] && imgs[index + d].naturalWidth) return index + d;
-    }
-    return -1;
-  }
-  // Рисуем только готовые битмапы — ноль синхронного декода в главном
-  // потоке. Если точный кадр ещё декодируется, берём лучший готовый по
-  // ходу движения и никогда не откатываемся назад (нет дёрганий).
-  function draw(frameFloat) {
-    const want = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(frameFloat)));
-    if (!supportsBitmap) { // старые браузеры: рисуем <img> напрямую
-      const j = nearestImg(want);
-      if (j >= 0 && j !== drawnKey) { blit(imgs[j]); drawnKey = j; }
-      return;
-    }
-    let i = -1;
-    if (bmps[want]) i = want;
-    else if (drawnKey >= 0) {
-      if (scrubDir >= 0) {
-        for (let j = want; j > drawnKey; j--) if (bmps[j]) { i = j; break; }
-      } else {
-        for (let j = want; j < drawnKey; j++) if (bmps[j]) { i = j; break; }
-      }
-      if (i < 0) return; // дождёмся декода — он уже в пути
-    } else {
-      for (let d = 0; d < FRAME_COUNT && i < 0; d++) {
-        if (want - d >= 0 && bmps[want - d]) i = want - d;
-        else if (want + d < FRAME_COUNT && bmps[want + d]) i = want + d;
-      }
-      if (i < 0) { // самый первый показ: битмапов ещё нет вовсе
-        const j = nearestImg(want);
-        if (j >= 0) { blit(imgs[j]); drawnKey = j; }
-        return;
-      }
-    }
-    if (i === drawnKey) return;
-    blit(bmps[i]);
-    drawnKey = i;
-  }
-
-  function getProgress() {
-    const total = wrapper.offsetHeight - window.innerHeight;
-    return Math.min(1, Math.max(0, -wrapper.getBoundingClientRect().top / total));
-  }
-  const ramp = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
-
-  let lastScenesP = -1;
-  function updateScenes(progress) {
-    if (Math.abs(progress - lastScenesP) < 0.0005) return;
-    lastScenesP = progress;
-    // форма плавно проявляется на финальных кадрах
-    const f = ramp(progress, 0.66, 0.86);
-    formBlock.style.opacity = String(f);
-    formBlock.style.transform = 'translateY(' + ((1 - f) * 36).toFixed(1) + 'px)';
-    formBlock.style.pointerEvents = f > 0.55 ? 'auto' : 'none';
-  }
-
-  function update(now) {
-    const dt = Math.min(((now || performance.now()) - lastTime) / 1000, 0.05) || 0.016;
-    lastTime = now || performance.now();
-    const progress = getProgress();
-    updateScenes(progress);
-    const targetFrame = progress * (FRAME_COUNT - 1);
-    if (targetFrame > prevTarget + 0.01) scrubDir = 1;
-    else if (targetFrame < prevTarget - 0.01) scrubDir = -1;
-    prevTarget = targetFrame;
-    const k = 1 - Math.exp(-dt / SMOOTH_TAU);
-    let step = (targetFrame - displayFrame) * k;
-    const maxStep = MAX_FPS * dt;
-    if (step > maxStep) step = maxStep; else if (step < -maxStep) step = -maxStep;
-    displayFrame += step;
-    if (Math.abs(targetFrame - displayFrame) < 0.25) displayFrame = targetFrame;
-    if (loadingStarted) ensureWindow(Math.round(displayFrame));
-    draw(displayFrame);
-    return displayFrame !== targetFrame;
-  }
-  function tick(now) {
-    lastRafTime = now;
-    const busy = update(now);
-    rafId = inView && busy ? requestAnimationFrame(tick) : null;
-  }
-  function kick() {
-    if (rafId === null) rafId = requestAnimationFrame(tick);
-  }
-  // старт загрузки, когда секция ближе двух экранов
-  function maybeStartLoading() {
-    if (!loadingStarted && wrapper.getBoundingClientRect().top < window.innerHeight * 2) {
-      startLoading();
-    }
-  }
-  window.addEventListener('scroll', () => {
-    maybeStartLoading();
-    kick();
-    if (performance.now() - lastRafTime > 120) update();
-  }, { passive: true });
-
-  // промотка активна, пока секция видна
-  const io = new IntersectionObserver(
-    (entries) => {
-      inView = entries[0].isIntersecting;
-      if (entries[0].isIntersecting) startLoading();
-      if (inView) { drawnKey = -1; kick(); }
-      else freeAll(); // вне экрана — растровые кадры не держим
-    },
-    { rootMargin: '150% 0px' }
-  );
-  io.observe(wrapper);
-
-  window.__vmotoScrub = window.__vmotoScrub || {};
-  window.__vmotoScrub.outro = {
-    get frame() { return drawnKey; },
-    get decoded() { let n = 0; for (let i = 0; i < FRAME_COUNT; i++) if (bmps[i]) n++; return n; },
-  };
-
-  lastTime = performance.now();
-  resize();
-  maybeStartLoading();
-})();
-
 /* ==== B2B-режим «мотопарк»: заголовки формы и пометка заявки ====
    Включается ссылкой из бизнес-секции, путём /fleet или параметром ?fleet=1
    (рекламные кампании ведут владельцев бизнеса именно сюда). */
@@ -276,9 +14,13 @@ function enableFleetMode() {
   window.__fleetMode = true;
   const t = window.i18nT;
   if (!t) return;
-  const title = document.querySelector('#outroForm [data-i18n="contacts.title"]');
-  const sub = document.querySelector('#outroForm [data-i18n="contacts.sub"]');
-  if (title) { title.setAttribute('data-i18n', 'fleet.formTitle'); title.textContent = t('fleet.formTitle'); }
+  const title = document.querySelector('#outroForm .contacts__title');
+  const sub = document.querySelector('#outroForm .contacts__sub');
+  if (title) {
+    title.removeAttribute('data-i18n-html');
+    title.setAttribute('data-i18n', 'fleet.formTitle');
+    title.textContent = t('fleet.formTitle');
+  }
   if (sub) { sub.setAttribute('data-i18n', 'fleet.formSub'); sub.textContent = t('fleet.formSub'); }
 }
 (function fleetEntry() {
@@ -298,14 +40,9 @@ function enableFleetMode() {
 
 /* ==== Якорь Contacts: сразу к форме (конец кино-секции), а не к её началу ==== */
 (function contactsAnchor() {
-  const outro = document.querySelector('.outro-scroll');
-  if (!outro) return;
   document.querySelectorAll('a[href="#contacts"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
+    a.addEventListener('click', () => {
       if (a.hasAttribute('data-fleet')) enableFleetMode();
-      const total = outro.offsetHeight - window.innerHeight;
-      window.scrollTo({ top: outro.offsetTop + total * 0.92, behavior: 'smooth' });
     });
   });
 })();
