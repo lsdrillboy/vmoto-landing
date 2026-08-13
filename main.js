@@ -31,7 +31,7 @@ function enableFleetMode() {
   // нельзя — на проде он наступает только после загрузки сотен кадров
   enableFleetMode();
   // убираем /fleet и ?fleet=1 из адресной строки — режим уже применён
-  const clean = location.pathname.replace(/fleet\/?$/, '');
+  const clean = location.pathname.replace(/\/?fleet\/?$/, '');
   history.replaceState(null, '', (clean || '/') + location.hash);
   const biz = document.getElementById('business');
   if (biz) {

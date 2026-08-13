@@ -4,21 +4,21 @@
   <url>
     <loc>https://www.vmotobikes.com/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.vmotobikes.com/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://www.vmotobikes.com/ru/"/>
-    <xhtml:link rel="alternate" hreflang="th" href="https://www.vmotobikes.com/th/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://www.vmotobikes.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.vmotobikes.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://www.vmotobikes.com/th"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.vmotobikes.com/zh"/>
     <lastmod>2026-08-12</lastmod>
   </url>
   <url>
-    <loc>https://www.vmotobikes.com/ru/</loc>
+    <loc>https://www.vmotobikes.com/ru</loc>
     <lastmod>2026-08-12</lastmod>
   </url>
   <url>
-    <loc>https://www.vmotobikes.com/th/</loc>
+    <loc>https://www.vmotobikes.com/th</loc>
     <lastmod>2026-08-12</lastmod>
   </url>
   <url>
-    <loc>https://www.vmotobikes.com/zh/</loc>
+    <loc>https://www.vmotobikes.com/zh</loc>
     <lastmod>2026-08-12</lastmod>
   </url>
 </urlset>

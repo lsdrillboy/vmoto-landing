@@ -31,9 +31,9 @@ if (!DICT || !DICT.ru) throw new Error('DICT не извлечён из i18n.js'
 const src = readFileSync('index.html', 'utf8');
 
 const HREFLANG = `  <link rel="alternate" hreflang="en" href="${SITE}/">
-  <link rel="alternate" hreflang="ru" href="${SITE}/ru/">
-  <link rel="alternate" hreflang="th" href="${SITE}/th/">
-  <link rel="alternate" hreflang="zh" href="${SITE}/zh/">
+  <link rel="alternate" hreflang="ru" href="${SITE}/ru">
+  <link rel="alternate" hreflang="th" href="${SITE}/th">
+  <link rel="alternate" hreflang="zh" href="${SITE}/zh">
   <link rel="alternate" hreflang="x-default" href="${SITE}/">`;
 
 function absolutify(html) {
@@ -86,8 +86,8 @@ function translate(html, lang) {
   html = html.replace('<html lang="en">', `<html lang="${lang}" data-lang-default="${lang}">`);
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${d['meta.title']}</title>`);
   html = html.replace(/(<meta name="description" content=")[^"]*(")/, `$1${d['meta.desc']}$2`);
-  html = html.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${SITE}/${lang}/$2`);
-  html = html.replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${SITE}/${lang}/$2`);
+  html = html.replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${SITE}/${lang}$2`);
+  html = html.replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${SITE}/${lang}$2`);
   html = html.replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${d['meta.title']}$2`);
   html = html.replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${d['meta.title']}$2`);
   return html;
