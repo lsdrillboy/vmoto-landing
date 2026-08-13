@@ -168,18 +168,23 @@ ul { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 8px 4px;
-  border: none;
-  background: transparent;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(10, 11, 10, 0.42);
+  backdrop-filter: blur(8px);
   cursor: pointer;
-  color: var(--muted);
+  color: var(--text);
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
   transition: color 0.2s, border-color 0.2s;
 }
-.lang__btn:hover { color: var(--text); }
+.lang__btn:hover { color: var(--accent); border-color: rgba(217, 79, 61, 0.6); }
+/* глобус и стрелка — акцентом: переключатель заметен на светлом фото */
+.lang__btn > svg:first-child { color: var(--accent); }
+.lang__chev { color: var(--accent); }
 .lang__chev { transition: transform 0.25s; }
 .lang.is-open .lang__chev { transform: rotate(180deg); }
 .lang__list {
@@ -220,12 +225,22 @@ ul { list-style: none; }
 .lang__list button.is-active { color: var(--accent); }
 
 .header__social {
-  color: var(--muted);
+  color: var(--accent);
   display: grid;
   place-items: center;
-  transition: color 0.2s;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 11, 10, 0.42);
+  backdrop-filter: blur(8px);
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
 }
-.header__social:hover { color: var(--text); }
+.header__social:hover {
+  color: var(--text);
+  border-color: rgba(217, 79, 61, 0.6);
+  transform: translateY(-1px);
+}
 .header.is-hidden { transform: translateY(-100%); }
 .header { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s, border-color 0.3s; }
 
