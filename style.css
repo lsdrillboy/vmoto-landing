@@ -2474,3 +2474,10 @@ html[lang="th"] .section-title { line-height: 1.35; }
 @media (max-width: 640px) {
   .hero-badge { font-size: 10.5px; padding: 6px 12px 6px 10px; }
 }
+
+/* подпись выбранного цвета рядом с кружками */
+.showcase__swatches-label b {
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}

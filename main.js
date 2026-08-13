@@ -206,10 +206,22 @@ function enableFleetMode() {
     const swatches = slide.querySelectorAll('.swatch');
     if (!swatches.length) return;
     const video = slide.querySelector('video');
+    const nameOut = slide.querySelector('.swatch-name');
+    // подписываем выбранный цвет словами: понятно, что кружки кликабельны
+    function showName(btn) {
+      if (!nameOut) return;
+      const key = btn.getAttribute('data-i18n-aria');
+      nameOut.textContent = (window.i18nT && key) ? i18nT(key) : (btn.getAttribute('aria-label') || '');
+    }
+    showName(slide.querySelector('.swatch.is-active') || swatches[0]);
+    window.addEventListener('vmoto:lang', () => {
+      showName(slide.querySelector('.swatch.is-active') || swatches[0]);
+    });
     swatches.forEach((btn) => {
       btn.addEventListener('click', () => {
         if (btn.classList.contains('is-active')) return;
         swatches.forEach((b) => b.classList.toggle('is-active', b === btn));
+        showName(btn);
         video.classList.add('is-swapping');
         setTimeout(() => {
           video.poster = btn.dataset.poster;

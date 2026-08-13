@@ -37,7 +37,7 @@
       'b3.unit': 'dB', 'b3.title': 'Silence & comfort', 'b3.text': 'No engine roar, no petrol smell.',
       'b4.unit': 'years', 'b4.title': 'Warranty', 'b4.text': 'Covers every part of the bike. Parts and service on the island.',
       'b5.unit': '×', 'b5.title': 'Two batteries', 'b5.text': 'Plus a charger. Top box and accessories available.',
-      'models.label': 'Model', 'models.color': 'Color', 'models.colorAria': 'Color choice',
+      'models.label': 'Model', 'models.color': 'Choose colour', 'models.colorAria': 'Color choice',
       'models.switchAria': 'Model switcher',
       'color.red': 'Red', 'color.grey': 'Grey', 'color.white': 'White', 'color.black': 'Black',
       'citi.desc': 'A light city e-scooter. Two batteries and a charger included.',
@@ -167,7 +167,7 @@
       'b3.unit': 'дБ', 'b3.title': 'Тишина и комфорт', 'b3.text': 'Никакого рёва мотора и запаха бензина.',
       'b4.unit': 'года', 'b4.title': 'Гарантия', 'b4.text': 'На все элементы байка. Запчасти и обслуживание — на острове.',
       'b5.unit': '×', 'b5.title': 'Две батареи', 'b5.text': 'Плюс зарядное устройство. Бокс и аксессуары.',
-      'models.label': 'Модель', 'models.color': 'Цвет', 'models.colorAria': 'Выбор цвета',
+      'models.label': 'Модель', 'models.color': 'Выберите цвет', 'models.colorAria': 'Выбор цвета',
       'models.switchAria': 'Переключение моделей',
       'color.red': 'Красный', 'color.grey': 'Серый', 'color.white': 'Белый', 'color.black': 'Чёрный',
       'citi.desc': 'Лёгкий городской электроскутер. Две батареи и зарядное устройство в комплекте.',
@@ -297,7 +297,7 @@
       'b3.unit': 'dB', 'b3.title': 'เงียบและสบาย', 'b3.text': 'ไม่มีเสียงเครื่องยนต์ ไม่มีกลิ่นน้ำมัน',
       'b4.unit': 'ปี', 'b4.title': 'รับประกัน', 'b4.text': 'ครอบคลุมทุกชิ้นส่วน อะไหล่และบริการบนเกาะ',
       'b5.unit': '×', 'b5.title': 'แบตเตอรี่ 2 ก้อน', 'b5.text': 'พร้อมเครื่องชาร์จ กล่องท้ายและอุปกรณ์เสริม',
-      'models.label': 'รุ่น', 'models.color': 'สี', 'models.colorAria': 'เลือกสี',
+      'models.label': 'รุ่น', 'models.color': 'เลือกสี', 'models.colorAria': 'เลือกสี',
       'models.switchAria': 'สลับรุ่นรถ',
       'color.red': 'แดง', 'color.grey': 'เทา', 'color.white': 'ขาว', 'color.black': 'ดำ',
       'citi.desc': 'สกู๊ตเตอร์ไฟฟ้าในเมืองน้ำหนักเบา พร้อมแบตเตอรี่ 2 ก้อนและเครื่องชาร์จ',
@@ -427,7 +427,7 @@
       'b3.unit': '分贝', 'b3.title': '静音舒适', 'b3.text': '没有引擎轰鸣，没有汽油味。',
       'b4.unit': '年', 'b4.title': '质保', 'b4.text': '覆盖整车所有部件，配件与服务就在岛上。',
       'b5.unit': '×', 'b5.title': '双电池', 'b5.text': '附充电器，尾箱与配件可选装。',
-      'models.label': '车型', 'models.color': '颜色', 'models.colorAria': '选择颜色',
+      'models.label': '车型', 'models.color': '选择颜色', 'models.colorAria': '选择颜色',
       'models.switchAria': '切换车型',
       'color.red': '红色', 'color.grey': '灰色', 'color.white': '白色', 'color.black': '黑色',
       'citi.desc': '轻巧的城市电动踏板车，标配两块电池与充电器。',
@@ -589,6 +589,8 @@
     current = l;
     try { localStorage.setItem('vmoto-lang', l); } catch (e) {}
     apply();
+    // тексты, которые ставит JS (например, название выбранного цвета)
+    window.dispatchEvent(new Event('vmoto:lang'));
     closeDrop();
   }
 
