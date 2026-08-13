@@ -33,7 +33,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Michroma&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="/style.css?v=109">
+  <link rel="stylesheet" href="/style.css?v=110">
   <link rel="preload" as="image" href="/assets/img/hero-bg.webp" media="(min-width: 701px)">
   <link rel="preload" as="image" href="/assets/img/hero-bg-m.webp" media="(max-width: 700px)">
 
@@ -72,6 +72,8 @@
     "telephone": "+66962244666",
     "priceRange": "฿95,000–฿120,000",
     "legalName": "CANVAS SPV Co., Ltd",
+    "description": "Official VMoto dealer in Thailand. Sales, test rides, delivery and service of VMoto CITI and CPx electric bikes on Koh Samui and Koh Phangan.",
+    "brand": { "@type": "Brand", "name": "VMoto" },
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "52/57 Moo 1, Na Jomtien Subdistrict",
@@ -224,6 +226,10 @@
     <div class="hero-static__shade" aria-hidden="true"></div>
 
     <div class="container hero-static__content">
+      <p class="hero-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5 4.5 5.8v5.4c0 4.6 3.2 8.9 7.5 10.3 4.3-1.4 7.5-5.7 7.5-10.3V5.8L12 2.5z"/><path d="m8.8 11.8 2.3 2.3 4.3-4.6"/></svg>
+        <span data-i18n="hero.dealer">VMoto 泰国官方经销商</span>
+      </p>
       <p class="hero-kicker" data-i18n-html="hero.kicker">电动摩托&ensp;·&ensp;苏梅岛&ensp;·&ensp;帕岸岛</p>
       <h1 class="hero-static__title" data-i18n-html="hero.title2">海岛。<br>电动化<i>。</i></h1>
       <span class="hero-static__dash" aria-hidden="true"></span>
@@ -848,7 +854,7 @@
       <div class="footer__bottom">
         <div>
           <p class="footer__copy" data-i18n="footer.copy">© 2026 VMoto — 泰国</p>
-          <p class="footer__law">CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</p>
+          <p class="footer__law"><span data-i18n="footer.dealer">VMoto 泰国官方经销商</span> · CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</p>
         </div>
         <div class="footer__legal">
           <a href="/privacy" data-i18n="footer.privacy">隐私政策</a>
@@ -863,7 +869,7 @@
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="/i18n.js?v=34"></script>
+  <script src="/i18n.js?v=35"></script>
   <script src="/main.js?v=79"></script>
 </body>
 </html>

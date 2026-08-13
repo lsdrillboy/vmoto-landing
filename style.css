@@ -2452,3 +2452,25 @@ html[lang="th"] .section-title { line-height: 1.35; }
   .contacts__card .outro-msgr { gap: 8px; }
   .msgr-btn { padding: 8px 12px; font-size: 11.5px; }
 }
+
+/* официальный статус дилера — плашка над киккером в hero */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 7px 14px 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 79, 61, 0.5);
+  background: rgba(217, 79, 61, 0.14);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-ui);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.hero-badge svg { color: var(--accent); flex: 0 0 auto; }
+@media (max-width: 640px) {
+  .hero-badge { font-size: 10.5px; padding: 6px 12px 6px 10px; }
+}
