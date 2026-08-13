@@ -15,19 +15,19 @@
   "rewrites": [
     {
       "source": "/fleet",
-      "destination": "/index.html"
+      "destination": "/"
     },
     {
       "source": "/ru/fleet",
-      "destination": "/ru/index.html"
+      "destination": "/ru"
     },
     {
       "source": "/th/fleet",
-      "destination": "/th/index.html"
+      "destination": "/th"
     },
     {
       "source": "/zh/fleet",
-      "destination": "/zh/index.html"
+      "destination": "/zh"
     }
   ]
 }
