@@ -279,58 +279,28 @@ function enableFleetMode() {
   const video = document.getElementById('promoVideo');
   if (!video) return;
   const btn = document.getElementById('promoSound');
-
-  let userMuted = false; // пользователь сам выключил звук
   let inView = false;
 
   function syncBtn() {
     btn.classList.toggle('is-on', !video.muted);
     btn.setAttribute('aria-label', window.i18nT ? i18nT(video.muted ? 'promo.soundOn' : 'promo.soundOff') : (video.muted ? 'Unmute' : 'Mute'));
   }
+  syncBtn();
 
-  // пытаемся играть со звуком сразу; если браузер запрещает автозвук
-  // (не было ещё ни одного клика по странице) — играем без звука,
-  // а звук включится при первом же жесте пользователя
-  function tryPlay() {
-    if (userMuted) { video.play().catch(() => {}); return; }
-    video.muted = false;
-    const p = video.play();
-    if (p && p.catch) {
-      p.catch(() => {
-        video.muted = true;
-        video.play().catch(() => {});
-        syncBtn();
-      });
-    }
-    syncBtn();
-  }
-
+  // Звук по умолчанию выключен — ролик не должен заговорить сам.
+  // Включает его только кнопка-динамик.
   const io = new IntersectionObserver(
     (entries) => {
       inView = entries[0].isIntersecting;
-      if (inView) tryPlay();
+      if (inView) video.play().catch(() => {});
       else video.pause();
     },
     { threshold: 0.35 }
   );
   io.observe(video);
 
-  // первый жест где угодно на странице снимает запрет автозвука
-  function onGesture(e) {
-    if (btn.contains(e.target)) return; // кнопкой управляет клик ниже
-    if (!inView) return;
-    if (video.muted && !userMuted) { video.muted = false; syncBtn(); }
-    // строгие браузеры (iOS в энергосбережении и т.п.) блокируют даже
-    // беззвучный автоплей — первый жест запускает и само видео
-    if (video.paused) video.play().catch(() => {});
-  }
-  ['pointerdown', 'keydown', 'touchend'].forEach((t) =>
-    window.addEventListener(t, onGesture, { capture: true, passive: true })
-  );
-
   btn.addEventListener('click', () => {
     video.muted = !video.muted;
-    userMuted = video.muted;
     if (!video.muted && video.paused && inView) video.play().catch(() => {});
     syncBtn();
   });
