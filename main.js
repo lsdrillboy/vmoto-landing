@@ -113,8 +113,8 @@ function enableFleetMode() {
         try { menuVideo.currentTime = 0; } catch (e) {}
         menuVideo.play().catch(() => {});
       }
-      // пункты появляются сразу после раскрытия шторки
-      litTimer = setTimeout(() => setLit(true), 250);
+      // пункты подхватывают ещё раскрывающуюся шторку — переход слитный
+      litTimer = setTimeout(() => setLit(true), 170);
     } else {
       if (menuVideo) menuVideo.pause();
       setLit(false);
