@@ -113,8 +113,8 @@ function enableFleetMode() {
         try { menuVideo.currentTime = 0; } catch (e) {}
         menuVideo.play().catch(() => {});
       }
-      // пункты подхватывают ещё раскрывающуюся шторку — переход слитный
-      litTimer = setTimeout(() => setLit(true), 170);
+      // пункты вступают, когда занавес прошёл примерно треть пути
+      litTimer = setTimeout(() => setLit(true), 320);
     } else {
       if (menuVideo) menuVideo.pause();
       setLit(false);
