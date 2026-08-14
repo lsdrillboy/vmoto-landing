@@ -3,95 +3,410 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms of Use — VMOTO</title>
-  <meta name="description" content="Terms of use for vmotobikes.com: prices and availability, warranty, intellectual property and contacts of CANVAS SPV Co., Ltd, official VMoto dealer in Thailand.">
+  <title>Terms of Use — VMOTO electric bikes Thailand</title>
+  <meta name="description" content="Terms of use for vmotobikes.com operated by CANVAS SPV Co., Ltd: prices, warranty, liability and governing law. English, Thai, Russian and Chinese.">
   <link rel="canonical" href="https://www.vmotobikes.com/terms">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VMOTO">
+  <meta property="og:title" content="Terms of Use — VMOTO electric bikes Thailand">
+  <meta property="og:description" content="Terms of use for vmotobikes.com operated by CANVAS SPV Co., Ltd: prices, warranty, liability and governing law. English, Thai, Russian and Chinese.">
+  <meta property="og:url" content="https://www.vmotobikes.com/terms">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="/assets/img/favicon-96.png" type="image/png" sizes="96x96">
   <link rel="icon" href="/assets/img/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0b0a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a0b0a; color: #f2f1ee; font: 15px/1.75 'Manrope', sans-serif; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
-    .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 56px; }
-    .logo { font: 600 15px 'Exo 2', sans-serif; letter-spacing: 0.14em; color: #f2f1ee; text-decoration: none; }
-    .logo span { color: #d94f3d; }
-    .lang-jump { font-size: 13px; color: rgba(242,241,238,0.55); text-decoration: none; border-bottom: 1px solid rgba(242,241,238,0.25); }
-    .lang-jump:hover { color: #f2f1ee; }
-    h1 { font: 600 clamp(26px, 4vw, 36px)/1.2 'Exo 2', sans-serif; margin-bottom: 8px; }
-    .date { color: rgba(242,241,238,0.45); font-size: 13px; margin-bottom: 40px; }
-    h2 { font: 600 19px 'Exo 2', sans-serif; margin: 36px 0 12px; }
-    p, li { color: rgba(242,241,238,0.8); }
-    ul { padding-left: 20px; margin: 8px 0; }
-    a { color: #f2f1ee; }
-    .ru { margin-top: 80px; padding-top: 56px; border-top: 1px solid rgba(242,241,238,0.12); }
+    :root {
+      --bg: #0a0b0a;
+      --surface: #101211;
+      --text: #f2f1ee;
+      --muted: rgba(242, 241, 238, .52);
+      --body: rgba(242, 241, 238, .78);
+      --line: rgba(255, 255, 255, .09);
+      --accent: #d94f3d;
+      --heading-font: 'Exo 2', 'Kanit', 'Noto Sans SC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', 'Kanit', 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 10, .82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--heading-font);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo img { width: 22px; height: 22px; display: block; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); }
+    .lang-toggle {
+      display: flex;
+      gap: 4px;
+      padding: 3px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 8px;
+    }
+    .lang-toggle button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color .2s, background .2s;
+    }
+    .lang-toggle button:hover { color: var(--text); }
+    .lang-toggle button.active { background: var(--accent); color: #fff; }
+
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
+    .page-eyebrow {
+      font-family: var(--heading-font);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .page-title {
+      font-family: var(--heading-font);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .page-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .page-intro { font-size: 16px; line-height: 1.75; color: var(--body); margin-bottom: 48px; }
+
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 48px 0 16px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+    p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    li { font-size: 15px; color: var(--body); margin-bottom: 6px; }
+    strong { color: var(--text); font-weight: 600; }
+    a { color: var(--accent); }
+
+    .company-block {
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 16px 0;
+      background: rgba(217, 79, 61, .06);
+      border-radius: 0 8px 8px 0;
+    }
+    .company-block strong { display: block; margin-bottom: 4px; }
+    .company-block span { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .page-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .page-footer span { font-size: 12px; color: var(--muted); }
+    .page-footer a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .page-footer a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .header-inner { padding: 0 16px; height: 60px; gap: 10px; }
+      .logo { font-size: 13px; letter-spacing: .12em; }
+      .back-link span { display: none; }
+      .page-wrap { padding: 40px 16px 80px; }
+      .page-footer { flex-direction: column; text-align: center; padding: 24px 16px; }
+    }
+
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <a class="logo" href="/">VMOTO<span>.</span></a>
-      <a class="lang-jump" href="#ru">Русская версия ↓</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo-mark.png" alt="" width="22" height="22">VMOTO</a>
+      <div class="header-right">
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n-back>Back</span>
+        </a>
+        <div class="lang-toggle" id="lang-toggle">
+          <button type="button" data-lang="en" class="active">EN</button>
+          <button type="button" data-lang="th">TH</button>
+          <button type="button" data-lang="ru">RU</button>
+          <button type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    <div class="lang-content active" data-lang-content="en">
+      <div class="page-eyebrow">Legal</div>
+      <h1 class="page-title">Terms of Use</h1>
+      <div class="page-meta">Last updated: 14 August 2026</div>
+      <p class="page-intro">These Terms govern the use of the website vmotobikes.com, operated by CANVAS SPV Co., Ltd. By using the website you accept these Terms.</p>
+
+      <h2 class="section-title">1. Website Operator</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+      <p>The website presents VMoto electric bikes and serves to request a test ride or a consultation.</p>
+
+      <h2 class="section-title">2. Prices and Availability</h2>
+      <p>Prices are listed in Thai Baht and are indicative. Final price, configuration, availability and delivery terms are confirmed when the sale is arranged. Product images may differ from the actual configuration.</p>
+
+      <h2 class="section-title">3. No Public Offer</h2>
+      <p>Nothing on this website constitutes a binding public offer. A purchase is concluded by a separate agreement between you and the Company.</p>
+
+      <h2 class="section-title">4. Warranty</h2>
+      <p>Warranty terms for the bikes, including the 3-year warranty, are set out in the sale documents provided at purchase.</p>
+
+      <h2 class="section-title">5. Enquiries Through the Website</h2>
+      <p>By submitting the form you confirm that the details provided are correct and consent to being contacted regarding your enquiry. Personal data is processed under the <a href="/privacy">Privacy Policy</a>.</p>
+
+      <h2 class="section-title">6. Intellectual Property</h2>
+      <p>Texts, photographs and graphics on this website belong to the Company or are used with permission. Copying or reuse without our consent is not allowed. The VMoto trademark belongs to its respective owner.</p>
+
+      <h2 class="section-title">7. Liability</h2>
+      <p>The website is provided «as is». We do our best to keep the information accurate, but we are not liable for occasional errors, interruptions, or the content of external services linked from the site (WhatsApp, Telegram, Facebook and others).</p>
+
+      <h2 class="section-title">8. Governing Law</h2>
+      <p>These Terms are governed by the laws of the Kingdom of Thailand.</p>
+
+      <h2 class="section-title">9. Changes</h2>
+      <p>We may update these Terms. The current version is always published on this page with the update date.</p>
+
+      <h2 class="section-title">10. Contact</h2>
+      <p>Questions about these Terms: +66 96 224 4666 (phone or WhatsApp).</p>
     </div>
 
-    <h1>Terms of Use</h1>
-    <p class="date">Last updated: 11 August 2026</p>
+    <div class="lang-content" data-lang-content="th">
+      <div class="page-eyebrow">ข้อมูลทางกฎหมาย</div>
+      <h1 class="page-title">ข้อกำหนดการใช้งาน</h1>
+      <div class="page-meta">อัปเดตล่าสุด: 14 สิงหาคม 2026</div>
+      <p class="page-intro">ข้อกำหนดนี้ใช้บังคับกับการใช้งานเว็บไซต์ vmotobikes.com ซึ่งดำเนินการโดย CANVAS SPV Co., Ltd การใช้เว็บไซต์ถือว่าคุณยอมรับข้อกำหนดเหล่านี้</p>
 
-    <h2>1. About this website</h2>
-    <p>vmotobikes.com presents VMoto electric bikes offered by <b>CANVAS SPV Co., Ltd</b> (52/57 Moo 1, Na Jomtien Subdistrict, Sattahip District, Chonburi Province 20250, Thailand). The website is for information purposes and for requesting a test ride or consultation.</p>
+      <h2 class="section-title">1. ผู้ดำเนินการเว็บไซต์</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+      <p>เว็บไซต์นำเสนอรถจักรยานยนต์ไฟฟ้า VMoto และใช้สำหรับนัดหมายทดลองขับหรือขอคำปรึกษา</p>
 
-    <h2>2. Prices and availability</h2>
-    <p>Prices are listed in Thai Baht and are indicative. Final price, configuration, availability and delivery terms are confirmed when the sale is arranged. Product images may differ from the actual configuration.</p>
+      <h2 class="section-title">2. ราคาและความพร้อมจำหน่าย</h2>
+      <p>ราคาแสดงเป็นเงินบาทไทยและเป็นราคาโดยประมาณ ราคาสุดท้าย รุ่นย่อย ความพร้อมจำหน่าย และเงื่อนไขการจัดส่งจะยืนยันเมื่อทำการซื้อขาย ภาพสินค้าอาจแตกต่างจากรุ่นจริง</p>
 
-    <h2>3. No public offer</h2>
-    <p>Nothing on this website constitutes a binding public offer. A purchase is concluded by a separate agreement between you and VMOTO.</p>
+      <h2 class="section-title">3. ไม่ถือเป็นคำเสนอต่อสาธารณะ</h2>
+      <p>ข้อมูลบนเว็บไซต์ไม่ถือเป็นคำเสนอที่ผูกพันตามกฎหมาย การซื้อขายจะทำผ่านสัญญาแยกต่างหากระหว่างคุณกับบริษัท</p>
 
-    <h2>4. Warranty</h2>
-    <p>Warranty terms for the bikes (including the 3-year warranty) are set out in the sale documents provided at purchase.</p>
+      <h2 class="section-title">4. การรับประกัน</h2>
+      <p>เงื่อนไขการรับประกันรถ รวมถึงการรับประกัน 3 ปี เป็นไปตามเอกสารที่มอบให้ในวันซื้อ</p>
 
-    <h2>5. Intellectual property</h2>
-    <p>Texts, photos and graphics on this website belong to VMOTO or are used with permission. Copying or reuse without our consent is not allowed. The VMoto trademark belongs to its respective owner.</p>
+      <h2 class="section-title">5. การส่งคำขอผ่านเว็บไซต์</h2>
+      <p>เมื่อส่งแบบฟอร์ม คุณยืนยันว่าข้อมูลที่ให้ถูกต้องและยินยอมให้เราติดต่อกลับเกี่ยวกับคำขอของคุณ ข้อมูลส่วนบุคคลจะประมวลผลตาม<a href="/privacy">นโยบายความเป็นส่วนตัว</a></p>
 
-    <h2>6. Liability</h2>
-    <p>The website is provided «as is». We do our best to keep the information accurate, but we are not liable for occasional errors, interruptions or the content of external services linked from the site (WhatsApp, Telegram, Facebook and others).</p>
+      <h2 class="section-title">6. ทรัพย์สินทางปัญญา</h2>
+      <p>ข้อความ ภาพถ่าย และกราฟิกบนเว็บไซต์เป็นของบริษัทหรือใช้โดยได้รับอนุญาต ห้ามคัดลอกหรือนำไปใช้โดยไม่ได้รับความยินยอมจากเรา เครื่องหมายการค้า VMoto เป็นของเจ้าของสิทธิ์</p>
 
-    <h2>7. Governing law</h2>
-    <p>These terms are governed by the laws of the Kingdom of Thailand.</p>
+      <h2 class="section-title">7. ความรับผิด</h2>
+      <p>เว็บไซต์ให้บริการ «ตามสภาพที่เป็นอยู่» เราพยายามรักษาข้อมูลให้เป็นปัจจุบัน แต่ไม่รับผิดชอบต่อความคลาดเคลื่อน การหยุดชะงักของบริการ หรือเนื้อหาของบริการภายนอกที่ลิงก์จากเว็บไซต์ (WhatsApp, Telegram, Facebook และอื่น ๆ)</p>
 
-    <h2>8. Contact</h2>
-    <p>Questions about these terms: +66 96 224 4666 (phone or WhatsApp).</p>
+      <h2 class="section-title">8. กฎหมายที่ใช้บังคับ</h2>
+      <p>ข้อกำหนดนี้อยู่ภายใต้กฎหมายแห่งราชอาณาจักรไทย</p>
 
-    <div class="ru" id="ru">
-      <h1>Пользовательское соглашение</h1>
-      <p class="date">Обновлено: 11 августа 2026</p>
+      <h2 class="section-title">9. การเปลี่ยนแปลง</h2>
+      <p>เราอาจปรับปรุงข้อกำหนดนี้ ฉบับปัจจุบันจะเผยแพร่บนหน้านี้พร้อมวันที่อัปเดตเสมอ</p>
 
-      <h2>1. О сайте</h2>
-      <p>Сайт vmotobikes.com представляет электробайки VMoto, предлагаемые компанией <b>CANVAS SPV Co., Ltd</b> (52/57 Moo 1, Na Jomtien Subdistrict, Sattahip District, Chonburi Province 20250, Thailand). Сайт носит информационный характер и служит для записи на тест-драйв и консультацию.</p>
+      <h2 class="section-title">10. ติดต่อ</h2>
+      <p>สอบถามเกี่ยวกับข้อกำหนด: +66 96 224 4666 (โทรศัพท์หรือ WhatsApp)</p>
+    </div>
 
-      <h2>2. Цены и наличие</h2>
+    <div class="lang-content" data-lang-content="ru">
+      <div class="page-eyebrow">Правовая информация</div>
+      <h1 class="page-title">Пользовательское соглашение</h1>
+      <div class="page-meta">Обновлено: 14 августа 2026</div>
+      <p class="page-intro">Настоящие Условия регулируют использование сайта vmotobikes.com, который принадлежит компании CANVAS SPV Co., Ltd. Используя сайт, вы принимаете эти Условия.</p>
+
+      <h2 class="section-title">1. Владелец сайта</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+      <p>Сайт представляет электробайки VMoto и служит для записи на тест-драйв и консультацию.</p>
+
+      <h2 class="section-title">2. Цены и наличие</h2>
       <p>Цены указаны в тайских батах и являются ориентировочными. Итоговая цена, комплектация, наличие и условия доставки подтверждаются при оформлении покупки. Изображения могут отличаться от фактической комплектации.</p>
 
-      <h2>3. Не публичная оферта</h2>
-      <p>Информация на сайте не является публичной офертой. Покупка оформляется отдельным договором между вами и VMOTO.</p>
+      <h2 class="section-title">3. Не публичная оферта</h2>
+      <p>Информация на сайте не является публичной офертой. Покупка оформляется отдельным договором между вами и компанией.</p>
 
-      <h2>4. Гарантия</h2>
-      <p>Условия гарантии на байки (включая гарантию 3 года) определяются документами, оформляемыми при покупке.</p>
+      <h2 class="section-title">4. Гарантия</h2>
+      <p>Условия гарантии на байки, включая гарантию 3 года, определяются документами, оформляемыми при покупке.</p>
 
-      <h2>5. Интеллектуальная собственность</h2>
-      <p>Тексты, фотографии и графика на сайте принадлежат VMOTO или используются с разрешения. Копирование и использование без нашего согласия не допускается. Товарный знак VMoto принадлежит его правообладателю.</p>
+      <h2 class="section-title">5. Заявки через сайт</h2>
+      <p>Отправляя форму, вы подтверждаете корректность указанных данных и согласие на связь с вами по вашей заявке. Персональные данные обрабатываются в соответствии с <a href="/privacy">Политикой конфиденциальности</a>.</p>
 
-      <h2>6. Ответственность</h2>
+      <h2 class="section-title">6. Интеллектуальная собственность</h2>
+      <p>Тексты, фотографии и графика на сайте принадлежат компании или используются с разрешения. Копирование и использование без нашего согласия не допускается. Товарный знак VMoto принадлежит его правообладателю.</p>
+
+      <h2 class="section-title">7. Ответственность</h2>
       <p>Сайт предоставляется «как есть». Мы стараемся поддерживать информацию актуальной, но не несём ответственности за возможные неточности, перерывы в работе и содержание внешних сервисов, на которые ведут ссылки (WhatsApp, Telegram, Facebook и другие).</p>
 
-      <h2>7. Применимое право</h2>
-      <p>Настоящие условия регулируются законодательством Королевства Таиланд.</p>
+      <h2 class="section-title">8. Применимое право</h2>
+      <p>Настоящие Условия регулируются законодательством Королевства Таиланд.</p>
 
-      <h2>8. Контакты</h2>
-      <p>Вопросы по условиям: +66 96 224 4666 (телефон или WhatsApp).</p>
+      <h2 class="section-title">9. Изменения</h2>
+      <p>Мы можем обновлять Условия. Актуальная версия всегда публикуется на этой странице с датой обновления.</p>
+
+      <h2 class="section-title">10. Контакты</h2>
+      <p>Вопросы по Условиям: +66 96 224 4666 (телефон или WhatsApp).</p>
     </div>
-  </div>
+
+    <div class="lang-content" data-lang-content="zh">
+      <div class="page-eyebrow">法律信息</div>
+      <h1 class="page-title">使用条款</h1>
+      <div class="page-meta">最后更新：2026年8月14日</div>
+      <p class="page-intro">本条款适用于由 CANVAS SPV Co., Ltd 运营的网站 vmotobikes.com。使用本网站即表示您接受这些条款。</p>
+
+      <h2 class="section-title">1. 网站运营方</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+      <p>本网站介绍 VMoto 电动车，并用于预约试驾或咨询。</p>
+
+      <h2 class="section-title">2. 价格与供货</h2>
+      <p>价格以泰铢标示，仅供参考。最终价格、配置、供货情况及交付条件在成交时确认。产品图片可能与实际配置存在差异。</p>
+
+      <h2 class="section-title">3. 非公开要约</h2>
+      <p>网站上的信息不构成具有法律约束力的公开要约。购买通过您与公司之间的单独协议完成。</p>
+
+      <h2 class="section-title">4. 质保</h2>
+      <p>包括 3 年质保在内的整车质保条款，以购车时提供的销售文件为准。</p>
+
+      <h2 class="section-title">5. 通过网站提交咨询</h2>
+      <p>提交表单即表示您确认所填信息真实，并同意我们就您的咨询与您联系。个人数据依照<a href="/privacy">隐私政策</a>处理。</p>
+
+      <h2 class="section-title">6. 知识产权</h2>
+      <p>网站上的文字、照片和图形归公司所有或经许可使用。未经我们同意不得复制或再利用。VMoto 商标归其权利人所有。</p>
+
+      <h2 class="section-title">7. 责任</h2>
+      <p>本网站按「现状」提供。我们尽力保持信息准确，但对偶发错误、服务中断以及站外链接服务（WhatsApp、Telegram、Facebook 等）的内容不承担责任。</p>
+
+      <h2 class="section-title">8. 适用法律</h2>
+      <p>本条款适用泰王国法律。</p>
+
+      <h2 class="section-title">9. 变更</h2>
+      <p>我们可能更新本条款。最新版本始终发布在本页面并注明更新日期。</p>
+
+      <h2 class="section-title">10. 联系方式</h2>
+      <p>条款相关问题：+66 96 224 4666（电话或 WhatsApp）。</p>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <span>&copy; 2026 VMOTO · CANVAS SPV Co., Ltd</span>
+    <a href="/privacy" data-i18n-other>Privacy Policy</a>
+  </footer>
+
+  <script>
+    (() => {
+      const LANGS = ['en', 'th', 'ru', 'zh'];
+      const BACK = {"en":"Back","th":"กลับ","ru":"Назад","zh":"返回"};
+      const OTHER = {"en":"Privacy Policy","th":"นโยบายความเป็นส่วนตัว","ru":"Политика конфиденциальности","zh":"隐私政策"};
+      const stored = localStorage.getItem('vmoto-lang');
+      switchLang(LANGS.includes(stored) ? stored : 'en');
+
+      document.getElementById('lang-toggle').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-lang]');
+        if (!btn) return;
+        switchLang(btn.dataset.lang);
+        localStorage.setItem('vmoto-lang', btn.dataset.lang);
+      });
+
+      function switchLang(l) {
+        document.querySelectorAll('.lang-toggle button').forEach((b) => {
+          b.classList.toggle('active', b.dataset.lang === l);
+        });
+        document.querySelectorAll('.lang-content').forEach((c) => {
+          c.classList.toggle('active', c.dataset.langContent === l);
+        });
+        document.querySelector('[data-i18n-back]').textContent = BACK[l] || BACK.en;
+        document.querySelector('[data-i18n-other]').textContent = OTHER[l] || OTHER.en;
+        document.documentElement.lang = l;
+      }
+    })();
+  </script>
 </body>
 </html>

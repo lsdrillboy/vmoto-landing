@@ -3,107 +3,514 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — VMOTO</title>
-  <meta name="description" content="How VMOTO (CANVAS SPV Co., Ltd) handles personal data collected through vmotobikes.com: what we collect, why, who processes it and your rights.">
+  <title>Privacy Policy — VMOTO electric bikes Thailand</title>
+  <meta name="description" content="How CANVAS SPV Co., Ltd collects, uses and protects personal data submitted through vmotobikes.com. Available in English, Thai, Russian and Chinese.">
   <link rel="canonical" href="https://www.vmotobikes.com/privacy">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="VMOTO">
+  <meta property="og:title" content="Privacy Policy — VMOTO electric bikes Thailand">
+  <meta property="og:description" content="How CANVAS SPV Co., Ltd collects, uses and protects personal data submitted through vmotobikes.com. Available in English, Thai, Russian and Chinese.">
+  <meta property="og:url" content="https://www.vmotobikes.com/privacy">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="/assets/img/favicon-96.png" type="image/png" sizes="96x96">
   <link rel="icon" href="/assets/img/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <meta name="theme-color" content="#0a0b0a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a0b0a; color: #f2f1ee; font: 15px/1.75 'Manrope', sans-serif; }
-    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
-    .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 56px; }
-    .logo { font: 600 15px 'Exo 2', sans-serif; letter-spacing: 0.14em; color: #f2f1ee; text-decoration: none; }
-    .logo span { color: #d94f3d; }
-    .lang-jump { font-size: 13px; color: rgba(242,241,238,0.55); text-decoration: none; border-bottom: 1px solid rgba(242,241,238,0.25); }
-    .lang-jump:hover { color: #f2f1ee; }
-    h1 { font: 600 clamp(26px, 4vw, 36px)/1.2 'Exo 2', sans-serif; margin-bottom: 8px; }
-    .date { color: rgba(242,241,238,0.45); font-size: 13px; margin-bottom: 40px; }
-    h2 { font: 600 19px 'Exo 2', sans-serif; margin: 36px 0 12px; }
-    p, li { color: rgba(242,241,238,0.8); }
-    ul { padding-left: 20px; margin: 8px 0; }
-    a { color: #f2f1ee; }
-    .ru { margin-top: 80px; padding-top: 56px; border-top: 1px solid rgba(242,241,238,0.12); }
+    :root {
+      --bg: #0a0b0a;
+      --surface: #101211;
+      --text: #f2f1ee;
+      --muted: rgba(242, 241, 238, .52);
+      --body: rgba(242, 241, 238, .78);
+      --line: rgba(255, 255, 255, .09);
+      --accent: #d94f3d;
+      --heading-font: 'Exo 2', 'Kanit', 'Noto Sans SC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', 'Kanit', 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 10, .82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--heading-font);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo img { width: 22px; height: 22px; display: block; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: var(--text); }
+    .lang-toggle {
+      display: flex;
+      gap: 4px;
+      padding: 3px;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 8px;
+    }
+    .lang-toggle button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color .2s, background .2s;
+    }
+    .lang-toggle button:hover { color: var(--text); }
+    .lang-toggle button.active { background: var(--accent); color: #fff; }
+
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
+    .page-eyebrow {
+      font-family: var(--heading-font);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .page-title {
+      font-family: var(--heading-font);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .page-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .page-intro { font-size: 16px; line-height: 1.75; color: var(--body); margin-bottom: 48px; }
+
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 48px 0 16px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+    p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    li { font-size: 15px; color: var(--body); margin-bottom: 6px; }
+    strong { color: var(--text); font-weight: 600; }
+    a { color: var(--accent); }
+
+    .company-block {
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      margin: 16px 0;
+      background: rgba(217, 79, 61, .06);
+      border-radius: 0 8px 8px 0;
+    }
+    .company-block strong { display: block; margin-bottom: 4px; }
+    .company-block span { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .page-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .page-footer span { font-size: 12px; color: var(--muted); }
+    .page-footer a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .page-footer a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .header-inner { padding: 0 16px; height: 60px; gap: 10px; }
+      .logo { font-size: 13px; letter-spacing: .12em; }
+      .back-link span { display: none; }
+      .page-wrap { padding: 40px 16px 80px; }
+      .page-footer { flex-direction: column; text-align: center; padding: 24px 16px; }
+    }
+
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <a class="logo" href="/">VMOTO<span>.</span></a>
-      <a class="lang-jump" href="#ru">Русская версия ↓</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo"><img src="/assets/img/logo-mark.png" alt="" width="22" height="22">VMOTO</a>
+      <div class="header-right">
+        <a href="/" class="back-link">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span data-i18n-back>Back</span>
+        </a>
+        <div class="lang-toggle" id="lang-toggle">
+          <button type="button" data-lang="en" class="active">EN</button>
+          <button type="button" data-lang="th">TH</button>
+          <button type="button" data-lang="ru">RU</button>
+          <button type="button" data-lang="zh">CN</button>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <h1>Privacy Policy</h1>
-    <p class="date">Last updated: 11 August 2026</p>
+  <main class="page-wrap">
+    <div class="lang-content active" data-lang-content="en">
+      <div class="page-eyebrow">Legal</div>
+      <h1 class="page-title">Privacy Policy</h1>
+      <div class="page-meta">Last updated: 14 August 2026</div>
+      <p class="page-intro">This Privacy Policy explains what data CANVAS SPV Co., Ltd may collect through the website vmotobikes.com, how it is used, stored and protected, and what rights users have.</p>
 
-    <p>This policy describes how <b>CANVAS SPV Co., Ltd</b> (52/57 Moo 1, Na Jomtien Subdistrict, Sattahip District, Chonburi Province 20250, Thailand — «we», «VMOTO») handles personal data collected through the website vmotobikes.com.</p>
+      <h2 class="section-title">1. Data Controller</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
 
-    <h2>1. What we collect</h2>
-    <ul>
-      <li><b>Data you submit</b>: name, phone number, preferred messenger and location — when you send the contact form.</li>
-      <li><b>Technical data</b>: cookies and similar identifiers set by analytics and advertising tools (Meta Pixel), your language preference stored in your browser (localStorage), IP address and device information processed by our hosting provider.</li>
-    </ul>
-
-    <h2>2. Why we use it</h2>
-    <ul>
-      <li>To respond to your request, arrange a test ride, delivery or service.</li>
-      <li>To keep records of enquiries in our customer system (CRM).</li>
-      <li>To measure advertising performance and show relevant ads (Meta Pixel events such as page views, form submissions and messenger clicks).</li>
-    </ul>
-
-    <h2>3. Who processes the data</h2>
-    <p>We use trusted service providers acting on our behalf: Bitrix24 (CRM), Meta Platforms (advertising analytics), Vercel (website hosting). We do not sell personal data and do not share it with anyone else.</p>
-
-    <h2>4. How long we keep it</h2>
-    <p>Enquiry data is kept for as long as needed to handle your request and maintain our customer relationship, or until you ask us to delete it.</p>
-
-    <h2>5. Your rights</h2>
-    <p>You may ask us to access, correct or delete your personal data at any time — message us on WhatsApp at +66 96 224 4666 or call the same number.</p>
-
-    <h2>6. Cookies</h2>
-    <p>The site uses cookies and localStorage for the language switcher and for Meta Pixel analytics. You can block cookies in your browser settings; the website will keep working.</p>
-
-    <h2>7. Changes</h2>
-    <p>We may update this policy from time to time. The current version is always available on this page.</p>
-
-    <div class="ru" id="ru">
-      <h1>Политика конфиденциальности</h1>
-      <p class="date">Обновлено: 11 августа 2026</p>
-
-      <p>Эта политика описывает, как <b>CANVAS SPV Co., Ltd</b> (52/57 Moo 1, Na Jomtien Subdistrict, Sattahip District, Chonburi Province 20250, Thailand — «мы», «VMOTO») обрабатывает персональные данные, собираемые через сайт vmotobikes.com.</p>
-
-      <h2>1. Какие данные мы собираем</h2>
+      <h2 class="section-title">2. Data We Collect</h2>
       <ul>
-        <li><b>Данные, которые вы отправляете</b>: имя, номер телефона, предпочитаемый мессенджер и локация — при отправке формы обратной связи.</li>
-        <li><b>Технические данные</b>: cookies и аналогичные идентификаторы аналитических и рекламных инструментов (Meta Pixel), выбранный язык сайта (localStorage), IP-адрес и данные устройства, обрабатываемые хостинг-провайдером.</li>
+        <li><strong>Data you provide in the form:</strong> name, phone number, preferred messenger and location (Koh Samui, Koh Phangan or your own option).</li>
+        <li><strong>Technical data:</strong> IP address, device and browser type, language, date and time of visit, pages viewed.</li>
+        <li><strong>Cookies and similar identifiers</strong> set for proper website operation and analytics, including your language choice stored in the browser (localStorage).</li>
       </ul>
 
-      <h2>2. Зачем мы их используем</h2>
+      <h2 class="section-title">3. How We Use Data</h2>
+      <ul>
+        <li>To respond to your enquiry, arrange a test ride, delivery or service.</li>
+        <li>To keep a record of enquiries in our customer system (CRM).</li>
+        <li>To measure advertising performance and show relevant ads.</li>
+        <li>To improve the website, service quality and ensure security.</li>
+        <li>To comply with applicable legislation.</li>
+      </ul>
+
+      <h2 class="section-title">4. Legal Basis for Processing</h2>
+      <ul>
+        <li>Your consent (including the checkbox confirmation in the form).</li>
+        <li>Pre-contractual actions at your request.</li>
+        <li>Legitimate interest of the Company (security, abuse prevention, service improvement).</li>
+        <li>Legal obligations.</li>
+      </ul>
+
+      <h2 class="section-title">5. Cookies and Similar Technologies</h2>
+      <p>We use cookies and browser storage to remember your language, for analytics and for advertising measurement. You can limit or disable cookies in your browser settings — the website will keep working.</p>
+
+      <h2 class="section-title">6. Third-Party Data Sharing</h2>
+      <p>We do not sell personal data. Transfer is possible only when necessary:</p>
+      <ul>
+        <li><strong>Bitrix24</strong> — customer system where enquiries are stored;</li>
+        <li><strong>Meta Platforms</strong> and <strong>Google Analytics</strong> — advertising and website analytics;</li>
+        <li><strong>Vercel</strong> — website hosting;</li>
+        <li>to government authorities, if required by law.</li>
+      </ul>
+
+      <h2 class="section-title">7. International Data Transfer</h2>
+      <p>Some data may be processed outside Thailand when using cloud services. We choose providers with reasonable protection measures and lawful data transfer mechanisms.</p>
+
+      <h2 class="section-title">8. Data Retention Period</h2>
+      <p>Data is stored for as long as necessary to handle your enquiry and maintain the customer relationship, or longer if required by law, accounting or protection of rights in disputes.</p>
+
+      <h2 class="section-title">9. Security</h2>
+      <p>We apply reasonable technical and organisational measures to protect data from loss, unauthorised access, alteration and disclosure. Form submissions are transmitted over an encrypted connection.</p>
+
+      <h2 class="section-title">10. Your Rights</h2>
+      <p>Depending on applicable legislation, you may request access, correction or deletion of your data and withdraw your consent for processing — write to us on WhatsApp at +66 96 224 4666 or call the same number.</p>
+
+      <h2 class="section-title">11. Third-Party Websites</h2>
+      <p>The website contains links to third-party services (WhatsApp, Telegram, Facebook, Instagram). Their privacy policies apply separately.</p>
+
+      <h2 class="section-title">12. Policy Changes</h2>
+      <p>We may update this Policy. The current version is always published on this page with the update date.</p>
+    </div>
+
+    <div class="lang-content" data-lang-content="th">
+      <div class="page-eyebrow">ข้อมูลทางกฎหมาย</div>
+      <h1 class="page-title">นโยบายความเป็นส่วนตัว</h1>
+      <div class="page-meta">อัปเดตล่าสุด: 14 สิงหาคม 2026</div>
+      <p class="page-intro">นโยบายความเป็นส่วนตัวนี้อธิบายว่า CANVAS SPV Co., Ltd อาจเก็บรวบรวมข้อมูลใดบ้างผ่านเว็บไซต์ vmotobikes.com ใช้งาน จัดเก็บ และปกป้องข้อมูลอย่างไร และผู้ใช้มีสิทธิ์อะไรบ้าง</p>
+
+      <h2 class="section-title">1. ผู้ควบคุมข้อมูล</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+
+      <h2 class="section-title">2. ข้อมูลที่เราเก็บรวบรวม</h2>
+      <ul>
+        <li><strong>ข้อมูลที่คุณกรอกในแบบฟอร์ม:</strong> ชื่อ หมายเลขโทรศัพท์ แอปที่ต้องการให้ติดต่อ และสถานที่ (เกาะสมุย เกาะพะงัน หรือระบุเอง)</li>
+        <li><strong>ข้อมูลทางเทคนิค:</strong> ที่อยู่ IP ประเภทอุปกรณ์และเบราว์เซอร์ ภาษา วันและเวลาที่เข้าชม หน้าที่เปิดดู</li>
+        <li><strong>คุกกี้และตัวระบุที่คล้ายกัน</strong> เพื่อให้เว็บไซต์ทำงานถูกต้องและเพื่อการวิเคราะห์ รวมถึงภาษาที่เลือกซึ่งบันทึกไว้ในเบราว์เซอร์ (localStorage)</li>
+      </ul>
+
+      <h2 class="section-title">3. เราใช้ข้อมูลอย่างไร</h2>
+      <ul>
+        <li>เพื่อตอบกลับคำขอของคุณ นัดหมายทดลองขับ จัดส่ง หรือบริการหลังการขาย</li>
+        <li>เพื่อบันทึกคำขอไว้ในระบบลูกค้าสัมพันธ์ (CRM)</li>
+        <li>เพื่อวัดผลโฆษณาและแสดงโฆษณาที่เกี่ยวข้อง</li>
+        <li>เพื่อปรับปรุงเว็บไซต์ คุณภาพบริการ และรักษาความปลอดภัย</li>
+        <li>เพื่อปฏิบัติตามกฎหมายที่บังคับใช้</li>
+      </ul>
+
+      <h2 class="section-title">4. ฐานทางกฎหมายในการประมวลผล</h2>
+      <ul>
+        <li>ความยินยอมของคุณ (รวมถึงการติ๊กยืนยันในแบบฟอร์ม)</li>
+        <li>การดำเนินการก่อนทำสัญญาตามคำขอของคุณ</li>
+        <li>ประโยชน์โดยชอบด้วยกฎหมายของบริษัท (ความปลอดภัย การป้องกันการใช้งานในทางที่ผิด การพัฒนาบริการ)</li>
+        <li>หน้าที่ตามกฎหมาย</li>
+      </ul>
+
+      <h2 class="section-title">5. คุกกี้และเทคโนโลยีที่คล้ายกัน</h2>
+      <p>เราใช้คุกกี้และพื้นที่จัดเก็บของเบราว์เซอร์เพื่อจดจำภาษาที่เลือก เพื่อการวิเคราะห์ และเพื่อวัดผลโฆษณา คุณสามารถจำกัดหรือปิดคุกกี้ได้ในการตั้งค่าเบราว์เซอร์ เว็บไซต์จะยังใช้งานได้ตามปกติ</p>
+
+      <h2 class="section-title">6. การเปิดเผยข้อมูลแก่บุคคลที่สาม</h2>
+      <p>เราไม่ขายข้อมูลส่วนบุคคล การส่งต่อข้อมูลจะเกิดขึ้นเท่าที่จำเป็นเท่านั้น:</p>
+      <ul>
+        <li><strong>Bitrix24</strong> — ระบบ CRM ที่จัดเก็บคำขอ</li>
+        <li><strong>Meta Platforms</strong> และ <strong>Google Analytics</strong> — การวิเคราะห์โฆษณาและเว็บไซต์</li>
+        <li><strong>Vercel</strong> — โฮสติ้งเว็บไซต์</li>
+        <li>หน่วยงานราชการ หากกฎหมายกำหนด</li>
+      </ul>
+
+      <h2 class="section-title">7. การโอนข้อมูลระหว่างประเทศ</h2>
+      <p>ข้อมูลบางส่วนอาจถูกประมวลผลนอกประเทศไทยเมื่อใช้บริการคลาวด์ เราเลือกผู้ให้บริการที่มีมาตรการคุ้มครองที่เหมาะสมและกลไกการโอนข้อมูลที่ชอบด้วยกฎหมาย</p>
+
+      <h2 class="section-title">8. ระยะเวลาการเก็บรักษาข้อมูล</h2>
+      <p>เราเก็บข้อมูลไว้เท่าที่จำเป็นต่อการดำเนินการตามคำขอและการรักษาความสัมพันธ์กับลูกค้า หรือนานกว่านั้นหากกฎหมาย การบัญชี หรือการคุ้มครองสิทธิในข้อพิพาทกำหนด</p>
+
+      <h2 class="section-title">9. ความปลอดภัย</h2>
+      <p>เราใช้มาตรการทางเทคนิคและองค์กรที่เหมาะสมเพื่อปกป้องข้อมูลจากการสูญหาย การเข้าถึงโดยไม่ได้รับอนุญาต การเปลี่ยนแปลง และการเปิดเผย ข้อมูลจากแบบฟอร์มถูกส่งผ่านการเชื่อมต่อที่เข้ารหัส</p>
+
+      <h2 class="section-title">10. สิทธิของคุณ</h2>
+      <p>ตามกฎหมายที่บังคับใช้ คุณสามารถขอเข้าถึง แก้ไข หรือลบข้อมูลของคุณ และเพิกถอนความยินยอมได้ — ทักหาเราทาง WhatsApp ที่ +66 96 224 4666 หรือโทรที่หมายเลขเดียวกัน</p>
+
+      <h2 class="section-title">11. เว็บไซต์ของบุคคลที่สาม</h2>
+      <p>เว็บไซต์มีลิงก์ไปยังบริการของบุคคลที่สาม (WhatsApp, Telegram, Facebook, Instagram) ซึ่งมีนโยบายความเป็นส่วนตัวของตนเองแยกต่างหาก</p>
+
+      <h2 class="section-title">12. การเปลี่ยนแปลงนโยบาย</h2>
+      <p>เราอาจปรับปรุงนโยบายนี้ ฉบับปัจจุบันจะเผยแพร่บนหน้านี้พร้อมวันที่อัปเดตเสมอ</p>
+    </div>
+
+    <div class="lang-content" data-lang-content="ru">
+      <div class="page-eyebrow">Правовая информация</div>
+      <h1 class="page-title">Политика конфиденциальности</h1>
+      <div class="page-meta">Обновлено: 14 августа 2026</div>
+      <p class="page-intro">Настоящая Политика конфиденциальности объясняет, какие данные CANVAS SPV Co., Ltd может собирать через сайт vmotobikes.com, как они используются, хранятся и защищаются, и какие права есть у пользователей.</p>
+
+      <h2 class="section-title">1. Оператор данных</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+
+      <h2 class="section-title">2. Какие данные мы собираем</h2>
+      <ul>
+        <li><strong>Данные, которые вы указываете в форме:</strong> имя, номер телефона, предпочитаемый мессенджер и локация (Самуи, Панган или свой вариант).</li>
+        <li><strong>Технические данные:</strong> IP-адрес, тип устройства и браузера, язык, дата и время визита, просмотренные страницы.</li>
+        <li><strong>Cookies и аналогичные идентификаторы</strong> для корректной работы сайта и аналитики, включая выбранный язык, сохраняемый в браузере (localStorage).</li>
+      </ul>
+
+      <h2 class="section-title">3. Как мы используем данные</h2>
       <ul>
         <li>Чтобы ответить на заявку, организовать тест-драйв, доставку или обслуживание.</li>
         <li>Чтобы вести учёт обращений в CRM-системе.</li>
-        <li>Чтобы измерять эффективность рекламы и показывать релевантные объявления (события Meta Pixel: просмотры страниц, отправка формы, клики по мессенджерам).</li>
+        <li>Чтобы измерять эффективность рекламы и показывать релевантные объявления.</li>
+        <li>Чтобы улучшать сайт, качество сервиса и обеспечивать безопасность.</li>
+        <li>Чтобы соблюдать требования применимого законодательства.</li>
       </ul>
 
-      <h2>3. Кто обрабатывает данные</h2>
-      <p>Мы пользуемся услугами проверенных провайдеров, действующих по нашему поручению: Bitrix24 (CRM), Meta Platforms (рекламная аналитика), Vercel (хостинг сайта). Мы не продаём персональные данные и не передаём их третьим лицам.</p>
+      <h2 class="section-title">4. Правовые основания обработки</h2>
+      <ul>
+        <li>Ваше согласие (в том числе отметка в чекбоксе формы).</li>
+        <li>Преддоговорные действия по вашему запросу.</li>
+        <li>Законный интерес компании (безопасность, предотвращение злоупотреблений, улучшение сервиса).</li>
+        <li>Требования законодательства.</li>
+      </ul>
 
-      <h2>4. Сколько мы их храним</h2>
-      <p>Данные обращений хранятся столько, сколько необходимо для обработки заявки и взаимодействия с клиентом, либо до вашего запроса на удаление.</p>
+      <h2 class="section-title">5. Cookies и похожие технологии</h2>
+      <p>Мы используем cookies и хранилище браузера, чтобы запоминать язык, для аналитики и оценки эффективности рекламы. Вы можете ограничить или отключить cookies в настройках браузера — сайт продолжит работать.</p>
 
-      <h2>5. Ваши права</h2>
-      <p>Вы можете в любой момент запросить доступ к своим данным, их исправление или удаление — напишите нам в WhatsApp на +66 96 224 4666 или позвоните по этому номеру.</p>
+      <h2 class="section-title">6. Передача данных третьим лицам</h2>
+      <p>Мы не продаём персональные данные. Передача возможна только при необходимости:</p>
+      <ul>
+        <li><strong>Bitrix24</strong> — CRM-система, где хранятся заявки;</li>
+        <li><strong>Meta Platforms</strong> и <strong>Google Analytics</strong> — рекламная и веб-аналитика;</li>
+        <li><strong>Vercel</strong> — хостинг сайта;</li>
+        <li>государственным органам, если этого требует закон.</li>
+      </ul>
 
-      <h2>6. Cookies</h2>
-      <p>Сайт использует cookies и localStorage для переключателя языка и аналитики Meta Pixel. Вы можете запретить cookies в настройках браузера — сайт продолжит работать.</p>
+      <h2 class="section-title">7. Международная передача данных</h2>
+      <p>Часть данных может обрабатываться за пределами Таиланда при использовании облачных сервисов. Мы выбираем провайдеров с разумными мерами защиты и законными механизмами передачи данных.</p>
 
-      <h2>7. Изменения</h2>
-      <p>Мы можем время от времени обновлять эту политику. Актуальная версия всегда доступна на этой странице.</p>
+      <h2 class="section-title">8. Срок хранения данных</h2>
+      <p>Данные хранятся столько, сколько необходимо для обработки заявки и поддержания отношений с клиентом, либо дольше, если это требуется законом, бухгалтерским учётом или защитой прав в спорах.</p>
+
+      <h2 class="section-title">9. Безопасность</h2>
+      <p>Мы применяем разумные технические и организационные меры для защиты данных от потери, несанкционированного доступа, изменения и раскрытия. Данные формы передаются по зашифрованному соединению.</p>
+
+      <h2 class="section-title">10. Ваши права</h2>
+      <p>В зависимости от применимого законодательства вы можете запросить доступ к данным, их исправление или удаление, а также отозвать согласие на обработку — напишите нам в WhatsApp на +66 96 224 4666 или позвоните по этому же номеру.</p>
+
+      <h2 class="section-title">11. Сторонние сайты</h2>
+      <p>На сайте есть ссылки на сторонние сервисы (WhatsApp, Telegram, Facebook, Instagram). Их политики конфиденциальности действуют отдельно.</p>
+
+      <h2 class="section-title">12. Изменения политики</h2>
+      <p>Мы можем обновлять Политику. Актуальная версия всегда публикуется на этой странице с датой обновления.</p>
     </div>
-  </div>
+
+    <div class="lang-content" data-lang-content="zh">
+      <div class="page-eyebrow">法律信息</div>
+      <h1 class="page-title">隐私政策</h1>
+      <div class="page-meta">最后更新：2026年8月14日</div>
+      <p class="page-intro">本隐私政策说明 CANVAS SPV Co., Ltd 可能通过网站 vmotobikes.com 收集哪些数据，如何使用、存储和保护这些数据，以及用户享有哪些权利。</p>
+
+      <h2 class="section-title">1. 数据控制者</h2>
+      <div class="company-block">
+        <strong>CANVAS SPV Co., Ltd</strong>
+        <span>52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand</span>
+      </div>
+
+      <h2 class="section-title">2. 我们收集的数据</h2>
+      <ul>
+        <li><strong>您在表单中填写的信息：</strong>姓名、电话号码、希望使用的通讯软件以及所在位置（苏梅岛、帕岸岛或自行填写）。</li>
+        <li><strong>技术数据：</strong>IP 地址、设备与浏览器类型、语言、访问日期与时间、浏览过的页面。</li>
+        <li><strong>Cookie 及类似标识符</strong>，用于网站正常运行和数据分析，包括保存在浏览器中的语言选择（localStorage）。</li>
+      </ul>
+
+      <h2 class="section-title">3. 我们如何使用数据</h2>
+      <ul>
+        <li>回复您的咨询，安排试驾、交付或售后服务。</li>
+        <li>在客户管理系统（CRM）中记录咨询。</li>
+        <li>衡量广告效果并展示相关广告。</li>
+        <li>改进网站与服务质量，保障安全。</li>
+        <li>遵守适用法律的要求。</li>
+      </ul>
+
+      <h2 class="section-title">4. 处理数据的法律依据</h2>
+      <ul>
+        <li>您的同意（包括在表单中勾选确认）。</li>
+        <li>应您的请求所进行的合同前准备。</li>
+        <li>公司的合法利益（安全、防止滥用、改进服务）。</li>
+        <li>法律义务。</li>
+      </ul>
+
+      <h2 class="section-title">5. Cookie 与类似技术</h2>
+      <p>我们使用 Cookie 和浏览器存储来记住您的语言选择、进行分析并衡量广告效果。您可以在浏览器设置中限制或禁用 Cookie，网站仍可正常使用。</p>
+
+      <h2 class="section-title">6. 向第三方共享数据</h2>
+      <p>我们不出售个人数据。仅在必要时才会传输：</p>
+      <ul>
+        <li><strong>Bitrix24</strong> — 存储咨询记录的 CRM 系统；</li>
+        <li><strong>Meta Platforms</strong> 与 <strong>Google Analytics</strong> — 广告与网站分析；</li>
+        <li><strong>Vercel</strong> — 网站托管；</li>
+        <li>法律要求时提供给政府主管部门。</li>
+      </ul>
+
+      <h2 class="section-title">7. 数据跨境传输</h2>
+      <p>使用云服务时，部分数据可能在泰国境外处理。我们选择具备合理保护措施和合法传输机制的服务提供商。</p>
+
+      <h2 class="section-title">8. 数据保存期限</h2>
+      <p>数据保存时间以处理您的咨询和维持客户关系所需为限；若法律、会计或争议中的权利保护另有要求，则相应延长。</p>
+
+      <h2 class="section-title">9. 安全</h2>
+      <p>我们采取合理的技术和组织措施，防止数据丢失、未经授权的访问、篡改和泄露。表单数据通过加密连接传输。</p>
+
+      <h2 class="section-title">10. 您的权利</h2>
+      <p>根据适用法律，您可以要求访问、更正或删除您的数据，并撤回处理同意 — 通过 WhatsApp +66 96 224 4666 联系我们，或拨打同一号码。</p>
+
+      <h2 class="section-title">11. 第三方网站</h2>
+      <p>本网站包含指向第三方服务的链接（WhatsApp、Telegram、Facebook、Instagram），其隐私政策单独适用。</p>
+
+      <h2 class="section-title">12. 政策变更</h2>
+      <p>我们可能更新本政策。最新版本始终发布在本页面并注明更新日期。</p>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <span>&copy; 2026 VMOTO · CANVAS SPV Co., Ltd</span>
+    <a href="/terms" data-i18n-other>Terms of Use</a>
+  </footer>
+
+  <script>
+    (() => {
+      const LANGS = ['en', 'th', 'ru', 'zh'];
+      const BACK = {"en":"Back","th":"กลับ","ru":"Назад","zh":"返回"};
+      const OTHER = {"en":"Terms of Use","th":"ข้อกำหนดการใช้งาน","ru":"Пользовательское соглашение","zh":"使用条款"};
+      const stored = localStorage.getItem('vmoto-lang');
+      switchLang(LANGS.includes(stored) ? stored : 'en');
+
+      document.getElementById('lang-toggle').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-lang]');
+        if (!btn) return;
+        switchLang(btn.dataset.lang);
+        localStorage.setItem('vmoto-lang', btn.dataset.lang);
+      });
+
+      function switchLang(l) {
+        document.querySelectorAll('.lang-toggle button').forEach((b) => {
+          b.classList.toggle('active', b.dataset.lang === l);
+        });
+        document.querySelectorAll('.lang-content').forEach((c) => {
+          c.classList.toggle('active', c.dataset.langContent === l);
+        });
+        document.querySelector('[data-i18n-back]').textContent = BACK[l] || BACK.en;
+        document.querySelector('[data-i18n-other]').textContent = OTHER[l] || OTHER.en;
+        document.documentElement.lang = l;
+      }
+    })();
+  </script>
 </body>
 </html>
