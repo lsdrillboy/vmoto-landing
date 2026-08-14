@@ -19,7 +19,7 @@
   <meta name="theme-color" content="#0a0b0a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Michroma&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0a0b0a;
@@ -49,10 +49,10 @@
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--line);
     }
+    /* контейнер и логотип — те же метрики, что в шапке лендинга */
     .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 32px;
+      width: min(1360px, 100% - 72px);
+      margin-inline: auto;
       height: 72px;
       display: flex;
       align-items: center;
@@ -62,16 +62,16 @@
     .logo {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      font-family: var(--heading-font);
+      gap: .5em;
+      font-family: 'Michroma', 'Exo 2', sans-serif;
+      font-weight: 400;
       font-size: 15px;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
+      letter-spacing: .14em;
+      -webkit-text-stroke: .028em currentColor;
       text-decoration: none;
       color: var(--text);
     }
-    .logo img { width: 22px; height: 22px; display: block; }
+    .logo img { height: 1.15em; width: auto; display: block; transform: translateY(-.04em); }
     .header-right { display: flex; align-items: center; gap: 16px; }
     .back-link {
       display: flex;
@@ -179,7 +179,7 @@
     .page-footer a:hover { color: var(--text); }
 
     @media (max-width: 600px) {
-      .header-inner { padding: 0 16px; height: 60px; gap: 10px; }
+      .header-inner { width: calc(100% - 32px); height: 60px; gap: 10px; }
       .logo { font-size: 13px; letter-spacing: .12em; }
       .back-link span { display: none; }
       .page-wrap { padding: 40px 16px 80px; }
@@ -193,7 +193,7 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a href="/" class="logo"><img src="/assets/img/logo-mark.png" alt="" width="22" height="22">VMOTO</a>
+      <a href="/" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
       <div class="header-right">
         <a href="/" class="back-link">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
