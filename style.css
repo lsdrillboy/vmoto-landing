@@ -2550,3 +2550,15 @@ html[lang="th"] .section-title { line-height: 1.35; }
   font-weight: 600;
   letter-spacing: 0.04em;
 }
+
+/* ссылка на страницу /faq — перелинковка и выход из короткого списка */
+.faq__more {
+  display: inline-block;
+  margin-top: 22px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  letter-spacing: .06em;
+  color: rgba(242, 241, 238, .55);
+  transition: color .25s ease;
+}
+.faq__more:hover { color: var(--accent); }
