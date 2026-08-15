@@ -526,29 +526,19 @@ ${feats}
     </section>`;
 }
 
-/* плашка с предложением и полоса доверия — общий низ всех разделов */
-function outro(d, ui, lang, trust) {
-  const items = trust
-    .map((t, i) => `      <div class="biz-trust__i">${icon(['check', 'pin', 'support', 'shield'][i], 18)}<span>${t}</span></div>`)
-    .join('\n');
+/* плашка с предложением — общий низ всех разделов */
+function outro(d, ui, lang) {
   return `    <div class="wide biz-cta">
       <div class="biz-cta__l">
         <i>${icon('calendar', 24)}</i>
         <p>${d.ctaTitle ? `<b>${d.ctaTitle}</b>` : ''}${d.ctaText || d.cta}</p>
       </div>
       <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
-    </div>
-
-    <div class="biz-trust">
-      <div class="wide biz-trust__in">
-${items}
-      </div>
     </div>`;
 }
 
 /* «Модели» и «Вопросы»: герой, затем содержимое в широких секциях */
 function docMain(d, ui, lang, slug) {
-  const trust = BUSINESS[lang].trust;
   let body;
   if (slug === 'faq') {
     const rows = d.sections
@@ -578,7 +568,7 @@ ${hero(slug, lang, ui, d.h1, d.lead, HERO_TILES[slug][lang])}
 
 ${body}
 
-${outro(d, ui, lang, trust)}
+${outro(d, ui, lang)}
   </main>`;
 }
 
@@ -626,7 +616,7 @@ ${inc}
       </ul>
     </section>
 
-${outro(d, ui, lang, d.trust)}
+${outro(d, ui, lang)}
   </main>`;
 }
 
@@ -889,44 +879,105 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     }
     .btn:hover { filter: brightness(1.1); }
 
-    /* подвал: те же колонки, что в подвале лендинга */
-    .site-footer { border-top: 1px solid var(--line); padding: 56px 0 34px; }
-    .foot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-    .foot-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .foot-grid ul { list-style: none; padding: 0; margin: 0; }
-    .foot-grid li { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
-    .foot-grid a { color: var(--muted); text-decoration: none; transition: color .2s; }
-    .foot-grid a:hover { color: var(--accent); }
-    .foot-bottom {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 18px 36px;
-      margin-top: 46px;
-      padding-top: 26px;
+    /* подвал повторяет подвал лендинга — правила перенесены из style.css */
+    .container { width: min(1240px, 100% - 48px); margin-inline: auto; }
+    .footer {
       border-top: 1px solid var(--line);
+      padding: clamp(48px, 6vw, 84px) 0 36px;
+      background: #070808;
     }
-    .foot-bottom p { margin: 0; font-size: 12px; color: var(--muted); }
-    .foot-law { margin-top: 6px !important; opacity: .72; }
-    .foot-end { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-    .foot-legal { display: flex; gap: 22px; }
-    .foot-legal a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .foot-legal a:hover { color: var(--accent); }
-    .foot-slogan {
-      font-family: var(--heading-font);
-      font-size: 12px !important;
-      letter-spacing: .16em;
+    .footer__brand {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(60px, 7.5vw, 100px);
+    }
+    .footer__brand .logo { font-size: 17px; }
+    .footer__tag {
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .22em;
       text-transform: uppercase;
-      color: rgba(242, 241, 238, .35) !important;
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
     }
+    .footer__grid { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 36px 44px; align-items: start; }
+    .footer__label {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0;
+    }
+    .footer__col ul { display: grid; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .footer__col li { font-size: 14.5px; color: rgba(242, 241, 238, .85); margin: 0; }
+    .footer__col li a {
+      text-decoration: none;
+      color: inherit;
+      padding-bottom: 2px;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: color .25s, background-size .35s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__col li a:hover { color: var(--text); background-size: 100% 1px; }
+    .footer__col li i {
+      font-style: normal;
+      display: inline-block;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color .25s, transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__col li a:hover i { color: var(--accent); transform: translate(3px, -3px); }
+    /* иерархия колонок: контакты ярче всех, локации спокойнее всех */
+    .footer__grid .footer__col:nth-child(1) li { color: rgba(242, 241, 238, .5); font-size: 13.5px; }
+    .footer__grid .footer__col:nth-child(2) li { color: rgba(242, 241, 238, .96); font-size: 15.5px; }
+    .footer__grid .footer__col:nth-child(3) li { color: rgba(242, 241, 238, .8); }
+    .footer__grid .footer__col:nth-child(4) li { color: rgba(242, 241, 238, .62); font-size: 14px; }
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      margin-top: clamp(40px, 5vw, 64px);
+      padding-top: 26px;
+    }
+    .footer__copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .footer__law { margin: 4px 0 0; font-size: 11px; color: rgba(242, 241, 238, .35); }
+    .footer__legal { display: flex; gap: 22px; }
+    .footer__legal a { font-size: 12px; color: rgba(242, 241, 238, .45); text-decoration: none; transition: color .2s; }
+    .footer__legal a:hover { color: var(--text); }
+    .footer__end { display: flex; align-items: center; gap: 26px; }
+    .footer__slogan { margin: 0; color: var(--muted); font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; }
+    .footer__up {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 16px;
+      transition: color .25s, border-color .25s, transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__up:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
 
     /* вопросы: минималистичный список «вопрос — ответ» */
     .qa { max-width: 1020px; margin-inline: auto; border-top: 1px solid var(--line); }
@@ -950,8 +1001,8 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .qa__q h2 { font-family: var(--heading-font); font-size: 18px; font-weight: 600; line-height: 1.4; margin: 0; }
     .qa__a { font-size: 15px; color: var(--body); margin: 0; }
 
-    @media (max-width: 900px) {
-      .foot-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 960px) {
+      .footer__grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 760px) {
       .qa__row { grid-template-columns: 1fr; gap: 10px; padding: 26px 0; }
@@ -1091,21 +1142,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .biz-cta__l p { margin: 0; font-size: 15px; }
     .biz-cta__l b { display: block; }
 
-    .biz-trust { margin-top: 84px; border-top: 1px solid var(--line); }
-    /* подвал во всю ширину — под посадочную вёрстку */
-
-    .biz-trust__in { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 26px 0; }
-    .biz-trust__i {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 34px;
-      border-left: 1px solid var(--line);
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .biz-trust__i:first-child { border-left: none; }
-    .biz-trust__i svg { color: var(--accent); }
 
     @media (max-width: 1040px) {
       /* плитки в две колонки: в одну строку они уже не читаются */
@@ -1128,12 +1164,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-feat span { font-size: 10px; }
       .biz-section { padding-top: 56px; }
       .biz-cta { margin-top: 56px; padding: 26px 22px; }
-      .biz-trust { margin-top: 56px; }
-      .biz-trust__in { justify-content: flex-start; gap: 12px 0; }
-      .biz-trust__i { padding: 0 14px 0 0; border-left: none; }
-      .site-footer { padding: 40px 0 28px; }
-      .foot-bottom { margin-top: 34px; }
-      .foot-end { align-items: flex-start; }
     }
   </style>
 </head>
@@ -1160,27 +1190,32 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
 
 ${main}
 
-  <footer class="site-footer">
-    <div class="wide">
-      <div class="foot-grid">
-        <div>
-          <p class="foot-label">${t(lang, 'footer.locations')}</p>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__brand">
+        <a href="${home(lang)}" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
+        <p class="footer__tag">Electric Mobility<br>Made for Island Life</p>
+      </div>
+
+      <div class="footer__grid">
+        <div class="footer__col">
+          <p class="footer__label">${t(lang, 'footer.locations')}</p>
           <ul><li>${t(lang, 'loc.samui')}</li><li>${t(lang, 'loc.phangan')}</li></ul>
         </div>
-        <div>
-          <p class="foot-label">${t(lang, 'footer.contacts')}</p>
+        <div class="footer__col">
+          <p class="footer__label">${t(lang, 'footer.contacts')}</p>
           <ul><li><a href="tel:+66962244666">+66 96 224 4666</a></li></ul>
         </div>
-        <div>
-          <p class="foot-label">${t(lang, 'footer.messengers')}</p>
+        <div class="footer__col">
+          <p class="footer__label">${t(lang, 'footer.messengers')}</p>
           <ul>
-            <li><a href="https://t.me/+66962244666" target="_blank" rel="noopener">Telegram&ensp;↗</a></li>
-            <li><a href="https://wa.me/66962244666" target="_blank" rel="noopener">WhatsApp&ensp;↗</a></li>
-            <li><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook&ensp;↗</a></li>
+            <li><a href="https://t.me/+66962244666" target="_blank" rel="noopener">Telegram&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://wa.me/66962244666" target="_blank" rel="noopener">WhatsApp&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook&ensp;<i aria-hidden="true">↗</i></a></li>
           </ul>
         </div>
-        <div>
-          <p class="foot-label">${t(lang, 'footer.navigation')}</p>
+        <div class="footer__col">
+          <p class="footer__label">${t(lang, 'footer.navigation')}</p>
           <ul>
             <li><a href="${home(lang)}">${ui.home}</a></li>
             <li><a href="${path(lang, 'models')}">${t(lang, 'footer.compare')}</a></li>
@@ -1190,17 +1225,18 @@ ${main}
         </div>
       </div>
 
-      <div class="foot-bottom">
+      <div class="footer__bottom">
         <div>
-          <p>${t(lang, 'footer.copy')}</p>
-          <p class="foot-law">${ui.dealer} · ${COMPANY} · ${ADDRESS}</p>
+          <p class="footer__copy">${t(lang, 'footer.copy')}</p>
+          <p class="footer__law">${ui.dealer} · ${COMPANY} · ${ADDRESS}</p>
         </div>
-        <div class="foot-end">
-          <div class="foot-legal">
-            <a href="/privacy">${t(lang, 'footer.privacy')}</a>
-            <a href="/terms">${t(lang, 'footer.terms')}</a>
-          </div>
-          <p class="foot-slogan">Silent. Electric. Free.</p>
+        <div class="footer__legal">
+          <a href="/privacy">${t(lang, 'footer.privacy')}</a>
+          <a href="/terms">${t(lang, 'footer.terms')}</a>
+        </div>
+        <div class="footer__end">
+          <p class="footer__slogan">Silent. Electric. Free.</p>
+          <button class="footer__up" type="button" aria-label="${t(lang, 'footer.top')}">↑</button>
         </div>
       </div>
     </div>
@@ -1213,6 +1249,8 @@ ${main}
       const onScroll = () => h.classList.toggle('is-scrolled', window.scrollY > 12);
       addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+      document.querySelector('.footer__up')
+        .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();
   </script>
 </body>
