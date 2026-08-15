@@ -2562,3 +2562,35 @@ html[lang="th"] .section-title { line-height: 1.35; }
   transition: color .25s ease;
 }
 .faq__more:hover { color: var(--accent); }
+
+/* ссылка на страницу «Для бизнеса» — без фона, по правому краю сцены */
+.b2b-foot {
+  position: absolute;
+  z-index: 3;
+  bottom: clamp(24px, 5vh, 52px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1240px, 100% - 48px);
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+.b2b-more {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 238, 0.6);
+  transition: color 0.25s, gap 0.25s;
+}
+.b2b-more::after {
+  content: '↗';
+  font-size: 13px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.b2b-more:hover { color: var(--accent); gap: 13px; }
+.b2b-more:hover::after { transform: translate(2px, -2px); }

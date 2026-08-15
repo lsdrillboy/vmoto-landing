@@ -10,6 +10,7 @@
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { MENU_CSS, menuMarkup, MENU_JS } from './lib/menu.mjs';
+import { ANALYTICS, FORM_CSS, formMarkup, formJs } from './lib/leadform.mjs';
 
 /* словарь лендинга: подписи подвала уже переведены там */
 const sandbox = {
@@ -40,6 +41,20 @@ const path = (lang, slug) => (lang === 'en' ? `/${slug}` : `/${lang}/${slug}`);
 const home = (lang) => (lang === 'en' ? '/' : `/${lang}`);
 
 /* ─────────────────────────── интерфейс ─────────────────────────── */
+
+/* заголовок и подпись окна заявки */
+const LEAD = {
+  en: { title: 'Book a test ride', sub: 'Leave your contact — we bring the bikes to a meeting point and answer everything on the spot.' },
+  ru: { title: 'Запись на тест-драйв', sub: 'Оставьте контакт — привезём байки в удобное место и ответим на все вопросы на месте.' },
+  th: { title: 'จองทดลองขับ', sub: 'ทิ้งช่องทางติดต่อไว้ เราจะนำรถไปยังจุดนัดพบและตอบทุกคำถามให้ที่นั่น' },
+  zh: { title: '预约试驾', sub: '留下联系方式 — 我们把车送到约定地点，并当场解答所有问题。' },
+};
+const LEAD_FLEET = {
+  en: { title: 'Fleet enquiry', sub: 'Tell us the size of the fleet and where it will operate — we will prepare terms for your business.' },
+  ru: { title: 'Заявка на парк', sub: 'Напишите, какой нужен парк и где он будет работать, — подготовим условия под ваш бизнес.' },
+  th: { title: 'สอบถามเรื่องฟลีต', sub: 'บอกเราว่าต้องการฟลีตขนาดเท่าไรและใช้งานที่ไหน เราจะจัดเงื่อนไขให้ธุรกิจของคุณ' },
+  zh: { title: '车队咨询', sub: '告诉我们车队规模和运营地点，我们会为您的业务准备方案。' },
+};
 
 const UI = {
   en: {
@@ -522,7 +537,7 @@ function hero(slug, lang, ui, h1, lead, tiles) {
         <div class="biz-feats">
 ${feats}
         </div>
-        <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+        <button type="button" class="btn" data-lead>${ui.cta}&ensp;→</button>
       </div>
     </section>`;
 }
@@ -534,7 +549,7 @@ function outro(d, ui, lang) {
         <i>${icon('calendar', 24)}</i>
         <p>${d.ctaTitle ? `<b>${d.ctaTitle}</b>` : ''}${d.ctaText || d.cta}</p>
       </div>
-      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+      <button type="button" class="btn" data-lead>${ui.cta}&ensp;→</button>
     </div>`;
 }
 
@@ -683,6 +698,7 @@ ${hreflang}
   <link rel="icon" href="/assets/img/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <meta name="theme-color" content="#0a0b0a">
+${ANALYTICS}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Michroma&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
@@ -1162,7 +1178,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-section { padding-top: 56px; }
       .biz-cta { margin-top: 56px; padding: 26px 22px; }
     }
-${MENU_CSS}
+${MENU_CSS}${FORM_CSS}
   </style>
 </head>
 <body>
@@ -1203,6 +1219,11 @@ ${menuMarkup({
 
 ${main}
 
+${formMarkup({
+    t, lang,
+    title: (slug === 'business' ? LEAD_FLEET : LEAD)[lang].title,
+    sub: (slug === 'business' ? LEAD_FLEET : LEAD)[lang].sub,
+  })}
   <footer class="footer">
     <div class="container">
       <div class="footer__brand">
@@ -1258,6 +1279,16 @@ ${main}
   <script>
     (() => {
 ${MENU_JS}
+${formJs({
+    fleet: slug === 'business',
+    lang,
+    strings: {
+      choose: t(lang, 'form.choose'),
+      sending: t(lang, 'form.sending'),
+      send: t(lang, 'form.send'),
+      error: t(lang, 'form.error'),
+    },
+  })}
       document.querySelector('.footer__up')
         .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();
