@@ -29,11 +29,14 @@ if (!DICT || !DICT.ru) throw new Error('DICT не извлечён из i18n.js'
 /* подписи подвала по языкам — подставляются переключателем без перезагрузки */
 const FOOT_KEYS = ['footer.locations', 'loc.samui', 'loc.phangan', 'footer.contacts',
   'footer.messengers', 'footer.navigation', 'footer.compare', 'footer.fleets',
-  'footer.faqPage', 'footer.copy', 'footer.dealer', 'footer.privacy', 'footer.terms', 'footer.top'];
+  'footer.faqPage', 'footer.copy', 'footer.dealer', 'footer.privacy', 'footer.terms',
+  'footer.top', 'nav.models', 'b2b.label', 'lang.aria'];
 const HOME = { en: 'Home', ru: 'Главная', th: 'หน้าแรก', zh: '首页' };
+const FAQ_NAV = { en: 'FAQ', ru: 'Вопросы', th: 'คำถามที่พบบ่อย', zh: '常见问题' };
 const FOOT = Object.fromEntries(LANGS_ALL.map((l) => [l, {
   ...Object.fromEntries(FOOT_KEYS.map((k) => [k, (DICT[l] && DICT[l][k]) || DICT.en[k]])),
   home: HOME[l],
+  faq: FAQ_NAV[l],
 }]));
 
 const SITE = 'https://www.vmotobikes.com';
@@ -90,26 +93,31 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       -webkit-font-smoothing: antialiased;
     }
 
+    /* шапка повторяет лендинг: фиксированная, фон появляется при прокрутке */
     .site-header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      inset: 0 0 auto 0;
       z-index: 100;
-      background: rgba(10, 11, 10, .82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s;
     }
-    /* контейнер и логотип — те же метрики, что в шапке лендинга */
+    .site-header.is-scrolled {
+      background: rgba(10, 11, 10, .82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom-color: var(--line);
+    }
     .header-inner {
       width: min(1360px, 100% - 72px);
       margin-inline: auto;
-      height: 72px;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 24px;
+      padding: 26px 0;
     }
     .logo {
+      justify-self: start;
       display: inline-flex;
       align-items: center;
       gap: .5em;
@@ -122,43 +130,92 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       color: var(--text);
     }
     .logo img { height: 1.15em; width: auto; display: block; transform: translateY(-.04em); }
-    .header-right { display: flex; align-items: center; gap: 16px; }
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
+    .page-nav { display: flex; gap: 32px; }
+    .page-nav a {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       text-decoration: none;
+      white-space: nowrap;
+      color: var(--text);
       transition: color .2s;
     }
-    .back-link:hover { color: var(--text); }
-    .lang-toggle {
-      display: flex;
-      gap: 4px;
-      padding: 3px;
-      background: rgba(255, 255, 255, .05);
-      border-radius: 8px;
-    }
-    .lang-toggle button {
-      appearance: none;
-      border: none;
-      background: transparent;
+    .page-nav a:hover { color: var(--accent); }
+    .header-right { justify-self: end; display: flex; align-items: center; gap: 14px; }
+
+    .lang { position: relative; }
+    .lang__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 999px;
+      background: rgba(10, 11, 10, .42);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      color: var(--text);
       font-family: inherit;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: .06em;
-      color: var(--muted);
-      padding: 6px 10px;
-      border-radius: 6px;
+      letter-spacing: .08em;
+      transition: color .2s, border-color .2s;
+    }
+    .lang__btn:hover { color: var(--accent); border-color: rgba(217, 79, 61, .6); }
+    .lang__btn > svg:first-child, .lang__chev { color: var(--accent); }
+    .lang__chev { transition: transform .25s; }
+    .lang:hover .lang__chev, .lang:focus-within .lang__chev { transform: rotate(180deg); }
+    .lang__list {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      min-width: 74px;
+      padding: 6px;
+      margin: 0;
+      list-style: none;
+      background: rgba(12, 13, 12, .92);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -6px);
+      transition: opacity .25s, visibility .25s, transform .25s;
+      z-index: 200;
+    }
+    .lang:hover .lang__list, .lang:focus-within .lang__list { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+    .lang__list button {
+      display: block;
+      width: 100%;
+      padding: 9px 12px;
+      border: none;
+      border-radius: 9px;
+      background: none;
       cursor: pointer;
+      text-align: center;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
       transition: color .2s, background .2s;
     }
-    .lang-toggle button:hover { color: var(--text); }
-    .lang-toggle button.active { background: var(--accent); color: #fff; }
+    .lang__list button:hover { color: var(--text); background: rgba(255, 255, 255, .06); }
+    .lang__list button.active { color: var(--accent); }
+    .header-social {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(10, 11, 10, .42);
+      backdrop-filter: blur(8px);
+      color: var(--accent);
+      transition: color .2s, border-color .2s, transform .2s;
+    }
+    .header-social:hover { color: var(--text); border-color: rgba(217, 79, 61, .6); transform: translateY(-1px); }
 
-    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 138px 32px 100px; }
     .page-eyebrow {
       font-family: var(--heading-font);
       font-size: 10px;
@@ -317,11 +374,13 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
     @media (max-width: 960px) {
       .footer__grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 600px) {
-      .header-inner { width: calc(100% - 32px); height: 60px; gap: 10px; }
+    @media (max-width: 700px) {
+      .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
       .logo { font-size: 13px; letter-spacing: .12em; }
-      .back-link span { display: none; }
-      .page-wrap { padding: 40px 16px 80px; }
+      .header-right { grid-column: 2; }
+      .page-nav { order: 3; grid-column: 1 / -1; gap: 18px; }
+      .page-nav a { font-size: 11px; letter-spacing: .1em; }
+      .page-wrap { padding: 124px 16px 80px; }
     }
 
     .lang-content { display: none; }
@@ -331,18 +390,29 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a href="/" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
+      <a href="/" class="logo" data-nav="home" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
+      <nav class="page-nav">
+        <a href="/models" data-nav="models" data-f="nav.models"></a>
+        <a href="/business" data-nav="business" data-f="b2b.label"></a>
+        <a href="/faq" data-nav="faq" data-f="faq"></a>
+      </nav>
       <div class="header-right">
-        <a href="/" class="back-link">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span data-i18n-back>Back</span>
-        </a>
-        <div class="lang-toggle" id="lang-toggle">
-          <button type="button" data-lang="en" class="active">EN</button>
-          <button type="button" data-lang="th">TH</button>
-          <button type="button" data-lang="ru">RU</button>
-          <button type="button" data-lang="zh">CN</button>
+        <div class="lang" id="lang-toggle">
+          <button class="lang__btn" type="button" aria-haspopup="true" data-f-aria="lang.aria">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8c2.6 2.4 4 5.6 4 9.2s-1.4 6.8-4 9.2c-2.6-2.4-4-5.6-4-9.2s1.4-6.8 4-9.2z"/></svg>
+            <span class="lang__cur">EN</span>
+            <svg class="lang__chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="lang__list">
+            <li><button type="button" data-lang="en">EN</button></li>
+            <li><button type="button" data-lang="ru">RU</button></li>
+            <li><button type="button" data-lang="th">ไทย</button></li>
+            <li><button type="button" data-lang="zh">中文</button></li>
+          </ul>
         </div>
+        <a class="header-social" href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8.5V7c0-.8.7-1.5 1.5-1.5H17V2.6h-2.8C11.9 2.6 10 4.5 10 6.8v1.7H7.5V12H10v9.4h4V12h2.6l.6-3.5H14z"/></svg>
+        </a>
       </div>
     </div>
   </header>
@@ -406,7 +476,6 @@ ${docs}
   <script>
     (() => {
       const LANGS = ['en', 'th', 'ru', 'zh'];
-      const BACK = ${JSON.stringify(UI.back)};
       const FOOT = ${JSON.stringify(FOOT)};
       const stored = localStorage.getItem('vmoto-lang');
       switchLang(LANGS.includes(stored) ? stored : 'en');
@@ -419,13 +488,13 @@ ${docs}
       });
 
       function switchLang(l) {
-        document.querySelectorAll('.lang-toggle button').forEach((b) => {
+        document.querySelectorAll('.lang__list button').forEach((b) => {
           b.classList.toggle('active', b.dataset.lang === l);
         });
+        document.querySelector('.lang__cur').textContent = l === 'zh' ? 'CN' : l.toUpperCase();
         document.querySelectorAll('.lang-content').forEach((c) => {
           c.classList.toggle('active', c.dataset.langContent === l);
         });
-        document.querySelector('[data-i18n-back]').textContent = BACK[l] || BACK.en;
         /* подвал: подписи и ссылки на языковые версии разделов */
         const f = FOOT[l] || FOOT.en;
         document.querySelectorAll('[data-f]').forEach((e) => { e.textContent = f[e.dataset.f]; });
@@ -436,6 +505,14 @@ ${docs}
         });
         document.documentElement.lang = l;
       }
+
+      /* фон шапки появляется при прокрутке — как на лендинге */
+      const header = document.querySelector('.site-header');
+      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      document.querySelector('.footer__up')
+        .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();
   </script>
 </body>
