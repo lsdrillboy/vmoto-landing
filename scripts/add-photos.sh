@@ -16,8 +16,8 @@ enc() { # enc <исходник> <куда>
   printf '%-38s %sK\n' "$2" "$(( $(stat -f%z "$2") / 1024 ))"
 }
 
-enc "${1:--}" assets/business/stations.avif
-enc "${2:--}" assets/business/faq-hero.avif
+enc "${1:--}" assets/img/stations.avif
+enc "${2:--}" assets/img/faq-hero.avif
 
 node scripts/build-pages.mjs >/dev/null
 echo "страницы пересобраны"

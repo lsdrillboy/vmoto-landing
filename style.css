@@ -292,7 +292,7 @@ ul { list-style: none; }
   background:
     radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, 0.08), transparent 65%),
     linear-gradient(rgba(8, 9, 8, 0.82), rgba(8, 9, 8, 0.82)),
-    #080908 url('assets/poster/menu.avif?v=2') center / cover no-repeat;
+    #080908 url('assets/img/menu.avif') center / cover no-repeat;
   backdrop-filter: blur(18px);
   /* занавес: раскрывается сверху вниз, закрывается обратно вверх */
   clip-path: inset(0 0 100% 0);
@@ -683,7 +683,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 .feature__bg {
   position: absolute;
   inset: 0;
-  background: url('assets/img/benefits-red.avif?v=2') right center / cover no-repeat;
+  background: url('assets/img/benefits-red.avif') right center / cover no-repeat;
 }
 .feature__inner {
   position: relative;

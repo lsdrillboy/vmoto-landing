@@ -667,7 +667,7 @@
       background:
         radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, .08), transparent 65%),
         linear-gradient(rgba(8, 9, 8, .82), rgba(8, 9, 8, .82)),
-        #080908 url('/assets/poster/menu.avif?v=2') center / cover no-repeat;
+        #080908 url('/assets/img/menu.avif') center / cover no-repeat;
       backdrop-filter: blur(18px);
       clip-path: inset(0 0 100% 0);
       visibility: hidden;
@@ -986,7 +986,7 @@
 
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.avif?v=2" muted playsinline preload="none"></video>
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/img/menu.avif" muted playsinline preload="none"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">
@@ -1009,7 +1009,7 @@
 
   <main>
     <section class="biz-hero">
-      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.avif?v=2" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/img/retreat.avif" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="biz-hero__fade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
@@ -1043,11 +1043,11 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="biz-seg">
         <article class="biz-seg__card">
-          <img src="/assets/business/hotels.webp" alt="" loading="lazy">
+          <img src="/assets/img/hotels.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>รีทรีตเซ็นเตอร์ วิลล่า และโรงแรม</h2><p>ฟลีตมอเตอร์ไซค์ไฟฟ้าที่เงียบสนิทคือการยกระดับบริการอย่างแท้จริง แขกเดินทางรอบเกาะโดยไม่มีเสียงและควัน สอดคล้องกับบรรยากาศของสถานที่ ไม่ต้องออกไปหาที่เช่ารถเมื่อมาถึง เพิ่มมูลค่าให้ทุกการเข้าพัก สร้างภาพลักษณ์รักษ์โลก และมีรายได้จากค่าเช่าหากคิดค่าบริการ</p></div>
         </article>
         <article class="biz-seg__card">
-          <img src="/assets/business/rental.webp" alt="" loading="lazy">
+          <img src="/assets/img/rental.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>เปิดธุรกิจให้เช่า</h2><p>การเริ่มธุรกิจให้เช่ามอเตอร์ไซค์ไฟฟ้าบนเกาะมีเงื่อนไขเฉพาะ: ราคาตามจำนวน ดำเนินการจดทะเบียนให้ อบรมพนักงาน และสนับสนุนงานบริการ รถไฟฟ้าช่วยตัดสองรายจ่ายที่กินกำไรของธุรกิจเช่ามากที่สุด คือค่าน้ำมันและค่าบำรุงรักษา</p></div>
         </article>
       </div>
@@ -1057,7 +1057,8 @@
       <p class="biz-label">การชาร์จ</p>
       <h2 class="biz-h2">โครงสร้างพื้นฐานการชาร์จสำหรับฟลีตของคุณ</h2>
       <div class="biz-rule" aria-hidden="true"></div>
-      <div class="biz-charge biz-charge--flat">
+      <div class="biz-charge">
+        <div class="biz-charge__photo" style="background-image:url('/assets/img/stations.avif')" aria-hidden="true"></div>
         <div class="biz-charge__text">
           <p>รถทุกคันมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ ฟลีตจึงใช้งานได้จากปลั๊กธรรมดาตั้งแต่วันแรก ไม่ต้องก่อสร้างหรือขอไฟเพิ่ม และเมื่อคุณต้องการรองรับการชาร์จมากขึ้น เราจะแนะนำว่าควรติดตั้งจุดชาร์จตรงไหนและต้องมีกี่จุดสำหรับฟลีตขนาดของคุณ</p>
           <ul class="biz-charge__facts">

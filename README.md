@@ -24,13 +24,22 @@ python3 -m http.server 8734
 
 ```
 assets/
-├── video/          mp4: citi-360*, cpx-360* (вертушки цветов), promo, menu
-├── poster/         постеры к видео и секвенциям (совпадают по именам)
-├── gallery/        карточки «Галереи деталей» (led, batteries, brakes…)
-├── business/       сцены слайдера «Решения для бизнеса» (retreat, rental, hotels)
-├── img/            hero-bg / contacts-bg (+ -m мобильные), benefits-red, rider (FAQ)
-└── src/            исходники и неиспользуемое — сайт на них не ссылается
+├── video/   mp4: citi-360*, cpx-360* (вертушки цветов), promo, menu
+└── img/     все изображения проекта, одной папкой:
+             • фоны: hero-bg, contacts-bg-4 (+ -m мобильные), benefits-red
+             • сцены: retreat, rental, hotels, stations, faq-hero
+             • галерея деталей: led, batteries, brakes, top-box…
+             • постеры видео: citi-360*, cpx-360*, menu, promo
+             • иконки и служебное: logo-mark, favicon-*, apple-touch-icon,
+               og-cover-3.jpg, rider.png
 ```
+
+Неиспользуемых файлов в `assets/` нет: всё, что там лежит, страница
+запрашивает. Перед добавлением нового кадра проверьте, что имя свободно —
+папка плоская.
+
+Что чем является: `.avif` — фотографии, `.png` — прозрачное и иконки,
+`og-cover-3.jpg` — превью для соцсетей (AVIF они не читают).
 
 ## Изображения
 

@@ -667,7 +667,7 @@
       background:
         radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, .08), transparent 65%),
         linear-gradient(rgba(8, 9, 8, .82), rgba(8, 9, 8, .82)),
-        #080908 url('/assets/poster/menu.avif?v=2') center / cover no-repeat;
+        #080908 url('/assets/img/menu.avif') center / cover no-repeat;
       backdrop-filter: blur(18px);
       clip-path: inset(0 0 100% 0);
       visibility: hidden;
@@ -986,7 +986,7 @@
 
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.avif?v=2" muted playsinline preload="none"></video>
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/img/menu.avif" muted playsinline preload="none"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">
@@ -1009,7 +1009,7 @@
 
   <main>
     <section class="biz-hero">
-      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.avif?v=2" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/img/retreat.avif" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="biz-hero__fade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
@@ -1043,11 +1043,11 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="biz-seg">
         <article class="biz-seg__card">
-          <img src="/assets/business/hotels.webp" alt="" loading="lazy">
+          <img src="/assets/img/hotels.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>Retreat centres, villas and hotels</h2><p>A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.</p></div>
         </article>
         <article class="biz-seg__card">
-          <img src="/assets/business/rental.webp" alt="" loading="lazy">
+          <img src="/assets/img/rental.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>Opening a rental business</h2><p>Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.</p></div>
         </article>
       </div>
@@ -1057,7 +1057,8 @@
       <p class="biz-label">Charging</p>
       <h2 class="biz-h2">Charging infrastructure for your fleet</h2>
       <div class="biz-rule" aria-hidden="true"></div>
-      <div class="biz-charge biz-charge--flat">
+      <div class="biz-charge">
+        <div class="biz-charge__photo" style="background-image:url('/assets/img/stations.avif')" aria-hidden="true"></div>
         <div class="biz-charge__text">
           <p>Every bike carries two removable batteries and a charger, so a fleet runs off ordinary sockets from day one — no construction, no separate connection. When you need more throughput, we advise where to put chargers on your property and how many a fleet of your size needs.</p>
           <ul class="biz-charge__facts">

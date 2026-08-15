@@ -667,7 +667,7 @@
       background:
         radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, .08), transparent 65%),
         linear-gradient(rgba(8, 9, 8, .82), rgba(8, 9, 8, .82)),
-        #080908 url('/assets/poster/menu.avif?v=2') center / cover no-repeat;
+        #080908 url('/assets/img/menu.avif') center / cover no-repeat;
       backdrop-filter: blur(18px);
       clip-path: inset(0 0 100% 0);
       visibility: hidden;
@@ -986,7 +986,7 @@
 
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.avif?v=2" muted playsinline preload="none"></video>
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/img/menu.avif" muted playsinline preload="none"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">
@@ -1009,7 +1009,7 @@
 
   <main>
     <section class="biz-hero">
-      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.avif?v=2" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/img/retreat.avif" alt="" style="object-position:72% 50%" fetchpriority="high"></div>
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="biz-hero__fade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
@@ -1043,11 +1043,11 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="biz-seg">
         <article class="biz-seg__card">
-          <img src="/assets/business/hotels.webp" alt="" loading="lazy">
+          <img src="/assets/img/hotels.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>Ретрит-центры, виллы и отели</h2><p>Парк бесшумных электробайков — реальный апгрейд сервиса: гости перемещаются по острову без шума и выхлопа, в согласии с местом. Не нужно искать прокат по приезде, каждая ночь становится ценнее, плюс экологичный образ и доход с аренды, если байки платные.</p></div>
         </article>
         <article class="biz-seg__card">
-          <img src="/assets/business/rental.webp" alt="" loading="lazy">
+          <img src="/assets/img/rental.avif" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>Открытие проката</h2><p>Для запуска проката электробайков на острове действуют отдельные условия: цена за парк, регистрация под ключ, обучение персонала и поддержка сервиса. Электробайки убирают две главные статьи, которые съедают маржу проката, — топливо и обслуживание.</p></div>
         </article>
       </div>
@@ -1057,7 +1057,8 @@
       <p class="biz-label">Зарядка</p>
       <h2 class="biz-h2">Зарядная инфраструктура для вашего парка</h2>
       <div class="biz-rule" aria-hidden="true"></div>
-      <div class="biz-charge biz-charge--flat">
+      <div class="biz-charge">
+        <div class="biz-charge__photo" style="background-image:url('/assets/img/stations.avif')" aria-hidden="true"></div>
         <div class="biz-charge__text">
           <p>У каждого байка две съёмные батареи и зарядное устройство, поэтому парк работает от обычных розеток с первого дня — без стройки и отдельного подключения. Когда нужна большая пропускная способность, подскажем, где разместить зарядки на территории и сколько их нужно парку вашего размера.</p>
           <ul class="biz-charge__facts">
