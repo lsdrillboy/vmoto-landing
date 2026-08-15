@@ -4,13 +4,43 @@
    реквизитов. Четыре языка живут в одном файле и переключаются без
    перезагрузки; выбор пишется в тот же ключ localStorage, что и на
    лендинге ('vmoto-lang'). Запуск: node scripts/build-legal.mjs */
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+const LANGS_ALL = ['en', 'th', 'ru', 'zh'];
+
+/* словарь лендинга: подписи подвала уже переведены там */
+const sandbox = {
+  window: {},
+  navigator: { languages: ['en'], language: 'en' },
+  localStorage: { getItem: () => null, setItem: () => {} },
+  document: {
+    documentElement: { getAttribute: () => null, setAttribute: () => {}, lang: 'en' },
+    title: '', querySelector: () => null, querySelectorAll: () => [],
+    getElementById: () => null, addEventListener: () => {},
+  },
+};
+sandbox.globalThis = sandbox;
+vm.createContext(sandbox);
+vm.runInContext(readFileSync('i18n.js', 'utf8'), sandbox);
+const DICT = sandbox.window.__DICT;
+if (!DICT || !DICT.ru) throw new Error('DICT не извлечён из i18n.js');
+
+/* подписи подвала по языкам — подставляются переключателем без перезагрузки */
+const FOOT_KEYS = ['footer.locations', 'loc.samui', 'loc.phangan', 'footer.contacts',
+  'footer.messengers', 'footer.navigation', 'footer.compare', 'footer.fleets',
+  'footer.faqPage', 'footer.copy', 'footer.dealer', 'footer.privacy', 'footer.terms', 'footer.top'];
+const HOME = { en: 'Home', ru: 'Главная', th: 'หน้าแรก', zh: '首页' };
+const FOOT = Object.fromEntries(LANGS_ALL.map((l) => [l, {
+  ...Object.fromEntries(FOOT_KEYS.map((k) => [k, (DICT[l] && DICT[l][k]) || DICT.en[k]])),
+  home: HOME[l],
+}]));
 
 const SITE = 'https://www.vmotobikes.com';
 const COMPANY = 'CANVAS SPV Co., Ltd';
 const ADDRESS = '52/57 Moo 1, Na Jomtien Subdistrict,<br>Sattahip District, Chonburi Province 20250, Thailand';
 const PHONE = '+66 96 224 4666';
-const LANGS = ['en', 'th', 'ru', 'zh'];
+const LANGS = LANGS_ALL;
 
 const UI = {
   back: { en: 'Back', th: 'กลับ', ru: 'Назад', zh: '返回' },
@@ -184,26 +214,114 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
     .company-block strong { display: block; margin-bottom: 4px; }
     .company-block span { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
-    .page-footer {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 32px;
+    /* подвал повторяет подвал лендинга — правила перенесены из style.css */
+    .container { width: min(1240px, 100% - 48px); margin-inline: auto; }
+    .footer {
       border-top: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      padding: clamp(48px, 6vw, 84px) 0 36px;
+      background: #070808;
     }
-    .page-footer span { font-size: 12px; color: var(--muted); }
-    .page-footer a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
-    .page-footer a:hover { color: var(--text); }
+    .footer__brand {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(60px, 7.5vw, 100px);
+    }
+    .footer__brand .logo { font-size: 17px; }
+    .footer__tag {
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .footer__grid { display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 36px 44px; align-items: start; }
+    .footer__label {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0;
+    }
+    .footer__col ul { display: grid; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .footer__col li { font-size: 14.5px; color: rgba(242, 241, 238, .85); margin: 0; }
+    .footer__col li a {
+      text-decoration: none;
+      color: inherit;
+      padding-bottom: 2px;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: color .25s, background-size .35s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__col li a:hover { color: var(--text); background-size: 100% 1px; }
+    .footer__col li i {
+      font-style: normal;
+      display: inline-block;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color .25s, transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__col li a:hover i { color: var(--accent); transform: translate(3px, -3px); }
+    /* иерархия колонок: контакты ярче всех, локации спокойнее всех */
+    .footer__grid .footer__col:nth-child(1) li { color: rgba(242, 241, 238, .5); font-size: 13.5px; }
+    .footer__grid .footer__col:nth-child(2) li { color: rgba(242, 241, 238, .96); font-size: 15.5px; }
+    .footer__grid .footer__col:nth-child(3) li { color: rgba(242, 241, 238, .8); }
+    .footer__grid .footer__col:nth-child(4) li { color: rgba(242, 241, 238, .62); font-size: 14px; }
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      margin-top: clamp(40px, 5vw, 64px);
+      padding-top: 26px;
+    }
+    .footer__copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .footer__law { margin: 4px 0 0; font-size: 11px; color: rgba(242, 241, 238, .35); }
+    .footer__legal { display: flex; gap: 22px; }
+    .footer__legal a { font-size: 12px; color: rgba(242, 241, 238, .45); text-decoration: none; transition: color .2s; }
+    .footer__legal a:hover { color: var(--text); }
+    .footer__end { display: flex; align-items: center; gap: 26px; }
+    .footer__slogan { margin: 0; color: var(--muted); font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; }
+    .footer__up {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 16px;
+      transition: color .25s, border-color .25s, transform .3s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer__up:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
 
+    @media (max-width: 960px) {
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 600px) {
       .header-inner { width: calc(100% - 32px); height: 60px; gap: 10px; }
       .logo { font-size: 13px; letter-spacing: .12em; }
       .back-link span { display: none; }
       .page-wrap { padding: 40px 16px 80px; }
-      .page-footer { flex-direction: column; text-align: center; padding: 24px 16px; }
     }
 
     .lang-content { display: none; }
@@ -233,16 +351,63 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
 ${docs}
   </main>
 
-  <footer class="page-footer">
-    <span>&copy; 2026 VMOTO · ${COMPANY}</span>
-    <a href="${slug === 'privacy' ? '/terms' : '/privacy'}" data-i18n-other>${slug === 'privacy' ? UI.terms.en : UI.privacy.en}</a>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__brand">
+        <a href="/" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
+        <p class="footer__tag">Electric Mobility<br>Made for Island Life</p>
+      </div>
+
+      <div class="footer__grid">
+        <div class="footer__col">
+          <p class="footer__label" data-f="footer.locations"></p>
+          <ul><li data-f="loc.samui"></li><li data-f="loc.phangan"></li></ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__label" data-f="footer.contacts"></p>
+          <ul><li><a href="tel:+66962244666">${PHONE}</a></li></ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__label" data-f="footer.messengers"></p>
+          <ul>
+            <li><a href="https://t.me/+66962244666" target="_blank" rel="noopener">Telegram&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://wa.me/66962244666" target="_blank" rel="noopener">WhatsApp&ensp;<i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook&ensp;<i aria-hidden="true">↗</i></a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__label" data-f="footer.navigation"></p>
+          <ul>
+            <li><a href="/" data-nav="home" data-f="home"></a></li>
+            <li><a href="/models" data-nav="models" data-f="footer.compare"></a></li>
+            <li><a href="/business" data-nav="business" data-f="footer.fleets"></a></li>
+            <li><a href="/faq" data-nav="faq" data-f="footer.faqPage"></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div>
+          <p class="footer__copy" data-f="footer.copy"></p>
+          <p class="footer__law"><span data-f="footer.dealer"></span> · ${COMPANY} · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</p>
+        </div>
+        <div class="footer__legal">
+          <a href="/privacy" data-f="footer.privacy"></a>
+          <a href="/terms" data-f="footer.terms"></a>
+        </div>
+        <div class="footer__end">
+          <p class="footer__slogan">Silent. Electric. Free.</p>
+          <button class="footer__up" type="button" data-f-aria="footer.top">↑</button>
+        </div>
+      </div>
+    </div>
   </footer>
 
   <script>
     (() => {
       const LANGS = ['en', 'th', 'ru', 'zh'];
       const BACK = ${JSON.stringify(UI.back)};
-      const OTHER = ${JSON.stringify(slug === 'privacy' ? UI.terms : UI.privacy)};
+      const FOOT = ${JSON.stringify(FOOT)};
       const stored = localStorage.getItem('vmoto-lang');
       switchLang(LANGS.includes(stored) ? stored : 'en');
 
@@ -261,7 +426,14 @@ ${docs}
           c.classList.toggle('active', c.dataset.langContent === l);
         });
         document.querySelector('[data-i18n-back]').textContent = BACK[l] || BACK.en;
-        document.querySelector('[data-i18n-other]').textContent = OTHER[l] || OTHER.en;
+        /* подвал: подписи и ссылки на языковые версии разделов */
+        const f = FOOT[l] || FOOT.en;
+        document.querySelectorAll('[data-f]').forEach((e) => { e.textContent = f[e.dataset.f]; });
+        document.querySelectorAll('[data-f-aria]').forEach((e) => { e.setAttribute('aria-label', f[e.dataset.fAria]); });
+        const base = l === 'en' ? '' : '/' + l;
+        document.querySelectorAll('[data-nav]').forEach((a) => {
+          a.href = a.dataset.nav === 'home' ? (base || '/') : base + '/' + a.dataset.nav;
+        });
         document.documentElement.lang = l;
       }
     })();
