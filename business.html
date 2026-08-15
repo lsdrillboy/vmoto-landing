@@ -229,6 +229,169 @@
       .ptable th, .ptable td { padding: 11px 6px; }
       .ptable td:first-child { white-space: normal; }
     }
+
+    /* ─── страница «Для бизнеса»: полноширинная посадочная вёрстка ─── */
+    .wide { width: min(1360px, 100% - 72px); margin-inline: auto; }
+    .biz-hero { position: relative; display: flex; align-items: center; min-height: 540px; overflow: hidden; }
+    .biz-hero__bg { position: absolute; inset: 0; }
+    .biz-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+    .biz-hero__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.9) 42%, rgba(10,11,10,.5) 68%, rgba(10,11,10,.12) 100%);
+    }
+    .biz-hero__inner { position: relative; padding: 76px 0; }
+    /* текстовая колонка не выходит за затемнённую часть кадра */
+    .biz-hero__inner > * { max-width: 820px; }
+    .biz-hero h1 {
+      font-size: clamp(32px, 5.2vw, 60px);
+      text-transform: uppercase;
+      max-width: 13ch;
+      margin-bottom: 22px;
+    }
+    .biz-hero__lead { max-width: 48ch; font-size: 16px; color: var(--body); margin-bottom: 36px; }
+    .biz-feats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 0; margin-bottom: 36px; }
+    .biz-feat { display: flex; align-items: center; gap: 12px; padding: 0 22px; border-left: 1px solid var(--line); }
+    .biz-feat:first-child { padding-left: 0; border-left: none; }
+    .biz-feat i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-feat span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      max-width: 15ch;
+    }
+
+    .biz-section { padding: 84px 0 0; }
+    .biz-label {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .biz-h2 {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: clamp(23px, 3vw, 34px);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .biz-rule { width: 44px; height: 2px; background: var(--accent); margin: 0 auto 46px; }
+    .biz-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .biz-card { padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255, 255, 255, .03); }
+    .biz-card i {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .biz-card h3 { font-size: 14px; letter-spacing: .07em; text-transform: uppercase; margin: 0 0 10px; }
+    .biz-card p { font-size: 14px; margin: 0; }
+
+    .biz-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .biz-seg__card { position: relative; display: flex; align-items: flex-end; min-height: 380px; border-radius: 20px; overflow: hidden; }
+    .biz-seg__card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .biz-seg__card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,11,10,.1) 14%, rgba(10,11,10,.7) 48%, rgba(10,11,10,.98) 100%);
+    }
+    /* текст поверх затемнения: ::after рисуется последним */
+    .biz-seg__txt { position: relative; z-index: 1; padding: 30px; }
+    .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .biz-seg__txt p { font-size: 14px; margin: 0; }
+
+    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; padding: 0; margin: 0; }
+    .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
+    .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
+
+    .biz-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 26px;
+      margin: 84px auto 0;
+      padding: 32px 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .03);
+    }
+    .biz-cta__l { display: flex; align-items: center; gap: 20px; flex: 1 1 420px; min-width: 0; }
+    .biz-cta .btn { flex: none; }
+    .biz-cta__l i {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-cta__l p { margin: 0; font-size: 15px; }
+    .biz-cta__l b { display: block; }
+
+    .biz-trust { margin-top: 84px; border-top: 1px solid var(--line); }
+    /* подвал во всю ширину — под посадочную вёрстку */
+    .page-footer--wide { max-width: none; width: min(1360px, 100% - 72px); padding-left: 0; padding-right: 0; }
+    .biz-trust__in { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 26px 0; }
+    .biz-trust__i {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 34px;
+      border-left: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .biz-trust__i:first-child { border-left: none; }
+    .biz-trust__i svg { color: var(--accent); }
+
+    @media (max-width: 1040px) {
+      /* плитки в две колонки: в одну строку они уже не читаются */
+      .biz-feats { grid-template-columns: 1fr 1fr; gap: 18px 16px; max-width: 560px; }
+      .biz-feat:nth-child(odd) { padding-left: 0; border-left: none; }
+      .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
+    }
+    @media (max-width: 900px) {
+      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .wide { width: calc(100% - 32px); }
+      .biz-hero { min-height: 0; }
+      .biz-hero__bg img { object-position: 66% 50%; }
+      .biz-hero__shade { background: linear-gradient(180deg, rgba(10,11,10,.86) 0%, rgba(10,11,10,.9) 45%, rgba(10,11,10,.96) 100%); }
+      .biz-hero__inner { padding: 48px 0 44px; }
+      .biz-hero h1 { max-width: none; }
+      .biz-feats { grid-template-columns: 1fr 1fr; gap: 18px 14px; max-width: none; }
+      .biz-feat { padding: 0; border-left: none; }
+      .biz-feat span { font-size: 10px; }
+      .biz-section { padding-top: 56px; }
+      .biz-cta { margin-top: 56px; padding: 26px 22px; }
+      .biz-trust { margin-top: 56px; }
+      .biz-trust__in { justify-content: flex-start; gap: 12px 0; }
+      .biz-trust__i { padding: 0 14px 0 0; border-left: none; }
+      .page-footer--wide { width: calc(100% - 32px); }
+    }
   </style>
 </head>
 <body>
@@ -240,40 +403,83 @@
     </div>
   </header>
 
-  <main class="page-wrap">
-    <div class="page-eyebrow">Official VMoto dealer in Thailand</div>
-    <h1>Electric bikes for business</h1>
-    <p class="page-lead">We build fleets for rental businesses, villas, hotels, retreat centres and delivery services on Koh Samui and Koh Phangan — with warranty, registration and service on the island.</p>
+  <main>
+    <section class="biz-hero">
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.webp" alt="" fetchpriority="high"></div>
+      <div class="biz-hero__shade" aria-hidden="true"></div>
+      <div class="wide biz-hero__inner">
+        <div class="page-eyebrow" style="text-align:left">Official VMoto dealer in Thailand</div>
+        <h1>Electric bikes for business</h1>
+        <p class="biz-hero__lead">We assemble fleets for rentals, villas, hotels, retreats and delivery services on Koh Samui and Koh Phangan — with warranty, registration and on-island support.</p>
+        <div class="biz-feats">
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></i><span>Warranty &amp; service</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></i><span>Registration included</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg></i><span>Delivery to your location</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/></svg></i><span>On-island support</span></div>
+        </div>
+        <a class="btn" href="/#contacts">Book a test ride&ensp;→</a>
+      </div>
+    </section>
 
-      <h2 class="section-title">1. Retreat centres, villas and hotels</h2>
-      <p>A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.</p>
+    <section class="wide biz-section">
+      <p class="biz-label">Why VMOTO</p>
+      <h2 class="biz-h2">Advantages for your business</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-cards">
+      <div class="biz-card"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/><path d="M20 11V7h-4"/></svg></i><h3>Low operating costs</h3><p>Around ฿25 of electricity per day against ฿150–200 on petrol. The difference stays with you.</p></div>
+      <div class="biz-card"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 3.5a5.5 5.5 0 00-6.9 7l-5 5a2 2 0 002.9 2.9l5-5a5.5 5.5 0 007-6.9L15 9.6 12.4 9l-.6-2.6 3.7-2.9z"/></svg></i><h3>Minimum maintenance</h3><p>No oil, belts or spark plugs. A 3-year warranty on every part and full service on the island.</p></div>
+      <div class="biz-card"><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg></i><h3>Simple and reliable</h3><p>Two batteries and a 20-minute fast charge keep your fleet running, not waiting in the shop.</p></div>
+      </div>
+    </section>
 
-      <h2 class="section-title">2. Opening a rental business</h2>
-      <p>Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.</p>
+    <section class="wide biz-section">
+      <p class="biz-label">Who it is for</p>
+      <h2 class="biz-h2">Two ways to put a fleet to work</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-seg">
+      <article class="biz-seg__card">
+        <img src="/assets/business/hotels.webp" alt="" loading="lazy">
+        <div class="biz-seg__txt"><h2>Retreat centres, villas and hotels</h2><p>A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.</p></div>
+      </article>
+      <article class="biz-seg__card">
+        <img src="/assets/business/rental.webp" alt="" loading="lazy">
+        <div class="biz-seg__txt"><h2>Opening a rental business</h2><p>Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.</p></div>
+      </article>
+      </div>
+    </section>
 
-      <h2 class="section-title">3. The economics</h2>
-      <ul>
-        <li><b>Running costs.</b> About ฿25 of electricity a day against ฿150–200 on petrol — the margin stays with you.</li>
-        <li><b>Minimal maintenance.</b> No oil, belts or spark plugs. A 3-year warranty on every part and service on the island.</li>
-        <li><b>Downtime.</b> Two batteries per bike and a 20-minute fast charge keep units on the road instead of in the shop.</li>
+    <section class="wide biz-section">
+      <h2 class="biz-h2">What a fleet package includes</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <ul class="biz-inc">
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>volume pricing on VMoto CITI and CPx</span></li>
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>registration and plates arranged for every unit</span></li>
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>delivery across Koh Samui and Koh Phangan</span></li>
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>service and spare parts on the island, mobile team for fleets</span></li>
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>charging setup advice</span></li>
+      <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>access to our charging network as it opens</span></li>
       </ul>
+    </section>
 
-      <h2 class="section-title">4. What a fleet package includes</h2>
-      <ul>
-        <li>volume pricing on VMoto CITI and CPx;</li>
-        <li>registration and plates arranged for every unit;</li>
-        <li>delivery across Koh Samui and Koh Phangan;</li>
-        <li>service and spare parts on the island, mobile team for fleets;</li>
-        <li>charging setup advice, and access to our charging network as it opens.</li>
-      </ul>
-
-    <div class="page-cta">
-      <p>Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.</p>
+    <div class="wide biz-cta">
+      <div class="biz-cta__l">
+        <i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></i>
+        <p><b>Every business is different.</b>Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.</p>
+      </div>
       <a class="btn" href="/#contacts">Book a test ride&ensp;→</a>
+    </div>
+
+    <div class="biz-trust">
+      <div class="wide biz-trust__in">
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>Official VMoto dealer</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>Samui &amp; Phangan</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/></svg><span>On-island support</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span>Warranty &amp; service</span></div>
+      </div>
     </div>
   </main>
 
-  <footer class="page-footer">
+  <footer class="page-footer page-footer--wide">
     <span>&copy; 2026 VMOTO · CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</span>
     <a href="/">Home</a>
   </footer>

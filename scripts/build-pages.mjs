@@ -199,111 +199,178 @@ const BUSINESS = {
     title: 'Electric bikes for business — fleets on Samui and Phangan | VMOTO',
     desc: 'Fleet terms for retreat centres, villas, hotels and rental businesses on Koh Samui and Koh Phangan: volume pricing, registration, service and charging handled.',
     h1: 'Electric bikes for business',
-    lead: 'We build fleets for rental businesses, villas, hotels, retreat centres and delivery services on Koh Samui and Koh Phangan — with warranty, registration and service on the island.',
-    sections: [
-      { h: 'Retreat centres, villas and hotels', body: p(
-        'A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.',
-      ) },
-      { h: 'Opening a rental business', body: p(
-        'Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.',
-      ) },
-      { h: 'The economics', body: ul(
-        '<b>Running costs.</b> About ฿25 of electricity a day against ฿150–200 on petrol — the margin stays with you.',
-        '<b>Minimal maintenance.</b> No oil, belts or spark plugs. A 3-year warranty on every part and service on the island.',
-        '<b>Downtime.</b> Two batteries per bike and a 20-minute fast charge keep units on the road instead of in the shop.',
-      ) },
-      { h: 'What a fleet package includes', body: ul(
-        'volume pricing on VMoto CITI and CPx;',
-        'registration and plates arranged for every unit;',
-        'delivery across Koh Samui and Koh Phangan;',
-        'service and spare parts on the island, mobile team for fleets;',
-        'charging setup advice, and access to our charging network as it opens.',
-      ) },
+    lead: 'We assemble fleets for rentals, villas, hotels, retreats and delivery services on Koh Samui and Koh Phangan — with warranty, registration and on-island support.',
+    features: [
+      ['shield', 'Warranty &amp; service'],
+      ['doc', 'Registration included'],
+      ['truck', 'Delivery to your location'],
+      ['support', 'On-island support'],
     ],
-    cta: 'Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.',
+    whyLabel: 'Why VMOTO',
+    whyTitle: 'Advantages for your business',
+    advantages: [
+      ['chart', 'Low operating costs', 'Around ฿25 of electricity per day against ฿150–200 on petrol. The difference stays with you.'],
+      ['wrench', 'Minimum maintenance', 'No oil, belts or spark plugs. A 3-year warranty on every part and full service on the island.'],
+      ['bolt', 'Simple and reliable', 'Two batteries and a 20-minute fast charge keep your fleet running, not waiting in the shop.'],
+    ],
+    segLabel: 'Who it is for',
+    segTitle: 'Two ways to put a fleet to work',
+    segments: [
+      { img: 'hotels', t: 'Retreat centres, villas and hotels',
+        x: 'A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.' },
+      { img: 'rental', t: 'Opening a rental business',
+        x: 'Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.' },
+    ],
+    incTitle: 'What a fleet package includes',
+    included: [
+      'volume pricing on VMoto CITI and CPx',
+      'registration and plates arranged for every unit',
+      'delivery across Koh Samui and Koh Phangan',
+      'service and spare parts on the island, mobile team for fleets',
+      'charging setup advice',
+      'access to our charging network as it opens',
+    ],
+    ctaTitle: 'Every business is different.',
+    ctaText: 'Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.',
+    trust: ['Official VMoto dealer', 'Samui &amp; Phangan', 'On-island support', 'Warranty &amp; service'],
   },
+
   ru: {
     title: 'Электробайки для бизнеса — парки на Самуи и Пангане | VMOTO',
     desc: 'Условия для ретрит-центров, вилл, отелей и прокатов на Самуи и Пангане: цены на парк, регистрация, сервис и зарядка — берём на себя.',
     h1: 'Электробайки для бизнеса',
-    lead: 'Собираем парки для прокатов, вилл, отелей, ретрит-центров и доставки на Самуи и Пангане — с гарантией, регистрацией и сервисом на острове.',
-    sections: [
-      { h: 'Ретрит-центры, виллы и отели', body: p(
-        'Парк бесшумных электробайков — реальный апгрейд сервиса: гости перемещаются по острову без шума и выхлопа, в согласии с местом. Не нужно искать прокат по приезде, каждая ночь становится ценнее, плюс экологичный образ и доход с аренды, если байки платные.',
-      ) },
-      { h: 'Открытие проката', body: p(
-        'Для запуска проката электробайков на острове действуют отдельные условия: цена за парк, регистрация под ключ, обучение персонала и поддержка сервиса. Электробайки убирают две главные статьи, которые съедают маржу проката, — топливо и обслуживание.',
-      ) },
-      { h: 'Экономика', body: ul(
-        '<b>Расходы на ход.</b> Около 25 ฿ электричества в день против 150–200 ฿ на бензин — разница остаётся у вас.',
-        '<b>Минимум обслуживания.</b> Нет масла, ремней и свечей. Гарантия 3 года на всё и сервис на острове.',
-        '<b>Простой.</b> Две батареи на байк и быстрая зарядка за 20 минут держат технику на линии, а не в мастерской.',
-      ) },
-      { h: 'Что входит в условия для парка', body: ul(
-        'цена за объём на VMoto CITI и CPx;',
-        'регистрация и номера на каждую единицу;',
-        'доставка по Самуи и Пангану;',
-        'сервис и запчасти на острове, выездная бригада для парков;',
-        'помощь с организацией зарядки и доступ к нашей сети станций по мере запуска.',
-      ) },
+    lead: 'Собираем парки для прокатов, вилл, отелей, ретрит-центров и служб доставки на Самуи и Пангане — с гарантией, регистрацией и поддержкой на острове.',
+    features: [
+      ['shield', 'Гарантия и сервис'],
+      ['doc', 'Регистрация включена'],
+      ['truck', 'Доставка на место'],
+      ['support', 'Поддержка на острове'],
     ],
-    cta: 'Напишите, какой нужен парк и где он будет работать, — подготовим условия под ваш бизнес: цены, сервис и зарядку.',
+    whyLabel: 'Почему VMOTO',
+    whyTitle: 'Преимущества для вашего бизнеса',
+    advantages: [
+      ['chart', 'Низкие расходы на ход', 'Около 25 ฿ электричества в день против 150–200 ฿ на бензин. Разница остаётся у вас.'],
+      ['wrench', 'Минимум обслуживания', 'Нет масла, ремней и свечей. Гарантия 3 года на всё и полный сервис на острове.'],
+      ['bolt', 'Просто и надёжно', 'Две батареи и быстрая зарядка за 20 минут держат парк на линии, а не в мастерской.'],
+    ],
+    segLabel: 'Кому подходит',
+    segTitle: 'Два способа заставить парк работать',
+    segments: [
+      { img: 'hotels', t: 'Ретрит-центры, виллы и отели',
+        x: 'Парк бесшумных электробайков — реальный апгрейд сервиса: гости перемещаются по острову без шума и выхлопа, в согласии с местом. Не нужно искать прокат по приезде, каждая ночь становится ценнее, плюс экологичный образ и доход с аренды, если байки платные.' },
+      { img: 'rental', t: 'Открытие проката',
+        x: 'Для запуска проката электробайков на острове действуют отдельные условия: цена за парк, регистрация под ключ, обучение персонала и поддержка сервиса. Электробайки убирают две главные статьи, которые съедают маржу проката, — топливо и обслуживание.' },
+    ],
+    incTitle: 'Что входит в условия для парка',
+    included: [
+      'цена за объём на VMoto CITI и CPx',
+      'регистрация и номера на каждую единицу',
+      'доставка по Самуи и Пангану',
+      'сервис и запчасти на острове, выездная бригада',
+      'помощь с организацией зарядки',
+      'доступ к нашей сети станций по мере запуска',
+    ],
+    ctaTitle: 'Каждый бизнес уникален.',
+    ctaText: 'Напишите, какой нужен парк и где он будет работать, — подготовим условия под ваш бизнес: цены, сервис и зарядку.',
+    trust: ['Официальный дилер VMoto', 'Самуи и Панган', 'Поддержка на острове', 'Гарантия и сервис'],
   },
+
   th: {
     title: 'มอเตอร์ไซค์ไฟฟ้าสำหรับธุรกิจ — ฟลีตบนเกาะสมุยและพะงัน | VMOTO',
     desc: 'เงื่อนไขสำหรับรีทรีตเซ็นเตอร์ วิลล่า โรงแรม และธุรกิจให้เช่าบนเกาะสมุยและเกาะพะงัน: ราคาต่อจำนวน การจดทะเบียน บริการ และการชาร์จ',
     h1: 'มอเตอร์ไซค์ไฟฟ้าสำหรับธุรกิจ',
-    lead: 'เราจัดฟลีตให้ธุรกิจให้เช่า วิลล่า โรงแรม รีทรีตเซ็นเตอร์ และบริการจัดส่งบนเกาะสมุยและเกาะพะงัน พร้อมการรับประกัน การจดทะเบียน และบริการบนเกาะ',
-    sections: [
-      { h: 'รีทรีตเซ็นเตอร์ วิลล่า และโรงแรม', body: p(
-        'ฟลีตมอเตอร์ไซค์ไฟฟ้าที่เงียบสนิทคือการยกระดับบริการอย่างแท้จริง แขกเดินทางรอบเกาะโดยไม่มีเสียงและควัน สอดคล้องกับบรรยากาศของสถานที่ ไม่ต้องออกไปหาที่เช่ารถเมื่อมาถึง เพิ่มมูลค่าให้ทุกการเข้าพัก สร้างภาพลักษณ์รักษ์โลก และมีรายได้จากค่าเช่าหากคิดค่าบริการ',
-      ) },
-      { h: 'เปิดธุรกิจให้เช่า', body: p(
-        'การเริ่มธุรกิจให้เช่ามอเตอร์ไซค์ไฟฟ้าบนเกาะมีเงื่อนไขเฉพาะ: ราคาตามจำนวน ดำเนินการจดทะเบียนให้ อบรมพนักงาน และสนับสนุนงานบริการ รถไฟฟ้าช่วยตัดสองรายจ่ายที่กินกำไรของธุรกิจเช่ามากที่สุด คือค่าน้ำมันและค่าบำรุงรักษา',
-      ) },
-      { h: 'เรื่องต้นทุน', body: ul(
-        '<b>ค่าใช้จ่ายในการวิ่ง</b> ค่าไฟราววันละ ฿25 เทียบกับค่าน้ำมัน ฿150–200 ส่วนต่างอยู่กับคุณ',
-        '<b>ดูแลรักษาน้อย</b> ไม่มีน้ำมันเครื่อง สายพาน หรือหัวเทียน รับประกันทุกชิ้นส่วน 3 ปี พร้อมบริการบนเกาะ',
-        '<b>เวลาจอดเสีย</b> แบตเตอรี่สองก้อนต่อคันและชาร์จเร็ว 20 นาที ทำให้รถอยู่บนถนน ไม่ใช่ในอู่',
-      ) },
-      { h: 'แพ็กเกจฟลีตประกอบด้วย', body: ul(
-        'ราคาตามจำนวนสำหรับ VMoto CITI และ CPx',
-        'จดทะเบียนและป้ายทะเบียนให้ทุกคัน',
-        'จัดส่งทั่วเกาะสมุยและเกาะพะงัน',
-        'บริการและอะไหล่บนเกาะ พร้อมทีมเคลื่อนที่สำหรับฟลีต',
-        'คำแนะนำการติดตั้งจุดชาร์จ และการเข้าถึงเครือข่ายสถานีชาร์จของเราเมื่อเปิดให้บริการ',
-      ) },
+    lead: 'เราจัดฟลีตให้ธุรกิจให้เช่า วิลล่า โรงแรม รีทรีตเซ็นเตอร์ และบริการจัดส่งบนเกาะสมุยและเกาะพะงัน พร้อมการรับประกัน การจดทะเบียน และการดูแลบนเกาะ',
+    features: [
+      ['shield', 'รับประกันและบริการ'],
+      ['doc', 'รวมการจดทะเบียน'],
+      ['truck', 'จัดส่งถึงที่'],
+      ['support', 'ทีมดูแลบนเกาะ'],
     ],
-    cta: 'บอกเราว่าต้องการฟลีตขนาดเท่าไรและใช้งานที่ไหน เราจะจัดเงื่อนไขให้ธุรกิจของคุณ ทั้งราคา บริการ และการชาร์จ',
+    whyLabel: 'ทำไมต้อง VMOTO',
+    whyTitle: 'ข้อดีสำหรับธุรกิจของคุณ',
+    advantages: [
+      ['chart', 'ต้นทุนใช้งานต่ำ', 'ค่าไฟราววันละ ฿25 เทียบกับค่าน้ำมัน ฿150–200 ส่วนต่างอยู่กับคุณ'],
+      ['wrench', 'ดูแลรักษาน้อย', 'ไม่มีน้ำมันเครื่อง สายพาน หรือหัวเทียน รับประกัน 3 ปีทุกชิ้นส่วน พร้อมบริการเต็มรูปแบบบนเกาะ'],
+      ['bolt', 'ง่ายและเชื่อถือได้', 'แบตเตอรี่สองก้อนและชาร์จเร็ว 20 นาที ทำให้ฟลีตวิ่งได้ต่อเนื่อง ไม่ต้องรอในอู่'],
+    ],
+    segLabel: 'เหมาะกับใคร',
+    segTitle: 'สองรูปแบบการใช้ฟลีตให้เกิดรายได้',
+    segments: [
+      { img: 'hotels', t: 'รีทรีตเซ็นเตอร์ วิลล่า และโรงแรม',
+        x: 'ฟลีตมอเตอร์ไซค์ไฟฟ้าที่เงียบสนิทคือการยกระดับบริการอย่างแท้จริง แขกเดินทางรอบเกาะโดยไม่มีเสียงและควัน สอดคล้องกับบรรยากาศของสถานที่ ไม่ต้องออกไปหาที่เช่ารถเมื่อมาถึง เพิ่มมูลค่าให้ทุกการเข้าพัก สร้างภาพลักษณ์รักษ์โลก และมีรายได้จากค่าเช่าหากคิดค่าบริการ' },
+      { img: 'rental', t: 'เปิดธุรกิจให้เช่า',
+        x: 'การเริ่มธุรกิจให้เช่ามอเตอร์ไซค์ไฟฟ้าบนเกาะมีเงื่อนไขเฉพาะ: ราคาตามจำนวน ดำเนินการจดทะเบียนให้ อบรมพนักงาน และสนับสนุนงานบริการ รถไฟฟ้าช่วยตัดสองรายจ่ายที่กินกำไรของธุรกิจเช่ามากที่สุด คือค่าน้ำมันและค่าบำรุงรักษา' },
+    ],
+    incTitle: 'แพ็กเกจฟลีตประกอบด้วย',
+    included: [
+      'ราคาตามจำนวนสำหรับ VMoto CITI และ CPx',
+      'จดทะเบียนและป้ายทะเบียนให้ทุกคัน',
+      'จัดส่งทั่วเกาะสมุยและเกาะพะงัน',
+      'บริการและอะไหล่บนเกาะ พร้อมทีมเคลื่อนที่',
+      'คำแนะนำการติดตั้งจุดชาร์จ',
+      'สิทธิ์เข้าถึงเครือข่ายสถานีชาร์จของเราเมื่อเปิดให้บริการ',
+    ],
+    ctaTitle: 'ทุกธุรกิจไม่เหมือนกัน',
+    ctaText: 'บอกเราว่าต้องการฟลีตขนาดเท่าไรและใช้งานที่ไหน เราจะจัดเงื่อนไขให้ธุรกิจของคุณ ทั้งราคา บริการ และการชาร์จ',
+    trust: ['ตัวแทนจำหน่าย VMoto อย่างเป็นทางการ', 'สมุยและพะงัน', 'ทีมดูแลบนเกาะ', 'รับประกันและบริการ'],
   },
+
   zh: {
     title: '企业电动车方案 — 苏梅岛与帕岸岛车队 | VMOTO',
     desc: '面向静修中心、别墅、酒店和租赁企业的车队方案：批量价格、上牌、岛上服务与充电，全部由我们负责。',
     h1: '企业电动车方案',
-    lead: '我们为苏梅岛和帕岸岛的租赁企业、别墅、酒店、静修中心和配送服务组建车队，含质保、上牌与岛上服务。',
-    sections: [
-      { h: '静修中心、别墅与酒店', body: p(
-        '一支安静的电动车队是服务品质的实质提升：客人环岛出行没有噪音和尾气，与环境相得益彰。抵达后无需再去找车行，每一晚的住宿都更有价值，同时带来环保形象；若收费出租，还能形成一项收入。',
-      ) },
-      { h: '开设租赁业务', body: p(
-        '在岛上开展电动车租赁享有专门条件：批量价格、代办上牌、员工培训与服务支持。电动车削减了最侵蚀租赁利润的两项成本 — 燃油与维修。',
-      ) },
-      { h: '成本账', body: ul(
-        '<b>使用成本。</b>每天约 ฿25 电费，而燃油为 ฿150–200 — 差额留在您手里。',
-        '<b>保养极少。</b>无需机油、皮带和火花塞。整车 3 年质保，岛上提供服务。',
-        '<b>停运时间。</b>每车两块电池加 20 分钟快充，让车留在路上而不是修理厂。',
-      ) },
-      { h: '车队方案包含', body: ul(
-        'VMoto CITI 与 CPx 的批量价格；',
-        '每台车的注册与牌照办理；',
-        '苏梅岛与帕岸岛全岛配送；',
-        '岛上服务与备件，车队专属上门团队；',
-        '充电方案建议，以及我们充电网络开通后的接入权。',
-      ) },
+    lead: '我们为苏梅岛和帕岸岛的租赁企业、别墅、酒店、静修中心和配送服务组建车队 — 含质保、上牌与岛上支持。',
+    features: [
+      ['shield', '质保与服务'],
+      ['doc', '含注册上牌'],
+      ['truck', '送车上门'],
+      ['support', '岛上支持'],
     ],
-    cta: '告诉我们车队规模和运营地点，我们会为您的业务准备方案：价格、服务与充电。',
+    whyLabel: '为什么选择 VMOTO',
+    whyTitle: '对您业务的价值',
+    advantages: [
+      ['chart', '使用成本低', '每天约 ฿25 电费，而燃油需要 ฿150–200。差额留在您手里。'],
+      ['wrench', '保养极少', '无需机油、皮带和火花塞。整车 3 年质保，岛上提供完整服务。'],
+      ['bolt', '简单可靠', '两块电池加 20 分钟快充，让车队持续运营，而不是在修理厂等待。'],
+    ],
+    segLabel: '适合谁',
+    segTitle: '车队创造收益的两种方式',
+    segments: [
+      { img: 'hotels', t: '静修中心、别墅与酒店',
+        x: '一支安静的电动车队是服务品质的实质提升：客人环岛出行没有噪音和尾气，与环境相得益彰。抵达后无需再去找车行，每一晚的住宿都更有价值，同时带来环保形象；若收费出租，还能形成一项收入。' },
+      { img: 'rental', t: '开设租赁业务',
+        x: '在岛上开展电动车租赁享有专门条件：批量价格、代办上牌、员工培训与服务支持。电动车削减了最侵蚀租赁利润的两项成本 — 燃油与维修。' },
+    ],
+    incTitle: '车队方案包含',
+    included: [
+      'VMoto CITI 与 CPx 的批量价格',
+      '每台车的注册与牌照办理',
+      '苏梅岛与帕岸岛全岛配送',
+      '岛上服务与备件，车队上门团队',
+      '充电方案建议',
+      '充电网络开通后的接入权',
+    ],
+    ctaTitle: '每一家企业都不一样。',
+    ctaText: '告诉我们车队规模和运营地点，我们会为您的业务准备方案：价格、服务与充电。',
+    trust: ['VMoto 官方经销商', '苏梅岛与帕岸岛', '岛上支持', '质保与服务'],
   },
 };
+
+/* иконки шапки преимуществ — контурные, наследуют цвет */
+const ICONS = {
+  shield: '<path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+  doc: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+  truck: '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
+  support: '<path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/>',
+  chart: '<path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3.5-4 3 2.5L20 7"/><path d="M20 11V7h-4"/>',
+  wrench: '<path d="M15.5 3.5a5.5 5.5 0 00-6.9 7l-5 5a2 2 0 002.9 2.9l5-5a5.5 5.5 0 007-6.9L15 9.6 12.4 9l-.6-2.6 3.7-2.9z"/>',
+  bolt: '<path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/>',
+  check: '<circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/>',
+  pin: '<path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+};
+const icon = (name, size = 20) =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
 
 /* вопросы вынесены отдельно: из них же собирается разметка FAQPage */
 const FAQ_QA = {
@@ -393,6 +460,103 @@ const CONTENT = {
 
 /* ──────────────────────────── шаблон ──────────────────────────── */
 
+/* обычная страница-документ: заголовок, лид, пронумерованные разделы */
+function docMain(d, ui, lang, slug) {
+  const sections = d.sections
+    .map((s, i) => `      <h2 class="section-title">${slug === 'faq' ? '' : `${i + 1}. `}${s.h}</h2>\n${s.body}`)
+    .join('\n\n');
+  return `  <main class="page-wrap">
+    <div class="page-eyebrow">${ui.dealer}</div>
+    <h1>${d.h1}</h1>
+    <p class="page-lead">${d.lead}</p>
+
+${sections}
+
+    <div class="page-cta">
+      <p>${d.cta}</p>
+      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+    </div>
+  </main>`;
+}
+
+/* страница «Для бизнеса»: герой с фото, преимущества, сегменты, оффер */
+function bizMain(d, ui, lang) {
+  const feats = d.features
+    .map(([ic, t]) => `        <div class="biz-feat"><i>${icon(ic)}</i><span>${t}</span></div>`)
+    .join('\n');
+  const cards = d.advantages
+    .map(([ic, t, x]) => `      <div class="biz-card"><i>${icon(ic, 22)}</i><h3>${t}</h3><p>${x}</p></div>`)
+    .join('\n');
+  const segs = d.segments
+    .map((s) => `      <article class="biz-seg__card">
+        <img src="/assets/business/${s.img}.webp" alt="" loading="lazy">
+        <div class="biz-seg__txt"><h2>${s.t}</h2><p>${s.x}</p></div>
+      </article>`)
+    .join('\n');
+  const inc = d.included
+    .map((x) => `      <li>${icon('check', 18)}<span>${x}</span></li>`)
+    .join('\n');
+  const trust = d.trust
+    .map((t, i) => `      <div class="biz-trust__i">${icon(['check', 'pin', 'support', 'shield'][i], 18)}<span>${t}</span></div>`)
+    .join('\n');
+
+  return `  <main>
+    <section class="biz-hero">
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.webp" alt="" fetchpriority="high"></div>
+      <div class="biz-hero__shade" aria-hidden="true"></div>
+      <div class="wide biz-hero__inner">
+        <div class="page-eyebrow" style="text-align:left">${ui.dealer}</div>
+        <h1>${d.h1}</h1>
+        <p class="biz-hero__lead">${d.lead}</p>
+        <div class="biz-feats">
+${feats}
+        </div>
+        <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+      </div>
+    </section>
+
+    <section class="wide biz-section">
+      <p class="biz-label">${d.whyLabel}</p>
+      <h2 class="biz-h2">${d.whyTitle}</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-cards">
+${cards}
+      </div>
+    </section>
+
+    <section class="wide biz-section">
+      <p class="biz-label">${d.segLabel}</p>
+      <h2 class="biz-h2">${d.segTitle}</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-seg">
+${segs}
+      </div>
+    </section>
+
+    <section class="wide biz-section">
+      <h2 class="biz-h2">${d.incTitle}</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <ul class="biz-inc">
+${inc}
+      </ul>
+    </section>
+
+    <div class="wide biz-cta">
+      <div class="biz-cta__l">
+        <i>${icon('calendar', 24)}</i>
+        <p><b>${d.ctaTitle}</b>${d.ctaText}</p>
+      </div>
+      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+    </div>
+
+    <div class="biz-trust">
+      <div class="wide biz-trust__in">
+${trust}
+      </div>
+    </div>
+  </main>`;
+}
+
 function render(slug, lang) {
   const d = CONTENT[slug][lang];
   const ui = UI[lang];
@@ -432,9 +596,7 @@ function render(slug, lang) {
     ? `<span class="lang-links__cur">${l === 'zh' ? 'CN' : l.toUpperCase()}</span>`
     : `<a href="${path(l, slug)}" hreflang="${l}">${l === 'zh' ? 'CN' : l.toUpperCase()}</a>`)).join('');
 
-  const sections = d.sections
-    .map((s, i) => `      <h2 class="section-title">${slug === 'faq' ? '' : `${i + 1}. `}${s.h}</h2>\n${s.body}`)
-    .join('\n\n');
+  const main = slug === 'business' ? bizMain(d, ui, lang) : docMain(d, ui, lang, slug);
 
   return `<!DOCTYPE html>
 <html lang="${lang}">
@@ -644,6 +806,169 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .ptable th, .ptable td { padding: 11px 6px; }
       .ptable td:first-child { white-space: normal; }
     }
+
+    /* ─── страница «Для бизнеса»: полноширинная посадочная вёрстка ─── */
+    .wide { width: min(1360px, 100% - 72px); margin-inline: auto; }
+    .biz-hero { position: relative; display: flex; align-items: center; min-height: 540px; overflow: hidden; }
+    .biz-hero__bg { position: absolute; inset: 0; }
+    .biz-hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+    .biz-hero__shade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.9) 42%, rgba(10,11,10,.5) 68%, rgba(10,11,10,.12) 100%);
+    }
+    .biz-hero__inner { position: relative; padding: 76px 0; }
+    /* текстовая колонка не выходит за затемнённую часть кадра */
+    .biz-hero__inner > * { max-width: 820px; }
+    .biz-hero h1 {
+      font-size: clamp(32px, 5.2vw, 60px);
+      text-transform: uppercase;
+      max-width: 13ch;
+      margin-bottom: 22px;
+    }
+    .biz-hero__lead { max-width: 48ch; font-size: 16px; color: var(--body); margin-bottom: 36px; }
+    .biz-feats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 0; margin-bottom: 36px; }
+    .biz-feat { display: flex; align-items: center; gap: 12px; padding: 0 22px; border-left: 1px solid var(--line); }
+    .biz-feat:first-child { padding-left: 0; border-left: none; }
+    .biz-feat i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-feat span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      max-width: 15ch;
+    }
+
+    .biz-section { padding: 84px 0 0; }
+    .biz-label {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .biz-h2 {
+      text-align: center;
+      font-family: var(--heading-font);
+      font-size: clamp(23px, 3vw, 34px);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .biz-rule { width: 44px; height: 2px; background: var(--accent); margin: 0 auto 46px; }
+    .biz-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .biz-card { padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255, 255, 255, .03); }
+    .biz-card i {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .biz-card h3 { font-size: 14px; letter-spacing: .07em; text-transform: uppercase; margin: 0 0 10px; }
+    .biz-card p { font-size: 14px; margin: 0; }
+
+    .biz-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .biz-seg__card { position: relative; display: flex; align-items: flex-end; min-height: 380px; border-radius: 20px; overflow: hidden; }
+    .biz-seg__card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .biz-seg__card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10,11,10,.1) 14%, rgba(10,11,10,.7) 48%, rgba(10,11,10,.98) 100%);
+    }
+    /* текст поверх затемнения: ::after рисуется последним */
+    .biz-seg__txt { position: relative; z-index: 1; padding: 30px; }
+    .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .biz-seg__txt p { font-size: 14px; margin: 0; }
+
+    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; padding: 0; margin: 0; }
+    .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
+    .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
+
+    .biz-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 26px;
+      margin: 84px auto 0;
+      padding: 32px 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .03);
+    }
+    .biz-cta__l { display: flex; align-items: center; gap: 20px; flex: 1 1 420px; min-width: 0; }
+    .biz-cta .btn { flex: none; }
+    .biz-cta__l i {
+      flex: none;
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-cta__l p { margin: 0; font-size: 15px; }
+    .biz-cta__l b { display: block; }
+
+    .biz-trust { margin-top: 84px; border-top: 1px solid var(--line); }
+    /* подвал во всю ширину — под посадочную вёрстку */
+    .page-footer--wide { max-width: none; width: min(1360px, 100% - 72px); padding-left: 0; padding-right: 0; }
+    .biz-trust__in { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 26px 0; }
+    .biz-trust__i {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 34px;
+      border-left: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .biz-trust__i:first-child { border-left: none; }
+    .biz-trust__i svg { color: var(--accent); }
+
+    @media (max-width: 1040px) {
+      /* плитки в две колонки: в одну строку они уже не читаются */
+      .biz-feats { grid-template-columns: 1fr 1fr; gap: 18px 16px; max-width: 560px; }
+      .biz-feat:nth-child(odd) { padding-left: 0; border-left: none; }
+      .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
+    }
+    @media (max-width: 900px) {
+      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .wide { width: calc(100% - 32px); }
+      .biz-hero { min-height: 0; }
+      .biz-hero__bg img { object-position: 66% 50%; }
+      .biz-hero__shade { background: linear-gradient(180deg, rgba(10,11,10,.86) 0%, rgba(10,11,10,.9) 45%, rgba(10,11,10,.96) 100%); }
+      .biz-hero__inner { padding: 48px 0 44px; }
+      .biz-hero h1 { max-width: none; }
+      .biz-feats { grid-template-columns: 1fr 1fr; gap: 18px 14px; max-width: none; }
+      .biz-feat { padding: 0; border-left: none; }
+      .biz-feat span { font-size: 10px; }
+      .biz-section { padding-top: 56px; }
+      .biz-cta { margin-top: 56px; padding: 26px 22px; }
+      .biz-trust { margin-top: 56px; }
+      .biz-trust__in { justify-content: flex-start; gap: 12px 0; }
+      .biz-trust__i { padding: 0 14px 0 0; border-left: none; }
+      .page-footer--wide { width: calc(100% - 32px); }
+    }
   </style>
 </head>
 <body>
@@ -655,20 +980,9 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     </div>
   </header>
 
-  <main class="page-wrap">
-    <div class="page-eyebrow">${ui.dealer}</div>
-    <h1>${d.h1}</h1>
-    <p class="page-lead">${d.lead}</p>
+${main}
 
-${sections}
-
-    <div class="page-cta">
-      <p>${d.cta}</p>
-      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
-    </div>
-  </main>
-
-  <footer class="page-footer">
+  <footer class="page-footer${slug === 'business' ? ' page-footer--wide' : ''}">
     <span>&copy; 2026 VMOTO · ${COMPANY} · ${ADDRESS}</span>
     <a href="${home(lang)}">${ui.home}</a>
   </footer>
