@@ -51,7 +51,7 @@ export const MENU_CSS = `
       background:
         radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, .08), transparent 65%),
         linear-gradient(rgba(8, 9, 8, .82), rgba(8, 9, 8, .82)),
-        #080908 url('/assets/poster/menu.jpg') center / cover no-repeat;
+        #080908 url('/assets/poster/menu.avif') center / cover no-repeat;
       backdrop-filter: blur(18px);
       clip-path: inset(0 0 100% 0);
       visibility: hidden;
@@ -224,7 +224,7 @@ export const menuMarkup = ({ links, lang, label, menuAria }) => `  <button class
 
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.jpg" muted playsinline preload="none"></video>
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.avif" muted playsinline preload="none"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">

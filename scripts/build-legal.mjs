@@ -277,7 +277,6 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
     /* подвал повторяет подвал лендинга — правила перенесены из style.css */
     .container { width: min(1240px, 100% - 48px); margin-inline: auto; }
     .footer {
-      border-top: 1px solid var(--line);
       padding: clamp(48px, 6vw, 84px) 0 36px;
       background: #070808;
     }

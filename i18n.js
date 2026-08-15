@@ -578,6 +578,14 @@
       a.href = 'https://wa.me/66962244666?text=' + encodeURIComponent(t(a.dataset.wa));
     });
 
+    // ссылки на страницы-разделы ведут в версию выбранного языка:
+    // иначе с русского лендинга открывалась английская страница
+    const base = current === 'en' ? '' : '/' + current;
+    document.querySelectorAll('a[href]').forEach((a) => {
+      const m = a.getAttribute('href').match(/^\/(?:ru|th|zh)?\/?(models|business|faq)$/);
+      if (m) a.setAttribute('href', base + '/' + m[1]);
+    });
+
     document.querySelectorAll('.lang__cur').forEach((el) => { el.textContent = CODE[current]; });
     document.querySelectorAll('[data-lang]').forEach((b) => {
       b.classList.toggle('is-active', b.dataset.lang === current);

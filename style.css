@@ -292,7 +292,7 @@ ul { list-style: none; }
   background:
     radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, 0.08), transparent 65%),
     linear-gradient(rgba(8, 9, 8, 0.82), rgba(8, 9, 8, 0.82)),
-    #080908 url('assets/poster/menu.jpg') center / cover no-repeat;
+    #080908 url('assets/poster/menu.avif') center / cover no-repeat;
   backdrop-filter: blur(18px);
   /* занавес: раскрывается сверху вниз, закрывается обратно вверх */
   clip-path: inset(0 0 100% 0);
@@ -683,7 +683,7 @@ html[lang="th"] .section-title { line-height: 1.35; }
 .feature__bg {
   position: absolute;
   inset: 0;
-  background: url('assets/img/benefits-red.webp') right center / cover no-repeat;
+  background: url('assets/img/benefits-red.avif') right center / cover no-repeat;
 }
 .feature__inner {
   position: relative;
@@ -2579,20 +2579,32 @@ html[lang="th"] .section-title { line-height: 1.35; }
   pointer-events: auto;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
+  padding: 13px 26px;
+  border: 1px solid rgba(242, 241, 238, 0.45);
+  border-radius: 999px;
+  background: rgba(10, 11, 10, 0.35);
+  backdrop-filter: blur(6px);
   font-family: var(--font-ui);
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(242, 241, 238, 0.6);
-  transition: color 0.25s, gap 0.25s;
+  color: var(--text);
+  transition: color 0.25s, border-color 0.25s, background 0.25s, gap 0.25s;
 }
 .b2b-more::after {
   content: '↗';
-  font-size: 13px;
+  font-size: 14px;
+  color: var(--accent);
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.b2b-more:hover { color: var(--accent); gap: 13px; }
+.b2b-more:hover {
+  gap: 14px;
+  color: #fff;
+  border-color: var(--accent);
+  background: rgba(217, 79, 61, 0.18);
+}
 .b2b-more:hover::after { transform: translate(2px, -2px); }
 
 /* нижняя кромка героя: кадр уходит в размытие и растворяется в фоне секции */

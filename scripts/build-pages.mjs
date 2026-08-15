@@ -393,7 +393,7 @@ const BUSINESS = {
 
 /* блок о зарядной инфраструктуре на странице «Для бизнеса».
    Фото появится само, как только файл ляжет в assets/business/ */
-const CHARGE_IMG = 'assets/business/stations.webp';
+const CHARGE_IMG = 'assets/business/stations.avif';
 const CHARGE = {
   en: {
     label: 'Charging',
@@ -559,9 +559,9 @@ const HERO_TILES = {
 
 /* фон героя и точка кадрирования: текст должен лечь на затемнённую часть */
 const HERO_IMG = {
-  models: ['/assets/img/hero-bg.webp', '78% 50%'],
-  business: ['/assets/business/retreat.webp', '72% 50%'],
-  faq: ['/assets/business/rental.webp', '38% 50%'],
+  models: ['/assets/img/hero-bg.avif', '78% 50%'],
+  business: ['/assets/business/retreat.avif', '72% 50%'],
+  faq: ['/assets/business/rental.avif', '38% 50%'],
 };
 
 const CONTENT = {
@@ -980,7 +980,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     /* подвал повторяет подвал лендинга — правила перенесены из style.css */
     .container { width: min(1240px, 100% - 48px); margin-inline: auto; }
     .footer {
-      border-top: 1px solid var(--line);
       padding: clamp(48px, 6vw, 84px) 0 36px;
       background: #070808;
     }
