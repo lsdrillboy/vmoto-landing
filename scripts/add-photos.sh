@@ -12,7 +12,7 @@ cd "$(dirname "$0")/.."
 enc() { # enc <исходник> <куда>
   [ "$1" = "-" ] && return 0
   [ -f "$1" ] || { echo "нет файла: $1" >&2; exit 1; }
-  ffmpeg -v error -y -i "$1" -c:v libsvtav1 -preset 4 -crf 36 -pix_fmt yuv420p "$2" 2>/dev/null
+  ffmpeg -v error -y -i "$1" -c:v libsvtav1 -preset 4 -crf 22 -pix_fmt yuv420p "$2" 2>/dev/null
   printf '%-38s %sK\n' "$2" "$(( $(stat -f%z "$2") / 1024 ))"
 }
 
