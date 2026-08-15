@@ -137,7 +137,7 @@ export const FORM_CSS = `
     .consent__text { font-size: 12.5px; line-height: 1.5; color: var(--muted); }
     .consent__text a { color: var(--muted); text-decoration: underline; }
     .consent__text a:hover { color: var(--accent); }
-    .lead-form .btn { width: 100%; border: none; }
+    .lead-form .btn, .lead-done .btn { width: 100%; }
     .lead-form .btn[disabled] { opacity: .6; cursor: default; }
     .lead-form__note { margin: 0; font-size: 12px; color: var(--accent); min-height: 1em; }
 

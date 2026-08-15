@@ -881,20 +881,25 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .ptable td:first-child { color: var(--muted); white-space: nowrap; }
     .ptable b { color: var(--text); }
 
+    /* красная кнопка — те же метрики, что у .btn--accent на лендинге */
     .btn {
       display: inline-block;
-      padding: 14px 26px;
+      padding: 15px 34px;
+      border: 1px solid var(--text);
       border-radius: 999px;
       background: var(--accent);
       color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      /* у <button> браузер ставит line-height: normal — задаём как у ссылок лендинга */
+      line-height: 1.65;
+      letter-spacing: .02em;
       text-decoration: none;
-      transition: filter .2s;
+      cursor: pointer;
+      transition: opacity .25s, transform .25s, filter .25s;
     }
-    .btn:hover { filter: brightness(1.1); }
+    .btn:hover { opacity: .85; transform: translateY(-1px); filter: brightness(1.08); }
 
     /* подвал повторяет подвал лендинга — правила перенесены из style.css */
     .container { width: min(1240px, 100% - 48px); margin-inline: auto; }
