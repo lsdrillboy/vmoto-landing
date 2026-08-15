@@ -393,7 +393,7 @@ const BUSINESS = {
 
 /* блок о зарядной инфраструктуре на странице «Для бизнеса».
    Фото появится само, как только файл ляжет в assets/business/ */
-const CHARGE_IMG = 'assets/business/stations.avif';
+const CHARGE_IMG = 'assets/business/stations.avif?v=2';
 const CHARGE = {
   en: {
     label: 'Charging',
@@ -559,11 +559,11 @@ const HERO_TILES = {
 
 /* фон героя и точка кадрирования: текст должен лечь на затемнённую часть.
    Для «Вопросов» ждём отдельный кадр; пока его нет — остаётся прокат. */
-const FAQ_HERO = 'assets/business/faq-hero.avif';
+const FAQ_HERO = 'assets/business/faq-hero.avif?v=2';
 const HERO_IMG = {
-  models: ['/assets/img/hero-bg.avif', '78% 50%'],
-  business: ['/assets/business/retreat.avif', '72% 50%'],
-  faq: [existsSync(FAQ_HERO) ? `/${FAQ_HERO}` : '/assets/business/rental.avif', '58% 50%'],
+  models: ['/assets/img/hero-bg.avif?v=2', '78% 50%'],
+  business: ['/assets/business/retreat.avif?v=2', '72% 50%'],
+  faq: [existsSync(FAQ_HERO) ? `/${FAQ_HERO}` : '/assets/business/rental.avif?v=2', '58% 50%'],
 };
 
 const CONTENT = {

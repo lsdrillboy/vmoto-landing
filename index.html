@@ -35,8 +35,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Kanit:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&family=Michroma&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="style.css?v=121">
-  <link rel="preload" as="image" href="assets/img/hero-bg.avif" media="(min-width: 701px)">
-  <link rel="preload" as="image" href="assets/img/hero-bg-m.avif" media="(max-width: 700px)">
+  <link rel="preload" as="image" href="assets/img/hero-bg.avif?v=2" media="(min-width: 701px)">
+  <link rel="preload" as="image" href="assets/img/hero-bg-m.avif?v=2" media="(max-width: 700px)">
 
   <meta name="facebook-domain-verification" content="u7atqlx79842csdufgdwshbuczog1s">
 
@@ -98,7 +98,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "VMoto CITI",
-    "image": "https://www.vmotobikes.com/assets/poster/citi-360.avif",
+    "image": "https://www.vmotobikes.com/assets/poster/citi-360.avif?v=2",
     "description": "Electric scooter for island life: 107 km range, two removable batteries with a charger, fast charge in about 20 minutes, 3-year warranty. Sold on Koh Samui and Koh Phangan, Thailand.",
     "brand": { "@type": "Brand", "name": "VMoto" },
     "offers": {
@@ -117,7 +117,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "VMoto CPX",
-    "image": "https://www.vmotobikes.com/assets/poster/cpx-360.avif",
+    "image": "https://www.vmotobikes.com/assets/poster/cpx-360.avif?v=2",
     "description": "The 125cc-class flagship electric scooter: 130 km range, two removable 74V batteries, fast charge in about 20 minutes, 3-year warranty. Sold on Koh Samui and Koh Phangan, Thailand.",
     "brand": { "@type": "Brand", "name": "VMoto" },
     "offers": {
@@ -192,7 +192,7 @@
   <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
     <!-- фоновое видео на весь экран: проигрывается один раз и замирает на последнем кадре -->
     <div class="menu-overlay__media" aria-hidden="true">
-      <video id="menuVideo" src="assets/video/menu.mp4" poster="assets/poster/menu.avif" muted playsinline preload="metadata"></video>
+      <video id="menuVideo" src="assets/video/menu.mp4" poster="assets/poster/menu.avif?v=2" muted playsinline preload="metadata"></video>
     </div>
     <div class="menu-overlay__inner">
       <nav class="menu-overlay__nav">
@@ -221,8 +221,8 @@
   <!-- Высота обёртки задаёт «длину» промотки кадров скроллом -->
   <section class="hero-static" id="hero">
     <picture class="hero-static__bg" aria-hidden="true">
-      <source media="(max-width: 700px)" srcset="assets/img/hero-bg-m.avif">
-      <img src="assets/img/hero-bg.avif" alt="" fetchpriority="high">
+      <source media="(max-width: 700px)" srcset="assets/img/hero-bg-m.avif?v=2">
+      <img src="assets/img/hero-bg.avif?v=2" alt="" fetchpriority="high">
     </picture>
     <div class="hero-static__shade" aria-hidden="true"></div>
     <div class="hero-static__fade" aria-hidden="true"></div>
@@ -323,13 +323,13 @@
         <p class="showcase__desc" data-i18n="citi.desc">A light city e-scooter. Two batteries and a charger included.</p>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
           <span class="showcase__swatches-label"><span data-i18n="models.color">Choose colour</span>: <b class="swatch-name"></b></span>
-          <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="assets/video/citi-360.mp4" data-poster="assets/poster/citi-360.avif" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
-          <button type="button" class="swatch" style="--c:#a9adb0" data-video="assets/video/citi-360-grey.mp4" data-poster="assets/poster/citi-360-grey.avif" data-i18n-aria="color.grey" aria-label="Grey" title="Grey"></button>
-          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/citi-360-white.mp4" data-poster="assets/poster/citi-360-white.avif" data-i18n-aria="color.white" aria-label="White" title="White"></button>
+          <button type="button" class="swatch is-active" style="--c:#d2311e" data-video="assets/video/citi-360.mp4" data-poster="assets/poster/citi-360.avif?v=2" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
+          <button type="button" class="swatch" style="--c:#a9adb0" data-video="assets/video/citi-360-grey.mp4" data-poster="assets/poster/citi-360-grey.avif?v=2" data-i18n-aria="color.grey" aria-label="Grey" title="Grey"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/citi-360-white.mp4" data-poster="assets/poster/citi-360-white.avif?v=2" data-i18n-aria="color.white" aria-label="White" title="White"></button>
         </div>
       </div>
       <div class="showcase__media" aria-hidden="true">
-        <video src="assets/video/citi-360.mp4" poster="assets/poster/citi-360.avif" muted loop playsinline preload="metadata"></video>
+        <video src="assets/video/citi-360.mp4" poster="assets/poster/citi-360.avif?v=2" muted loop playsinline preload="metadata"></video>
       </div>
       <ul class="showcase__specs">
         <li>
@@ -359,13 +359,13 @@
         <p class="showcase__desc" data-i18n="cpx.desc">The 125cc-class flagship: more power, more range, more comfort. Two batteries and a charger included.</p>
         <div class="showcase__swatches" role="group" data-i18n-aria="models.colorAria" aria-label="Color choice">
           <span class="showcase__swatches-label"><span data-i18n="models.color">Choose colour</span>: <b class="swatch-name"></b></span>
-          <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="assets/video/cpx-360.mp4" data-poster="assets/poster/cpx-360.avif" data-i18n-aria="color.black" aria-label="Black" title="Black"></button>
-          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/cpx-360-white.mp4" data-poster="assets/poster/cpx-360-white.avif" data-i18n-aria="color.white" aria-label="White" title="White"></button>
-          <button type="button" class="swatch" style="--c:#d2311e" data-video="assets/video/cpx-360-red.mp4" data-poster="assets/poster/cpx-360-red.avif" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
+          <button type="button" class="swatch is-active" style="--c:#1a1b1d" data-video="assets/video/cpx-360.mp4" data-poster="assets/poster/cpx-360.avif?v=2" data-i18n-aria="color.black" aria-label="Black" title="Black"></button>
+          <button type="button" class="swatch" style="--c:#f4f3f0" data-video="assets/video/cpx-360-white.mp4" data-poster="assets/poster/cpx-360-white.avif?v=2" data-i18n-aria="color.white" aria-label="White" title="White"></button>
+          <button type="button" class="swatch" style="--c:#d2311e" data-video="assets/video/cpx-360-red.mp4" data-poster="assets/poster/cpx-360-red.avif?v=2" data-i18n-aria="color.red" aria-label="Red" title="Red"></button>
         </div>
       </div>
       <div class="showcase__media" aria-hidden="true">
-        <video src="assets/video/cpx-360.mp4" poster="assets/poster/cpx-360.avif" muted loop playsinline preload="metadata"></video>
+        <video src="assets/video/cpx-360.mp4" poster="assets/poster/cpx-360.avif?v=2" muted loop playsinline preload="metadata"></video>
       </div>
       <ul class="showcase__specs">
         <li>
@@ -401,7 +401,7 @@
 
   <!-- ===== PROMO VIDEO ===== -->
   <section class="promo" id="promo">
-    <video id="promoVideo" src="assets/video/promo.mp4" poster="assets/poster/promo.avif" muted loop playsinline preload="metadata"></video>
+    <video id="promoVideo" src="assets/video/promo.mp4" poster="assets/poster/promo.avif?v=2" muted loop playsinline preload="metadata"></video>
     <button class="promo__sound" id="promoSound" type="button" data-i18n-aria="promo.soundOn" aria-label="Unmute">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M11 5 6.5 9H3v6h3.5L11 19V5z"/>
@@ -422,7 +422,7 @@
 
     <div class="gallery__track" id="galleryTrack">
       <figure class="gallery__item">
-        <img src="assets/gallery/led.avif" alt="VMoto — LED lighting" loading="lazy">
+        <img src="assets/gallery/led.avif?v=2" alt="VMoto — LED lighting" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g1.t">LED lighting</b><span data-i18n="g1.s">Visible day and night.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -432,7 +432,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/top-box.avif" alt="VMoto CPX — top box on the rack" loading="lazy">
+        <img src="assets/gallery/top-box.avif?v=2" alt="VMoto CPX — top box on the rack" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g2.t">Rack as standard</b><span data-i18n="g2.s">40 L top box — fits two helmets.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -442,7 +442,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/windshield.avif" alt="VMoto — windshield" loading="lazy">
+        <img src="assets/gallery/windshield.avif?v=2" alt="VMoto — windshield" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g3.t">Windshield</b><span data-i18n="g3.s">Comfort at any speed.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -452,7 +452,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/batteries.avif" alt="VMoto — removable 74V batteries" loading="lazy">
+        <img src="assets/gallery/batteries.avif?v=2" alt="VMoto — removable 74V batteries" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g4.t">Two removable batteries</b><span data-i18n="g4.s">Charge wherever you like.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -462,7 +462,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/island.avif" alt="VMoto CITI — island format" loading="lazy">
+        <img src="assets/gallery/island.avif?v=2" alt="VMoto CITI — island format" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g5.t">Island format</b><span data-i18n="g5.s">CITI: 92 kg, made for life by the sea.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -472,7 +472,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/brakes.avif" alt="VMoto — CBS disc brakes" loading="lazy">
+        <img src="assets/gallery/brakes.avif?v=2" alt="VMoto — CBS disc brakes" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g6.t">CBS brakes</b><span data-i18n="g6.s">Discs with combined braking.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -482,7 +482,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/phone-mount.avif" alt="VMoto — phone mount" loading="lazy">
+        <img src="assets/gallery/phone-mount.avif?v=2" alt="VMoto — phone mount" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g7.t">Phone mount</b><span data-i18n="g7.s">Fits on the mirror stem.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -492,7 +492,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/cargo-box.avif" alt="VMoto — 98 L cargo box" loading="lazy">
+        <img src="assets/gallery/cargo-box.avif?v=2" alt="VMoto — 98 L cargo box" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g8.t">98 L cargo box</b><span data-i18n="g8.s">For delivery and bigger loads.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -502,7 +502,7 @@
       </figure>
 
       <figure class="gallery__item">
-        <img src="assets/gallery/cover.avif" alt="VMoto — bike cover" loading="lazy">
+        <img src="assets/gallery/cover.avif?v=2" alt="VMoto — bike cover" loading="lazy">
         <button class="gallery__plus" type="button" data-i18n-aria="gallery.more" aria-label="More">+</button>
         <figcaption><b data-i18n="g9.t">Bike cover</b><span data-i18n="g9.s">Rain, sun and dust stay out.</span></figcaption>
         <div class="gallery__detail" hidden>
@@ -580,7 +580,7 @@
       <div class="b2b-sticky">
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/retreat.avif')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/retreat.avif?v=2')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs1.t">Electric bikes as part of a premium guest experience</h3>
@@ -596,7 +596,7 @@
         </div>
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/rental.avif')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/rental.avif?v=2')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs2.t">Launch your own rental fleet</h3>
@@ -615,7 +615,7 @@
         </div>
 
         <div class="b2b-slide">
-          <div class="b2b-slide__bg" style="background-image:url('assets/business/hotels.avif')" aria-hidden="true"></div>
+          <div class="b2b-slide__bg" style="background-image:url('assets/business/hotels.avif?v=2')" aria-hidden="true"></div>
           <div class="b2b-slide__content">
             <div class="b2b-slide__inner">
               <h3 class="b2b-slide__title" data-i18n="bs3.t">Your guests get freedom right at check-in</h3>
@@ -725,8 +725,8 @@
         <!-- ===== CONTACTS: финал с промоткой и формой ===== -->
   <section class="contacts" id="contacts">
     <picture class="contacts__bg" aria-hidden="true">
-      <source media="(max-width: 900px)" srcset="assets/img/contacts-bg-4-m.avif">
-      <img src="assets/img/contacts-bg-4.avif" alt="" loading="lazy">
+      <source media="(max-width: 900px)" srcset="assets/img/contacts-bg-4-m.avif?v=2">
+      <img src="assets/img/contacts-bg-4.avif?v=2" alt="" loading="lazy">
     </picture>
     <div class="contacts__shade" aria-hidden="true"></div>
 
