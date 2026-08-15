@@ -82,6 +82,9 @@ function translate(html, lang) {
   html = html.replace(/aria-label="[^"]*"([^>]*?)data-i18n-aria="([^"]+)"/g,
     (all, mid, key) => { const v = t(key); return v === null ? all : `aria-label="${v}"${mid}data-i18n-aria="${key}"`; });
 
+  // ссылки на страницы-разделы ведут в свою языковую версию
+  html = html.replace(/href="\/(models|business|faq)"/g, `href="/${lang}/$1"`);
+
   // язык документа, title, description, canonical, og
   html = html.replace('<html lang="en">', `<html lang="${lang}" data-lang-default="${lang}">`);
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${d['meta.title']}</title>`);

@@ -1,216 +1,739 @@
-/* Генератор индексируемых страниц-разделов: /business /faq /models
-   Тексты живут здесь (расширенные версии секций лендинга), общая
-   обвязка — ниже в PAGE(). Запуск: node scripts/build-pages.mjs
-   После правок обязательно перегенерировать sitemap вручную. */
-import { writeFileSync } from 'node:fs';
+/* Генератор индексируемых страниц-разделов на четырёх языках:
+     /models   /ru/models   /th/models   /zh/models
+     /business /ru/business /th/business /zh/business
+     /faq      /ru/faq      /th/faq      /zh/faq
+   Заголовки начинаются с темы (без бренда в начале) — именно первые
+   слова <title> Google берёт подписью сайтлинка. У каждой страницы свой
+   canonical, кластер hreflang, хлебные крошки и видимая навигация по
+   разделам: без заметных внутренних ссылок сайтлинки не появляются.
+   Запуск: node scripts/build-pages.mjs (из корня проекта). */
+import { writeFileSync, mkdirSync } from 'node:fs';
 
 const SITE = 'https://www.vmotobikes.com';
-const CSS = 'style.css?v=117';
+const LANGS = ['en', 'ru', 'th', 'zh'];
+const SLUGS = ['models', 'business', 'faq'];
+const COMPANY = 'CANVAS SPV Co., Ltd';
+const ADDRESS = '52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand';
 
-const HEAD = (slug, title, desc) => `<!DOCTYPE html>
-<html lang="en">
+/* префикс языка: en живёт в корне, остальные — в своей папке */
+const path = (lang, slug) => (lang === 'en' ? `/${slug}` : `/${lang}/${slug}`);
+const home = (lang) => (lang === 'en' ? '/' : `/${lang}`);
+
+/* ─────────────────────────── интерфейс ─────────────────────────── */
+
+const UI = {
+  en: {
+    nav: { models: 'Models', business: 'For business', faq: 'FAQ' },
+    home: 'Home',
+    cta: 'Book a test ride',
+    dealer: 'Official VMoto dealer in Thailand',
+  },
+  ru: {
+    nav: { models: 'Модели', business: 'Для бизнеса', faq: 'Вопросы' },
+    home: 'Главная',
+    cta: 'Записаться на тест-драйв',
+    dealer: 'Официальный дилер VMoto в Таиланде',
+  },
+  th: {
+    nav: { models: 'รุ่นรถ', business: 'สำหรับธุรกิจ', faq: 'คำถามที่พบบ่อย' },
+    home: 'หน้าแรก',
+    cta: 'จองทดลองขับ',
+    dealer: 'ตัวแทนจำหน่าย VMoto อย่างเป็นทางการในประเทศไทย',
+  },
+  zh: {
+    nav: { models: '车型', business: '企业方案', faq: '常见问题' },
+    home: '首页',
+    cta: '预约试驾',
+    dealer: '泰国 VMoto 官方经销商',
+  },
+};
+
+/* ──────────────────────────── контент ──────────────────────────── */
+
+const p = (...l) => l.map((x) => `      <p>${x}</p>`).join('\n');
+const ul = (...l) => `      <ul>\n${l.map((x) => `        <li>${x}</li>`).join('\n')}\n      </ul>`;
+const table = (head, rows) => `      <div class="table-wrap"><table class="ptable">
+        <tr><th>&nbsp;</th><th>${head[0]}</th><th>${head[1]}</th></tr>
+${rows.map((r) => (r.length === 2
+    ? `        <tr><td>${r[0]}</td><td colspan="2"><b>${r[1]}</b></td></tr>`
+    : `        <tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td><b>${r[2]}</b></td></tr>`)).join('\n')}
+      </table></div>`;
+
+const MODELS = {
+  en: {
+    title: 'Electric bikes CITI and CPx — prices and specs | VMOTO',
+    desc: 'VMoto CITI (฿95,000, 107 km) and VMoto CPx (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.',
+    h1: 'Electric bikes CITI and CPx',
+    lead: 'Two electric bikes for island life. CITI is the light everyday commuter; CPx is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.',
+    sections: [
+      { h: 'Side by side', body: table(['VMoto CITI', 'VMoto CPx'], [
+        ['Price', '฿95,000', '฿120,000'],
+        ['Range', '107 km', '130 km'],
+        ['Top speed', '80 km/h', '90 km/h'],
+        ['Fast charge', '20 min', '20 min'],
+        ['Weight', '92 kg', '107 kg'],
+        ['Batteries', 'Two removable batteries + charger included'],
+        ['Warranty', '3 years on every part, service on the island'],
+      ]) },
+      { h: 'Which one is for you', body: `      <h3>Take the CITI if…</h3>\n` + ul(
+        'you ride mostly around town, to the beach and back;',
+        'you want the lightest bike to handle and park;',
+        '฿95,000 is the budget you had in mind.',
+      ) + `\n      <h3>Take the CPx if…</h3>\n` + ul(
+        'you cross the island daily and want range to spare;',
+        'you ride two-up or carry cargo;',
+        'you want the taller screen and the calmer ride at speed.',
+      ) },
+      { h: 'What both models give you', body: ul(
+        '<b>Instant torque.</b> Off the line an electric drive beats petrol 125cc scooters — no gears, no lag.',
+        '<b>About ฿25 a day</b> of electricity instead of ฿150–200 on petrol.',
+        '<b>Silence.</b> No engine roar, no fumes — you hear the island, not the bike.',
+        '<b>Minimal maintenance.</b> No oil, belts or spark plugs.',
+      ) },
+    ],
+    cta: 'Not sure which model fits? Ride both — we bring the bikes to a meeting point on Koh Phangan, free and with no obligation.',
+  },
+  ru: {
+    title: 'Электробайки CITI и CPx — цены и характеристики | VMOTO',
+    desc: 'Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPx (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.',
+    h1: 'Электробайки CITI и CPx',
+    lead: 'Два электробайка для жизни на острове. CITI — лёгкий байк на каждый день, CPx — флагман класса 125 кубов с большим запасом хода и комфортом. У обоих две съёмные батареи и зарядка в комплекте, гарантия 3 года.',
+    sections: [
+      { h: 'Сравнение', body: table(['VMoto CITI', 'VMoto CPx'], [
+        ['Цена', '95 000 ฿', '120 000 ฿'],
+        ['Запас хода', '107 км', '130 км'],
+        ['Максимальная скорость', '80 км/ч', '90 км/ч'],
+        ['Быстрая зарядка', '20 минут', '20 минут'],
+        ['Вес', '92 кг', '107 кг'],
+        ['Батареи', 'Две съёмные батареи и зарядное устройство в комплекте'],
+        ['Гарантия', '3 года на всё, сервис на острове'],
+      ]) },
+      { h: 'Какой выбрать', body: `      <h3>Берите CITI, если…</h3>\n` + ul(
+        'ездите в основном по посёлку, до пляжа и обратно;',
+        'нужен самый лёгкий байк — удобнее в управлении и парковке;',
+        'бюджет 95 000 ฿.',
+      ) + `\n      <h3>Берите CPx, если…</h3>\n` + ul(
+        'каждый день пересекаете остров и хотите запас хода с запасом;',
+        'ездите вдвоём или возите груз;',
+        'важнее высокое ветровое стекло и спокойный ход на скорости.',
+      ) },
+      { h: 'Что дают обе модели', body: ul(
+        '<b>Мгновенная тяга.</b> На старте электромотор уверенно обходит бензиновые 125-кубовые скутеры — без передач и задержки.',
+        '<b>Около 25 ฿ в день</b> на электричество вместо 150–200 ฿ на бензин.',
+        '<b>Тишина.</b> Ни рёва мотора, ни выхлопа — слышно остров, а не байк.',
+        '<b>Минимум обслуживания.</b> Нет масла, ремней и свечей.',
+      ) },
+    ],
+    cta: 'Не знаете, какая модель ваша? Прокатитесь на обеих — привезём байки в удобное место на Пангане, бесплатно и без обязательств.',
+  },
+  th: {
+    title: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPx — ราคาและสเปก | VMOTO',
+    desc: 'เปรียบเทียบ VMoto CITI (฿95,000 ระยะทาง 107 กม.) กับ VMoto CPx (฿120,000 ระยะทาง 130 กม.): ระยะทาง ความเร็ว การชาร์จ น้ำหนัก ตัวแทนจำหน่ายอย่างเป็นทางการบนเกาะสมุยและเกาะพะงัน',
+    h1: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPx',
+    lead: 'มอเตอร์ไซค์ไฟฟ้าสองรุ่นสำหรับชีวิตบนเกาะ CITI เป็นรุ่นเบาสำหรับใช้งานทุกวัน ส่วน CPx เป็นรุ่นเรือธงระดับ 125 ซีซี ที่วิ่งได้ไกลกว่าและนั่งสบายกว่า ทั้งสองรุ่นมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ พร้อมการรับประกัน 3 ปี',
+    sections: [
+      { h: 'เปรียบเทียบ', body: table(['VMoto CITI', 'VMoto CPx'], [
+        ['ราคา', '฿95,000', '฿120,000'],
+        ['ระยะทางต่อการชาร์จ', '107 กม.', '130 กม.'],
+        ['ความเร็วสูงสุด', '80 กม./ชม.', '90 กม./ชม.'],
+        ['ชาร์จเร็ว', '20 นาที', '20 นาที'],
+        ['น้ำหนัก', '92 กก.', '107 กก.'],
+        ['แบตเตอรี่', 'แบตเตอรี่ถอดได้ 2 ก้อน พร้อมที่ชาร์จ'],
+        ['การรับประกัน', '3 ปีทุกชิ้นส่วน พร้อมบริการบนเกาะ'],
+      ]) },
+      { h: 'เลือกรุ่นไหนดี', body: `      <h3>เลือก CITI ถ้า…</h3>\n` + ul(
+        'คุณขี่ในตัวเมืองเป็นหลัก ไปหาดแล้วกลับ',
+        'คุณต้องการรถที่เบาที่สุด ควบคุมและจอดง่าย',
+        'งบประมาณของคุณคือ ฿95,000',
+      ) + `\n      <h3>เลือก CPx ถ้า…</h3>\n` + ul(
+        'คุณข้ามเกาะทุกวันและอยากได้ระยะทางเผื่อไว้',
+        'คุณซ้อนสองหรือบรรทุกของ',
+        'คุณต้องการบังลมสูงและการขับขี่ที่นิ่งกว่าเมื่อใช้ความเร็ว',
+      ) },
+      { h: 'สิ่งที่ได้จากทั้งสองรุ่น', body: ul(
+        '<b>แรงบิดทันที</b> ออกตัวได้ดีกว่าสกูตเตอร์น้ำมัน 125 ซีซี ไม่มีเกียร์ ไม่มีดีเลย์',
+        '<b>ค่าไฟราววันละ ฿25</b> แทนค่าน้ำมัน ฿150–200',
+        '<b>เงียบสนิท</b> ไม่มีเสียงเครื่องยนต์ ไม่มีควัน คุณได้ยินเสียงของเกาะ ไม่ใช่เสียงรถ',
+        '<b>ดูแลรักษาน้อย</b> ไม่มีน้ำมันเครื่อง สายพาน หรือหัวเทียน',
+      ) },
+    ],
+    cta: 'ยังไม่แน่ใจว่ารุ่นไหนเหมาะกับคุณ? ลองขี่ทั้งสองรุ่นได้เลย เรานำรถไปยังจุดนัดพบบนเกาะพะงัน ฟรีและไม่มีข้อผูกมัด',
+  },
+  zh: {
+    title: '电动车 CITI 与 CPx — 价格与参数 | VMOTO',
+    desc: 'VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPx（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。',
+    h1: '电动车 CITI 与 CPx',
+    lead: '两款适合海岛生活的电动车。CITI 轻便，适合日常代步；CPx 是 125cc 级别的旗舰，续航更长、乘坐更舒适。两款均配备两块可拆卸电池和充电器，享 3 年质保。',
+    sections: [
+      { h: '参数对比', body: table(['VMoto CITI', 'VMoto CPx'], [
+        ['价格', '฿95,000', '฿120,000'],
+        ['续航', '107 公里', '130 公里'],
+        ['最高时速', '80 公里/小时', '90 公里/小时'],
+        ['快充', '20 分钟', '20 分钟'],
+        ['重量', '92 公斤', '107 公斤'],
+        ['电池', '两块可拆卸电池，含充电器'],
+        ['质保', '整车 3 年质保，岛上提供服务'],
+      ]) },
+      { h: '如何选择', body: `      <h3>选择 CITI，如果…</h3>\n` + ul(
+        '您主要在镇上代步，往返海滩；',
+        '您想要最轻便、好操控好停放的车；',
+        '预算在 ฿95,000 左右。',
+      ) + `\n      <h3>选择 CPx，如果…</h3>\n` + ul(
+        '您每天穿越全岛，希望续航有余量；',
+        '您经常载人或带货；',
+        '您需要更高的风挡和高速下更稳的行驶质感。',
+      ) },
+      { h: '两款车的共同优势', body: ul(
+        '<b>瞬时扭矩。</b>起步优于 125cc 燃油踏板车 — 无挡位、无迟滞。',
+        '<b>每天约 ฿25 电费</b>，而燃油需要 ฿150–200。',
+        '<b>安静。</b>没有轰鸣与尾气 — 听见的是海岛，而不是车。',
+        '<b>保养极少。</b>无需机油、皮带和火花塞。',
+      ) },
+    ],
+    cta: '不确定选哪一款？两款都可以试骑 — 我们把车送到帕岸岛的约定地点，免费且无任何购买义务。',
+  },
+};
+
+const BUSINESS = {
+  en: {
+    title: 'Electric bikes for business — fleets on Samui and Phangan | VMOTO',
+    desc: 'Fleet terms for retreat centres, villas, hotels and rental businesses on Koh Samui and Koh Phangan: volume pricing, registration, service and charging handled.',
+    h1: 'Electric bikes for business',
+    lead: 'We build fleets for rental businesses, villas, hotels, retreat centres and delivery services on Koh Samui and Koh Phangan — with warranty, registration and service on the island.',
+    sections: [
+      { h: 'Retreat centres, villas and hotels', body: p(
+        'A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.',
+      ) },
+      { h: 'Opening a rental business', body: p(
+        'Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.',
+      ) },
+      { h: 'The economics', body: ul(
+        '<b>Running costs.</b> About ฿25 of electricity a day against ฿150–200 on petrol — the margin stays with you.',
+        '<b>Minimal maintenance.</b> No oil, belts or spark plugs. A 3-year warranty on every part and service on the island.',
+        '<b>Downtime.</b> Two batteries per bike and a 20-minute fast charge keep units on the road instead of in the shop.',
+      ) },
+      { h: 'What a fleet package includes', body: ul(
+        'volume pricing on VMoto CITI and CPx;',
+        'registration and plates arranged for every unit;',
+        'delivery across Koh Samui and Koh Phangan;',
+        'service and spare parts on the island, mobile team for fleets;',
+        'charging setup advice, and access to our charging network as it opens.',
+      ) },
+    ],
+    cta: 'Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.',
+  },
+  ru: {
+    title: 'Электробайки для бизнеса — парки на Самуи и Пангане | VMOTO',
+    desc: 'Условия для ретрит-центров, вилл, отелей и прокатов на Самуи и Пангане: цены на парк, регистрация, сервис и зарядка — берём на себя.',
+    h1: 'Электробайки для бизнеса',
+    lead: 'Собираем парки для прокатов, вилл, отелей, ретрит-центров и доставки на Самуи и Пангане — с гарантией, регистрацией и сервисом на острове.',
+    sections: [
+      { h: 'Ретрит-центры, виллы и отели', body: p(
+        'Парк бесшумных электробайков — реальный апгрейд сервиса: гости перемещаются по острову без шума и выхлопа, в согласии с местом. Не нужно искать прокат по приезде, каждая ночь становится ценнее, плюс экологичный образ и доход с аренды, если байки платные.',
+      ) },
+      { h: 'Открытие проката', body: p(
+        'Для запуска проката электробайков на острове действуют отдельные условия: цена за парк, регистрация под ключ, обучение персонала и поддержка сервиса. Электробайки убирают две главные статьи, которые съедают маржу проката, — топливо и обслуживание.',
+      ) },
+      { h: 'Экономика', body: ul(
+        '<b>Расходы на ход.</b> Около 25 ฿ электричества в день против 150–200 ฿ на бензин — разница остаётся у вас.',
+        '<b>Минимум обслуживания.</b> Нет масла, ремней и свечей. Гарантия 3 года на всё и сервис на острове.',
+        '<b>Простой.</b> Две батареи на байк и быстрая зарядка за 20 минут держат технику на линии, а не в мастерской.',
+      ) },
+      { h: 'Что входит в условия для парка', body: ul(
+        'цена за объём на VMoto CITI и CPx;',
+        'регистрация и номера на каждую единицу;',
+        'доставка по Самуи и Пангану;',
+        'сервис и запчасти на острове, выездная бригада для парков;',
+        'помощь с организацией зарядки и доступ к нашей сети станций по мере запуска.',
+      ) },
+    ],
+    cta: 'Напишите, какой нужен парк и где он будет работать, — подготовим условия под ваш бизнес: цены, сервис и зарядку.',
+  },
+  th: {
+    title: 'มอเตอร์ไซค์ไฟฟ้าสำหรับธุรกิจ — ฟลีตบนเกาะสมุยและพะงัน | VMOTO',
+    desc: 'เงื่อนไขสำหรับรีทรีตเซ็นเตอร์ วิลล่า โรงแรม และธุรกิจให้เช่าบนเกาะสมุยและเกาะพะงัน: ราคาต่อจำนวน การจดทะเบียน บริการ และการชาร์จ',
+    h1: 'มอเตอร์ไซค์ไฟฟ้าสำหรับธุรกิจ',
+    lead: 'เราจัดฟลีตให้ธุรกิจให้เช่า วิลล่า โรงแรม รีทรีตเซ็นเตอร์ และบริการจัดส่งบนเกาะสมุยและเกาะพะงัน พร้อมการรับประกัน การจดทะเบียน และบริการบนเกาะ',
+    sections: [
+      { h: 'รีทรีตเซ็นเตอร์ วิลล่า และโรงแรม', body: p(
+        'ฟลีตมอเตอร์ไซค์ไฟฟ้าที่เงียบสนิทคือการยกระดับบริการอย่างแท้จริง แขกเดินทางรอบเกาะโดยไม่มีเสียงและควัน สอดคล้องกับบรรยากาศของสถานที่ ไม่ต้องออกไปหาที่เช่ารถเมื่อมาถึง เพิ่มมูลค่าให้ทุกการเข้าพัก สร้างภาพลักษณ์รักษ์โลก และมีรายได้จากค่าเช่าหากคิดค่าบริการ',
+      ) },
+      { h: 'เปิดธุรกิจให้เช่า', body: p(
+        'การเริ่มธุรกิจให้เช่ามอเตอร์ไซค์ไฟฟ้าบนเกาะมีเงื่อนไขเฉพาะ: ราคาตามจำนวน ดำเนินการจดทะเบียนให้ อบรมพนักงาน และสนับสนุนงานบริการ รถไฟฟ้าช่วยตัดสองรายจ่ายที่กินกำไรของธุรกิจเช่ามากที่สุด คือค่าน้ำมันและค่าบำรุงรักษา',
+      ) },
+      { h: 'เรื่องต้นทุน', body: ul(
+        '<b>ค่าใช้จ่ายในการวิ่ง</b> ค่าไฟราววันละ ฿25 เทียบกับค่าน้ำมัน ฿150–200 ส่วนต่างอยู่กับคุณ',
+        '<b>ดูแลรักษาน้อย</b> ไม่มีน้ำมันเครื่อง สายพาน หรือหัวเทียน รับประกันทุกชิ้นส่วน 3 ปี พร้อมบริการบนเกาะ',
+        '<b>เวลาจอดเสีย</b> แบตเตอรี่สองก้อนต่อคันและชาร์จเร็ว 20 นาที ทำให้รถอยู่บนถนน ไม่ใช่ในอู่',
+      ) },
+      { h: 'แพ็กเกจฟลีตประกอบด้วย', body: ul(
+        'ราคาตามจำนวนสำหรับ VMoto CITI และ CPx',
+        'จดทะเบียนและป้ายทะเบียนให้ทุกคัน',
+        'จัดส่งทั่วเกาะสมุยและเกาะพะงัน',
+        'บริการและอะไหล่บนเกาะ พร้อมทีมเคลื่อนที่สำหรับฟลีต',
+        'คำแนะนำการติดตั้งจุดชาร์จ และการเข้าถึงเครือข่ายสถานีชาร์จของเราเมื่อเปิดให้บริการ',
+      ) },
+    ],
+    cta: 'บอกเราว่าต้องการฟลีตขนาดเท่าไรและใช้งานที่ไหน เราจะจัดเงื่อนไขให้ธุรกิจของคุณ ทั้งราคา บริการ และการชาร์จ',
+  },
+  zh: {
+    title: '企业电动车方案 — 苏梅岛与帕岸岛车队 | VMOTO',
+    desc: '面向静修中心、别墅、酒店和租赁企业的车队方案：批量价格、上牌、岛上服务与充电，全部由我们负责。',
+    h1: '企业电动车方案',
+    lead: '我们为苏梅岛和帕岸岛的租赁企业、别墅、酒店、静修中心和配送服务组建车队，含质保、上牌与岛上服务。',
+    sections: [
+      { h: '静修中心、别墅与酒店', body: p(
+        '一支安静的电动车队是服务品质的实质提升：客人环岛出行没有噪音和尾气，与环境相得益彰。抵达后无需再去找车行，每一晚的住宿都更有价值，同时带来环保形象；若收费出租，还能形成一项收入。',
+      ) },
+      { h: '开设租赁业务', body: p(
+        '在岛上开展电动车租赁享有专门条件：批量价格、代办上牌、员工培训与服务支持。电动车削减了最侵蚀租赁利润的两项成本 — 燃油与维修。',
+      ) },
+      { h: '成本账', body: ul(
+        '<b>使用成本。</b>每天约 ฿25 电费，而燃油为 ฿150–200 — 差额留在您手里。',
+        '<b>保养极少。</b>无需机油、皮带和火花塞。整车 3 年质保，岛上提供服务。',
+        '<b>停运时间。</b>每车两块电池加 20 分钟快充，让车留在路上而不是修理厂。',
+      ) },
+      { h: '车队方案包含', body: ul(
+        'VMoto CITI 与 CPx 的批量价格；',
+        '每台车的注册与牌照办理；',
+        '苏梅岛与帕岸岛全岛配送；',
+        '岛上服务与备件，车队专属上门团队；',
+        '充电方案建议，以及我们充电网络开通后的接入权。',
+      ) },
+    ],
+    cta: '告诉我们车队规模和运营地点，我们会为您的业务准备方案：价格、服务与充电。',
+  },
+};
+
+/* вопросы вынесены отдельно: из них же собирается разметка FAQPage */
+const FAQ_QA = {
+  en: [
+    ['Can foreigners buy a bike?', 'Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork.'],
+    ['Registration and plates?', 'We take care of the registration and plates ourselves right after the purchase.'],
+    ['Do I need a licence?', 'Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one.'],
+    ['Can I charge at home?', 'Yes — each battery charges from a regular outlet with the included charger. A fast charge at our stations takes about 20 minutes. Both batteries are removable, so you can carry them inside instead of parking next to a socket.'],
+    ['Where is the bike serviced?', 'On the island: our own service, parts in stock and a mobile team for Samui and Phangan. An electric drive needs no oil, belts or spark plugs, so routine maintenance is minimal.'],
+    ['How does a test ride work?', 'We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations.'],
+    ['What does it cost to run?', 'About ฿25 of electricity a day against ฿150–200 you would spend on petrol — plus no oil changes and no engine servicing.'],
+    ['What is covered by the warranty?', 'Three years on every part of the bike, with parts and service available on the island.'],
+  ],
+  ru: [
+    ['Может ли иностранец купить байк?', 'Да — иностранец может официально купить и владеть VMoto. Все документы оформляем мы.'],
+    ['Регистрация и номера?', 'Регистрацию и номера оформляем сами сразу после покупки.'],
+    ['Нужны ли права?', 'Да, как и на любой скутер: тайские или международные права категории «мотоцикл». Подскажем, как получить местные.'],
+    ['Можно заряжать дома?', 'Да — каждая батарея заряжается от обычной розетки зарядным устройством из комплекта. Быстрая зарядка на наших станциях занимает около 20 минут. Обе батареи съёмные, так что их можно занести домой, а не парковаться у розетки.'],
+    ['Где обслуживать байк?', 'На острове: собственный сервис, запчасти в наличии и выездная бригада на Самуи и Пангане. Электромотору не нужны масло, ремни и свечи, поэтому регулярное обслуживание минимально.'],
+    ['Как проходит тест-драйв?', 'Встречаемся на Пангане — вы приезжаете к нам или договариваемся об удобном месте индивидуально. 15–20 минут, бесплатно и без обязательств.'],
+    ['Сколько стоит эксплуатация?', 'Около 25 ฿ электричества в день против 150–200 ฿ на бензин — плюс нет замены масла и обслуживания двигателя.'],
+    ['Что покрывает гарантия?', 'Три года на все узлы байка, запчасти и сервис доступны на острове.'],
+  ],
+  th: [
+    ['ชาวต่างชาติซื้อรถได้ไหม', 'ได้ — ชาวต่างชาติสามารถซื้อและถือครอง VMoto ได้อย่างถูกต้อง เราดำเนินเอกสารทั้งหมดให้'],
+    ['การจดทะเบียนและป้ายทะเบียน', 'เราดำเนินการจดทะเบียนและทำป้ายให้เองทันทีหลังการซื้อ'],
+    ['ต้องมีใบขับขี่ไหม', 'ต้องมี เช่นเดียวกับสกูตเตอร์ทั่วไป: ใบขับขี่รถจักรยานยนต์ของไทยหรือใบขับขี่สากล เราแนะนำวิธีทำใบขับขี่ในไทยให้ได้'],
+    ['ชาร์จที่บ้านได้ไหม', 'ได้ — แบตเตอรี่แต่ละก้อนชาร์จจากปลั๊กบ้านทั่วไปด้วยที่ชาร์จที่ให้มา ส่วนการชาร์จเร็วที่สถานีของเราใช้เวลาราว 20 นาที แบตเตอรี่ถอดได้ทั้งสองก้อน จึงยกเข้าบ้านได้โดยไม่ต้องจอดรถข้างปลั๊ก'],
+    ['ซ่อมบำรุงที่ไหน', 'บนเกาะ: ศูนย์บริการของเราเอง มีอะไหล่พร้อม และทีมเคลื่อนที่สำหรับสมุยและพะงัน มอเตอร์ไฟฟ้าไม่ต้องใช้น้ำมันเครื่อง สายพาน หรือหัวเทียน การบำรุงรักษาจึงน้อยมาก'],
+    ['ทดลองขับอย่างไร', 'นัดพบกันที่เกาะพะงัน — คุณมาหาเรา หรือนัดจุดที่สะดวกเป็นรายบุคคล ใช้เวลา 15–20 นาที ฟรี ไม่มีข้อผูกมัด'],
+    ['ค่าใช้จ่ายในการใช้งานเท่าไร', 'ค่าไฟราววันละ ฿25 เทียบกับค่าน้ำมัน ฿150–200 อีกทั้งไม่ต้องเปลี่ยนถ่ายน้ำมันเครื่องหรือดูแลเครื่องยนต์'],
+    ['การรับประกันครอบคลุมอะไรบ้าง', 'รับประกัน 3 ปีทุกชิ้นส่วนของรถ พร้อมอะไหล่และบริการบนเกาะ'],
+  ],
+  zh: [
+    ['外国人可以购买吗？', '可以 — 外国人能够合法购买并持有 VMoto。所有手续由我们办理。'],
+    ['注册与牌照怎么办？', '购车后我们会立即代为办理注册和牌照。'],
+    ['需要驾照吗？', '需要，与普通踏板车一样：泰国摩托车驾照或国际驾照。我们会指导如何办理本地驾照。'],
+    ['可以在家充电吗？', '可以 — 每块电池都能用随车充电器在普通插座充电。在我们的站点快充约 20 分钟。两块电池均可拆卸，可以拿回室内充电，无需把车停在插座旁。'],
+    ['在哪里保养维修？', '就在岛上：我们自己的服务点、常备配件，以及苏梅岛和帕岸岛的上门团队。电驱动无需机油、皮带和火花塞，日常保养极少。'],
+    ['试驾如何安排？', '我们在帕岸岛见面 — 您来找我们，或另约方便的地点。15–20 分钟，免费，无任何购买义务。'],
+    ['日常使用成本是多少？', '每天约 ฿25 电费，而燃油需要 ฿150–200 — 而且无需换机油和发动机保养。'],
+    ['质保包含哪些内容？', '整车所有部件 3 年质保，岛上提供配件与服务。'],
+  ],
+};
+
+const FAQ_META = {
+  en: {
+    title: 'Questions before buying an electric bike in Thailand | VMOTO',
+    desc: 'Can foreigners buy? Registration, licence, home charging, service and how a test ride works — answers for buyers on Koh Samui and Koh Phangan.',
+    h1: 'Questions before buying',
+    lead: 'Everything foreigners usually ask before buying an electric bike on Koh Samui or Koh Phangan. Something missing? Message us on WhatsApp — we answer within the hour.',
+    cta: 'Still deciding? Book a free test ride and answer the question with your hands on the bars.',
+  },
+  ru: {
+    title: 'Вопросы перед покупкой электробайка в Таиланде | VMOTO',
+    desc: 'Может ли иностранец купить? Регистрация, права, зарядка дома, сервис и как проходит тест-драйв — ответы для покупателей на Самуи и Пангане.',
+    h1: 'Вопросы перед покупкой',
+    lead: 'Всё, что обычно спрашивают иностранцы перед покупкой электробайка на Самуи или Пангане. Чего-то не хватает? Напишите в WhatsApp — отвечаем в течение часа.',
+    cta: 'Ещё выбираете? Запишитесь на бесплатный тест-драйв и ответьте на вопрос руками, а не текстом.',
+  },
+  th: {
+    title: 'คำถามก่อนซื้อมอเตอร์ไซค์ไฟฟ้าในประเทศไทย | VMOTO',
+    desc: 'ชาวต่างชาติซื้อได้ไหม การจดทะเบียน ใบขับขี่ การชาร์จที่บ้าน การบริการ และการทดลองขับ — คำตอบสำหรับผู้ซื้อบนเกาะสมุยและเกาะพะงัน',
+    h1: 'คำถามก่อนซื้อ',
+    lead: 'ทุกเรื่องที่ชาวต่างชาติมักถามก่อนซื้อมอเตอร์ไซค์ไฟฟ้าบนเกาะสมุยหรือเกาะพะงัน ไม่เจอคำตอบที่ต้องการ? ทักมาทาง WhatsApp เราตอบภายในหนึ่งชั่วโมง',
+    cta: 'ยังตัดสินใจไม่ได้? จองทดลองขับฟรี แล้วให้มือของคุณเป็นคนตอบ',
+  },
+  zh: {
+    title: '在泰国购买电动车前的常见问题 | VMOTO',
+    desc: '外国人能否购买？注册、驾照、家用充电、维修保养以及试驾流程 — 面向苏梅岛与帕岸岛买家的解答。',
+    h1: '购车前的常见问题',
+    lead: '外国人在苏梅岛或帕岸岛购买电动车前最常问的问题都在这里。没找到答案？通过 WhatsApp 联系我们，一小时内回复。',
+    cta: '还在犹豫？预约免费试驾，用手感来回答这个问题。',
+  },
+};
+
+const faqDoc = (lang) => ({
+  ...FAQ_META[lang],
+  sections: FAQ_QA[lang].map(([q, a]) => ({ h: q, body: p(a) })),
+});
+
+const CONTENT = {
+  models: MODELS,
+  business: BUSINESS,
+  faq: Object.fromEntries(LANGS.map((l) => [l, faqDoc(l)])),
+};
+
+/* ──────────────────────────── шаблон ──────────────────────────── */
+
+function render(slug, lang) {
+  const d = CONTENT[slug][lang];
+  const ui = UI[lang];
+  const url = SITE + path(lang, slug);
+
+  const hreflang = LANGS.map((l) => `  <link rel="alternate" hreflang="${l}" href="${SITE}${path(l, slug)}">`).join('\n') +
+    `\n  <link rel="alternate" hreflang="x-default" href="${SITE}${path('en', slug)}">`;
+
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'VMOTO', item: SITE + home(lang) },
+      { '@type': 'ListItem', position: 2, name: ui.nav[slug], item: url },
+    ],
+  };
+
+  const schemas = [breadcrumb];
+  if (slug === 'faq') {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      inLanguage: lang,
+      mainEntity: FAQ_QA[lang].map(([q, a]) => ({
+        '@type': 'Question', name: q,
+        acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    });
+  }
+
+  /* видимая навигация по разделам — то, из чего Google собирает сайтлинки */
+  const nav = SLUGS.map((s) => (s === slug
+    ? `<span class="page-nav__cur">${ui.nav[s]}</span>`
+    : `<a href="${path(lang, s)}">${ui.nav[s]}</a>`)).join('');
+
+  const langLinks = LANGS.map((l) => (l === lang
+    ? `<span class="lang-links__cur">${l === 'zh' ? 'CN' : l.toUpperCase()}</span>`
+    : `<a href="${path(l, slug)}" hreflang="${l}">${l === 'zh' ? 'CN' : l.toUpperCase()}</a>`)).join('');
+
+  const sections = d.sections
+    .map((s, i) => `      <h2 class="section-title">${slug === 'faq' ? '' : `${i + 1}. `}${s.h}</h2>\n${s.body}`)
+    .join('\n\n');
+
+  return `<!DOCTYPE html>
+<html lang="${lang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
-  <meta name="description" content="${desc}">
-  <link rel="canonical" href="${SITE}/${slug}">
+  <title>${d.title}</title>
+  <meta name="description" content="${d.desc}">
+  <link rel="canonical" href="${url}">
+${hreflang}
+  <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VMOTO">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${desc}">
-  <meta property="og:url" content="${SITE}/${slug}">
+  <meta property="og:title" content="${d.title}">
+  <meta property="og:description" content="${d.desc}">
+  <meta property="og:url" content="${url}">
   <meta property="og:image" content="${SITE}/assets/img/og-cover-3.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
   <link rel="icon" href="/assets/img/favicon-96.png" type="image/png" sizes="96x96">
   <link rel="icon" href="/assets/img/favicon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-  <meta name="theme-color" content="#0a0a0c">
+  <meta name="theme-color" content="#0a0b0a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Manrope:wght@400;500;600&family=Michroma&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/${CSS}">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&family=Manrope:wght@400;500;600&family=Michroma&family=Kanit:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s, null, 2)}\n  </script>`).join('\n')}
   <style>
-    .page { max-width: 900px; margin: 0 auto; padding: 120px 24px 96px; }
-    .page__back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 34px; }
-    .page h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(32px, 5vw, 56px); line-height: 1.06; margin-bottom: 18px; }
-    .page__lead { font-size: 17px; color: rgba(242,241,238,.78); max-width: 62ch; margin-bottom: 14px; }
-    .page h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(22px, 2.6vw, 30px); margin: 52px 0 14px; }
-    .page h3 { font-family: var(--font-display); font-weight: 600; font-size: 18px; margin: 26px 0 8px; }
-    .page p, .page li { color: rgba(242,241,238,.78); line-height: 1.75; }
-    .page ul { padding-left: 20px; margin: 10px 0; }
-    .page li { margin-bottom: 6px; }
-    .ptable { width: 100%; border-collapse: collapse; margin: 22px 0; font-size: 15px; }
-    .ptable th, .ptable td { padding: 13px 14px; border-bottom: 1px solid rgba(255,255,255,.1); text-align: left; }
-    .ptable th { font-family: var(--font-ui); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(242,241,238,.55); }
-    .ptable td:first-child { color: rgba(242,241,238,.6); }
+    :root {
+      --bg: #0a0b0a;
+      --text: #f2f1ee;
+      --muted: rgba(242, 241, 238, .52);
+      --body: rgba(242, 241, 238, .78);
+      --line: rgba(255, 255, 255, .09);
+      --accent: #d94f3d;
+      --heading-font: 'Exo 2', 'Kanit', 'Noto Sans SC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Manrope', 'Kanit', 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 11, 10, .82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    /* контейнер и логотип — те же метрики, что в шапке лендинга */
+    .header-inner {
+      width: min(1360px, 100% - 72px);
+      margin-inline: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      padding: 12px 0;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: .5em;
+      font-family: 'Michroma', 'Exo 2', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: .14em;
+      -webkit-text-stroke: .028em currentColor;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .logo img { height: 1.15em; width: auto; display: block; transform: translateY(-.04em); }
+    .page-nav { display: flex; gap: 22px; font-size: 13px; }
+    .page-nav a, .page-nav__cur { text-decoration: none; white-space: nowrap; }
+    .page-nav a { color: var(--muted); transition: color .2s; }
+    .page-nav a:hover { color: var(--accent); }
+    .page-nav__cur { color: var(--text); }
+    .lang-links { display: flex; gap: 4px; padding: 3px; background: rgba(255, 255, 255, .05); border-radius: 8px; }
+    .lang-links a, .lang-links__cur {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      padding: 6px 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--muted);
+      transition: color .2s, background .2s;
+    }
+    .lang-links a:hover { color: var(--text); }
+    .lang-links__cur { background: var(--accent); color: #fff; }
+
+    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
+    .page-eyebrow {
+      font-family: var(--heading-font);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: var(--heading-font);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .page-lead {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--body);
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--line);
+    }
+    .section-title {
+      font-family: var(--heading-font);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 48px 0 16px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+    h3 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
+    p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
+    ul { padding-left: 20px; margin-bottom: 16px; }
+    li { font-size: 15px; color: var(--body); margin-bottom: 6px; }
+    b, strong { color: var(--text); font-weight: 600; }
+    a { color: var(--accent); }
+
+    /* узкий экран: таблица прокручивается, а не ломает значения по слогам */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    .ptable { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 15px; }
+    .ptable td:not(:first-child) { white-space: nowrap; }
+    .ptable td[colspan] { white-space: normal; }
+    .ptable th, .ptable td { padding: 13px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    .ptable th {
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .ptable td:first-child { color: var(--muted); white-space: nowrap; }
     .ptable b { color: var(--text); }
-    .page__cta { margin-top: 56px; padding: 30px; border: 1px solid rgba(255,255,255,.1); border-radius: 22px; background: rgba(255,255,255,.03); }
-    .page__cta p { margin-bottom: 18px; }
-    .page__links { margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.1); display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; }
-    .page__links a { color: rgba(242,241,238,.7); }
-    .page__links a:hover { color: var(--accent); }
-    .page__law { margin-top: 40px; font-size: 12px; color: rgba(242,241,238,.35); }
+
+    .page-cta {
+      margin-top: 56px;
+      padding: 28px 30px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .03);
+    }
+    .page-cta p { margin-bottom: 18px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 26px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: filter .2s;
+    }
+    .btn:hover { filter: brightness(1.1); }
+
+    .page-footer {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 24px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-footer span { font-size: 12px; color: var(--muted); }
+    .page-footer a { font-size: 13px; color: var(--muted); text-decoration: none; }
+    .page-footer a:hover { color: var(--text); }
+
+    @media (max-width: 700px) {
+      /* логотип и языки в одну строку, разделы — во вторую */
+      .header-inner { width: calc(100% - 32px); gap: 10px 16px; padding: 10px 0; }
+      .page-nav { order: 3; width: 100%; gap: 16px; font-size: 12px; padding-top: 2px; }
+      .lang-links a, .lang-links__cur { padding: 5px 8px; }
+      .page-wrap { padding: 40px 16px 80px; }
+      .page-footer { padding: 24px 16px; }
+      /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
+      .ptable { min-width: 0; font-size: 13px; }
+      .ptable th, .ptable td { padding: 11px 6px; }
+      .ptable td:first-child { white-space: normal; }
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <a class="page__back" href="/">← VMOTO</a>
-`;
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="${home(lang)}" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
+      <nav class="page-nav">${nav}</nav>
+      <div class="lang-links">${langLinks}</div>
+    </div>
+  </header>
 
-const CTA = (text) => `
-    <div class="page__cta">
-      <p>${text}</p>
-      <a class="btn btn--accent" href="/#contacts">Book a test ride&ensp;→</a>
-    </div>`;
+  <main class="page-wrap">
+    <div class="page-eyebrow">${ui.dealer}</div>
+    <h1>${d.h1}</h1>
+    <p class="page-lead">${d.lead}</p>
 
-const LINKS = (slug) => {
-  const all = [
-    ['/models', 'Models — CITI &amp; CPx'],
-    ['/business', 'For business'],
-    ['/faq', 'FAQ'],
-    ['/', 'Home'],
-  ].filter(([href]) => href !== `/${slug}`);
-  return `
-    <nav class="page__links">${all.map(([h, t]) => `<a href="${h}">${t}</a>`).join('')}</nav>
-    <p class="page__law">Official VMoto dealer in Thailand · CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</p>
-  </div>
+${sections}
+
+    <div class="page-cta">
+      <p>${d.cta}</p>
+      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <span>&copy; 2026 VMOTO · ${COMPANY} · ${ADDRESS}</span>
+    <a href="${home(lang)}">${ui.home}</a>
+  </footer>
 </body>
 </html>
 `;
-};
-
-/* ────────────────────────── страницы ────────────────────────── */
-
-const pages = [
-  {
-    slug: 'models',
-    title: 'VMoto CITI vs CPx — specs & prices on Koh Samui | VMOTO',
-    desc: 'Compare VMoto CITI (฿95,000, 107 km) and VMoto CPx (฿120,000, 130 km): range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.',
-    body: `
-    <h1>VMoto CITI vs CPx</h1>
-    <p class="page__lead">Two electric bikes for island life. CITI is the light everyday commuter; CPx is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.</p>
-
-    <h2>Side by side</h2>
-    <table class="ptable">
-      <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPx</th></tr>
-      <tr><td>Price</td><td><b>฿95,000</b></td><td><b>฿120,000</b></td></tr>
-      <tr><td>Range</td><td><b>107 km</b></td><td><b>130 km</b></td></tr>
-      <tr><td>Top speed</td><td><b>80 km/h</b></td><td><b>90 km/h</b></td></tr>
-      <tr><td>Fast charge</td><td><b>20 min</b></td><td><b>20 min</b></td></tr>
-      <tr><td>Weight</td><td><b>92 kg</b></td><td><b>107 kg</b></td></tr>
-      <tr><td>Batteries</td><td colspan="2"><b>Two removable batteries + charger included</b></td></tr>
-      <tr><td>Warranty</td><td colspan="2"><b>3 years on every part, service on the island</b></td></tr>
-    </table>
-
-    <h2>Which one is for you</h2>
-    <h3>Take the CITI if…</h3>
-    <ul>
-      <li>you ride mostly around town, to the beach and back;</li>
-      <li>you want the lightest bike to handle and park;</li>
-      <li>฿95,000 is the budget you had in mind.</li>
-    </ul>
-    <h3>Take the CPx if…</h3>
-    <ul>
-      <li>you cross the island daily and want range to spare;</li>
-      <li>you ride two-up or carry cargo;</li>
-      <li>you want the taller screen and the calmer ride at speed.</li>
-    </ul>
-
-    <h2>What both models give you</h2>
-    <ul>
-      <li><b>Instant torque.</b> Off the line an electric drive beats petrol 125cc scooters — no gears, no lag.</li>
-      <li><b>About ฿25 a day</b> of electricity instead of ฿150–200 on petrol.</li>
-      <li><b>Silence.</b> No engine roar, no fumes — you hear the island, not the bike.</li>
-      <li><b>Minimal maintenance.</b> No oil, belts or spark plugs.</li>
-    </ul>
-${CTA('Not sure which model fits? Ride both — we bring the bikes to a meeting point on Koh Phangan, free and with no obligation.')}`,
-  },
-  {
-    slug: 'business',
-    title: 'Electric bike fleets for hotels, villas & rentals in Thailand | VMOTO',
-    desc: 'Fleet terms for retreat centres, villas, hotels and rental businesses on Koh Samui and Koh Phangan: volume pricing, registration, service and charging handled.',
-    body: `
-    <h1>Electric bikes for business</h1>
-    <p class="page__lead">We build fleets for rental businesses, villas, hotels, retreat centres and delivery services on Koh Samui and Koh Phangan — with warranty, registration and service on the island.</p>
-
-    <h2>Retreat centres, villas and hotels</h2>
-    <p>A fleet of silent e-bikes is a real upgrade to your service: guests move around the island with no noise and no fumes — in tune with the place. No rental hunting on arrival, extra value for every stay, an eco-friendly image, and rental income if you charge for the bikes.</p>
-
-    <h2>Opening a rental business</h2>
-    <p>Launching e-bike rental on the island comes with dedicated terms: volume pricing, registration handled for you, staff training and service support. Electric bikes cut the two things that hurt rental margins most — fuel and maintenance.</p>
-
-    <h2>The economics</h2>
-    <ul>
-      <li><b>Running costs.</b> About ฿25 of electricity a day against ฿150–200 on petrol — the margin stays with you.</li>
-      <li><b>Minimal maintenance.</b> No oil, belts or spark plugs. A 3-year warranty on every part and service on the island.</li>
-      <li><b>Downtime.</b> Two batteries per bike and a 20-minute fast charge keep units on the road instead of in the shop.</li>
-    </ul>
-
-    <h2>What a fleet package includes</h2>
-    <ul>
-      <li>volume pricing on VMoto CITI and CPx;</li>
-      <li>registration and plates arranged for every unit;</li>
-      <li>delivery across Koh Samui and Koh Phangan;</li>
-      <li>service and spare parts on the island, mobile team for fleets;</li>
-      <li>charging setup advice, and access to our charging network as it opens.</li>
-    </ul>
-${CTA('Tell us the size of the fleet and where it will operate — we will prepare terms for your business: pricing, service and charging.')}`,
-  },
-  {
-    slug: 'faq',
-    title: 'Buying an electric bike in Thailand — FAQ | VMOTO Samui & Phangan',
-    desc: 'Can foreigners buy? Registration, licence, home charging, service and how a test ride works — answers for buyers of VMoto electric bikes on Koh Samui and Koh Phangan.',
-    body: `
-    <h1>Questions before buying</h1>
-    <p class="page__lead">Everything foreigners usually ask before buying an electric bike on Koh Samui or Koh Phangan. Something missing? Message us on WhatsApp — we answer within the hour.</p>
-
-    <h2>Can foreigners buy a bike?</h2>
-    <p>Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork.</p>
-
-    <h2>Registration and plates?</h2>
-    <p>We take care of the registration and plates ourselves right after the purchase.</p>
-
-    <h2>Do I need a licence?</h2>
-    <p>Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one.</p>
-
-    <h2>Can I charge at home?</h2>
-    <p>Yes — each battery charges from a regular outlet with the included charger. A fast charge at our stations takes about 20 minutes. Both batteries are removable, so you can carry them inside instead of parking next to a socket.</p>
-
-    <h2>Where is the bike serviced?</h2>
-    <p>On the island: our own service, parts in stock and a mobile team for Samui and Phangan. An electric drive needs no oil, belts or spark plugs, so routine maintenance is minimal.</p>
-
-    <h2>How does a test ride work?</h2>
-    <p>We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations.</p>
-
-    <h2>What does it cost to run?</h2>
-    <p>About ฿25 of electricity a day against ฿150–200 you would spend on petrol — plus no oil changes and no engine servicing.</p>
-
-    <h2>What is covered by the warranty?</h2>
-    <p>Three years on every part of the bike, with parts and service available on the island.</p>
-${CTA('Still deciding? Book a free test ride and answer the question with your hands on the bars.')}`,
-    schema: {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      mainEntity: [
-        ['Can foreigners buy a bike?', 'Yes — foreigners can officially buy and own a VMoto. We handle all the paperwork.'],
-        ['Registration and plates?', 'We take care of the registration and plates ourselves right after the purchase.'],
-        ['Do I need a licence?', 'Yes, same as any scooter: a Thai or an international motorcycle licence. We’ll advise how to get a local one.'],
-        ['Can I charge at home?', 'Yes — each battery charges from a regular outlet with the included charger. A fast charge at our stations takes about 20 minutes.'],
-        ['Where is the bike serviced?', 'On the island: our own service, parts in stock and a mobile team for Samui and Phangan.'],
-        ['How does a test ride work?', 'We meet on Koh Phangan — you come to us, or we arrange a convenient spot individually. 15–20 minutes, free, no obligations.'],
-      ].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
-    },
-  },
-];
-
-for (const p of pages) {
-  const schema = p.schema
-    ? `  <script type="application/ld+json">\n${JSON.stringify(p.schema, null, 2)}\n  </script>\n`
-    : '';
-  const html = HEAD(p.slug, p.title, p.desc).replace('</head>', schema + '</head>') + p.body + LINKS(p.slug);
-  writeFileSync(`${p.slug}.html`, html);
-  console.log(`${p.slug}.html: ${(html.length / 1024).toFixed(0)} KB`);
 }
+
+/* ──────────────────────────── сборка ──────────────────────────── */
+
+for (const slug of SLUGS) {
+  for (const lang of LANGS) {
+    const html = render(slug, lang);
+    const file = lang === 'en' ? `${slug}.html` : `${lang}/${slug}.html`;
+    if (lang !== 'en') mkdirSync(lang, { recursive: true });
+    writeFileSync(file, html);
+    console.log(`${file}: ${(html.length / 1024).toFixed(0)} KB`);
+  }
+}
+
+/* карта сайта: лендинг + все разделы + юридические страницы */
+const cluster = (paths) => paths
+  .map((u) => `    <xhtml:link rel="alternate" hreflang="${u.lang}" href="${SITE}${u.path}"/>`)
+  .join('\n');
+
+const landing = LANGS.map((l) => ({ lang: l, path: home(l) }));
+const urls = [];
+urls.push(`  <url>
+    <loc>${SITE}/</loc>
+${cluster(landing)}
+    <lastmod>2026-08-15</lastmod>
+    <priority>1.0</priority>
+  </url>`);
+for (const l of LANGS.filter((x) => x !== 'en')) {
+  urls.push(`  <url>
+    <loc>${SITE}${home(l)}</loc>
+${cluster(landing)}
+    <lastmod>2026-08-15</lastmod>
+    <priority>0.9</priority>
+  </url>`);
+}
+for (const slug of SLUGS) {
+  const set = LANGS.map((l) => ({ lang: l, path: path(l, slug) }));
+  for (const l of LANGS) {
+    urls.push(`  <url>
+    <loc>${SITE}${path(l, slug)}</loc>
+${cluster(set)}
+    <lastmod>2026-08-15</lastmod>
+    <priority>${l === 'en' ? '0.9' : '0.8'}</priority>
+  </url>`);
+  }
+}
+for (const legal of ['privacy', 'terms']) {
+  urls.push(`  <url>
+    <loc>${SITE}/${legal}</loc>
+    <lastmod>2026-08-15</lastmod>
+    <priority>0.3</priority>
+  </url>`);
+}
+
+writeFileSync('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.join('\n')}
+</urlset>
+`);
+console.log(`sitemap.xml: ${urls.length} URLs`);
 console.log('done');
