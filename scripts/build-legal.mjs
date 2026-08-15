@@ -30,7 +30,8 @@ if (!DICT || !DICT.ru) throw new Error('DICT не извлечён из i18n.js'
 const FOOT_KEYS = ['footer.locations', 'loc.samui', 'loc.phangan', 'footer.contacts',
   'footer.messengers', 'footer.navigation', 'footer.compare', 'footer.fleets',
   'footer.faqPage', 'footer.copy', 'footer.dealer', 'footer.privacy', 'footer.terms',
-  'footer.top', 'nav.models', 'b2b.label', 'lang.aria'];
+  'footer.top', 'lang.aria',
+  'nav.benefits', 'nav.models', 'nav.gallery', 'st.label', 'b2b.label', 'nav.contacts'];
 const HOME = { en: 'Home', ru: 'Главная', th: 'หน้าแรก', zh: '首页' };
 const FAQ_NAV = { en: 'FAQ', ru: 'Вопросы', th: 'คำถามที่พบบ่อย', zh: '常见问题' };
 const FOOT = Object.fromEntries(LANGS_ALL.map((l) => [l, {
@@ -130,7 +131,7 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       color: var(--text);
     }
     .logo img { height: 1.15em; width: auto; display: block; transform: translateY(-.04em); }
-    .page-nav { display: flex; gap: 32px; }
+    .page-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 26px; }
     .page-nav a {
       font-size: 12px;
       letter-spacing: .12em;
@@ -378,9 +379,20 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
       .logo { font-size: 13px; letter-spacing: .12em; }
       .header-right { grid-column: 2; }
-      .page-nav { order: 3; grid-column: 1 / -1; gap: 18px; }
+      /* семь разделов в одну прокручиваемую строку: две строки съедали экран */
+      .page-nav {
+        order: 3;
+        grid-column: 1 / -1;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 18px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .page-nav::-webkit-scrollbar { display: none; }
       .page-nav a { font-size: 11px; letter-spacing: .1em; }
-      .page-wrap { padding: 124px 16px 80px; }
+      .page-wrap { padding: 132px 16px 80px; }
     }
 
     .lang-content { display: none; }
@@ -392,9 +404,13 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
     <div class="header-inner">
       <a href="/" class="logo" data-nav="home" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
       <nav class="page-nav">
-        <a href="/models" data-nav="models" data-f="nav.models"></a>
-        <a href="/business" data-nav="business" data-f="b2b.label"></a>
-        <a href="/faq" data-nav="faq" data-f="faq"></a>
+        <a href="/#benefits" data-anchor="benefits" data-f="nav.benefits"></a>
+        <a href="/#models" data-anchor="models" data-f="nav.models"></a>
+        <a href="/#gallery" data-anchor="gallery" data-f="nav.gallery"></a>
+        <a href="/#stations" data-anchor="stations" data-f="st.label"></a>
+        <a href="/#business" data-anchor="business" data-f="b2b.label"></a>
+        <a href="/#faq" data-anchor="faq">FAQ</a>
+        <a href="/#contacts" data-anchor="contacts" data-f="nav.contacts"></a>
       </nav>
       <div class="header-right">
         <div class="lang" id="lang-toggle">
@@ -502,6 +518,10 @@ ${docs}
         const base = l === 'en' ? '' : '/' + l;
         document.querySelectorAll('[data-nav]').forEach((a) => {
           a.href = a.dataset.nav === 'home' ? (base || '/') : base + '/' + a.dataset.nav;
+        });
+        /* пункты меню ведут на разделы лендинга своего языка */
+        document.querySelectorAll('[data-anchor]').forEach((a) => {
+          a.href = (base || '/') + '#' + a.dataset.anchor;
         });
         document.documentElement.lang = l;
       }
