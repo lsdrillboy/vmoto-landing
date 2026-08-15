@@ -368,6 +368,8 @@ const ICONS = {
   check: '<circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/>',
   pin: '<path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>',
+  battery: '<rect x="3" y="7" width="15" height="10" rx="2"/><path d="M21 10.5v3"/><path d="M7 10.5v3M11 10.5v3"/>',
 };
 const icon = (name, size = 20) =>
   `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`;
@@ -452,6 +454,30 @@ const faqDoc = (lang) => ({
   sections: FAQ_QA[lang].map(([q, a]) => ({ h: q, body: p(a) })),
 });
 
+
+/* плитки под заголовком героя: только проверяемые факты */
+const HERO_TILES = {
+  models: {
+    en: [['bolt', 'Range up to 130 km'], ['clock', '20-minute fast charge'], ['shield', '3-year warranty'], ['battery', 'Two removable batteries']],
+    ru: [['bolt', 'Запас хода до 130 км'], ['clock', 'Зарядка 20 минут'], ['shield', 'Гарантия 3 года'], ['battery', 'Две съёмные батареи']],
+    th: [['bolt', 'ระยะทางสูงสุด 130 กม.'], ['clock', 'ชาร์จเร็ว 20 นาที'], ['shield', 'รับประกัน 3 ปี'], ['battery', 'แบตเตอรี่ถอดได้ 2 ก้อน']],
+    zh: [['bolt', '续航最高 130 公里'], ['clock', '20 分钟快充'], ['shield', '3 年质保'], ['battery', '两块可拆卸电池']],
+  },
+  faq: {
+    en: [['support', 'We answer within the hour'], ['doc', 'Paperwork handled for you'], ['pin', 'Samui &amp; Phangan'], ['shield', '3-year warranty']],
+    ru: [['support', 'Отвечаем в течение часа'], ['doc', 'Документы оформляем мы'], ['pin', 'Самуи и Панган'], ['shield', 'Гарантия 3 года']],
+    th: [['support', 'ตอบภายในหนึ่งชั่วโมง'], ['doc', 'เราจัดการเอกสารให้'], ['pin', 'สมุยและพะงัน'], ['shield', 'รับประกัน 3 ปี']],
+    zh: [['support', '一小时内回复'], ['doc', '手续由我们办理'], ['pin', '苏梅岛与帕岸岛'], ['shield', '3 年质保']],
+  },
+};
+
+/* фон героя и точка кадрирования: текст должен лечь на затемнённую часть */
+const HERO_IMG = {
+  models: ['/assets/img/hero-bg.webp', '78% 50%'],
+  business: ['/assets/business/retreat.webp', '72% 50%'],
+  faq: ['/assets/business/rental.webp', '38% 50%'],
+};
+
 const CONTENT = {
   models: MODELS,
   business: BUSINESS,
@@ -460,60 +486,97 @@ const CONTENT = {
 
 /* ──────────────────────────── шаблон ──────────────────────────── */
 
-/* обычная страница-документ: заголовок, лид, пронумерованные разделы */
-function docMain(d, ui, lang, slug) {
-  const sections = d.sections
-    .map((s, i) => `      <h2 class="section-title">${slug === 'faq' ? '' : `${i + 1}. `}${s.h}</h2>\n${s.body}`)
-    .join('\n\n');
-  return `  <main class="page-wrap">
-    <div class="page-eyebrow">${ui.dealer}</div>
-    <h1>${d.h1}</h1>
-    <p class="page-lead">${d.lead}</p>
-
-${sections}
-
-    <div class="page-cta">
-      <p>${d.cta}</p>
-      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
-    </div>
-  </main>`;
-}
-
-/* страница «Для бизнеса»: герой с фото, преимущества, сегменты, оффер */
-function bizMain(d, ui, lang) {
-  const feats = d.features
+/* общий герой с фотографией — одинаковый на всех страницах-разделах */
+function hero(slug, lang, ui, h1, lead, tiles) {
+  const [img, pos] = HERO_IMG[slug];
+  const feats = tiles
     .map(([ic, t]) => `        <div class="biz-feat"><i>${icon(ic)}</i><span>${t}</span></div>`)
     .join('\n');
-  const cards = d.advantages
-    .map(([ic, t, x]) => `      <div class="biz-card"><i>${icon(ic, 22)}</i><h3>${t}</h3><p>${x}</p></div>`)
-    .join('\n');
-  const segs = d.segments
-    .map((s) => `      <article class="biz-seg__card">
-        <img src="/assets/business/${s.img}.webp" alt="" loading="lazy">
-        <div class="biz-seg__txt"><h2>${s.t}</h2><p>${s.x}</p></div>
-      </article>`)
-    .join('\n');
-  const inc = d.included
-    .map((x) => `      <li>${icon('check', 18)}<span>${x}</span></li>`)
-    .join('\n');
-  const trust = d.trust
-    .map((t, i) => `      <div class="biz-trust__i">${icon(['check', 'pin', 'support', 'shield'][i], 18)}<span>${t}</span></div>`)
-    .join('\n');
-
-  return `  <main>
-    <section class="biz-hero">
-      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/retreat.webp" alt="" fetchpriority="high"></div>
+  return `    <section class="biz-hero">
+      <div class="biz-hero__bg" aria-hidden="true"><img src="${img}" alt="" style="object-position:${pos}" fetchpriority="high"></div>
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
-        <div class="page-eyebrow" style="text-align:left">${ui.dealer}</div>
-        <h1>${d.h1}</h1>
-        <p class="biz-hero__lead">${d.lead}</p>
+        <p class="page-eyebrow">${ui.dealer}</p>
+        <h1>${h1}</h1>
+        <p class="biz-hero__lead">${lead}</p>
         <div class="biz-feats">
 ${feats}
         </div>
         <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
       </div>
-    </section>
+    </section>`;
+}
+
+/* плашка с предложением и полоса доверия — общий низ всех разделов */
+function outro(d, ui, lang, trust) {
+  const items = trust
+    .map((t, i) => `      <div class="biz-trust__i">${icon(['check', 'pin', 'support', 'shield'][i], 18)}<span>${t}</span></div>`)
+    .join('\n');
+  return `    <div class="wide biz-cta">
+      <div class="biz-cta__l">
+        <i>${icon('calendar', 24)}</i>
+        <p>${d.ctaTitle ? `<b>${d.ctaTitle}</b>` : ''}${d.ctaText || d.cta}</p>
+      </div>
+      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
+    </div>
+
+    <div class="biz-trust">
+      <div class="wide biz-trust__in">
+${items}
+      </div>
+    </div>`;
+}
+
+/* «Модели» и «Вопросы»: герой, затем содержимое в широких секциях */
+function docMain(d, ui, lang, slug) {
+  const trust = BUSINESS[lang].trust;
+  let body;
+  if (slug === 'faq') {
+    const cards = d.sections
+      .map((s) => `        <article class="faq-card"><h2>${s.h}</h2>${s.body.trim().replace(/^<p>|<\/p>$/g, (m) => (m === '<p>' ? '<p>' : '</p>'))}</article>`)
+      .join('\n');
+    body = `    <section class="wide biz-section">
+      <div class="faq-grid">
+${cards}
+      </div>
+    </section>`;
+  } else {
+    body = d.sections
+      .map((s) => `    <section class="wide biz-section">
+      <h2 class="biz-h2">${s.h}</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="doc-body">
+${s.body}
+      </div>
+    </section>`)
+      .join('\n\n');
+  }
+  return `  <main>
+${hero(slug, lang, ui, d.h1, d.lead, HERO_TILES[slug][lang])}
+
+${body}
+
+${outro(d, ui, lang, trust)}
+  </main>`;
+}
+
+/* страница «Для бизнеса»: герой, преимущества, сегменты, состав условий */
+function bizMain(d, ui, lang) {
+  const cards = d.advantages
+    .map(([ic, t, x]) => `        <div class="biz-card"><i>${icon(ic, 22)}</i><h3>${t}</h3><p>${x}</p></div>`)
+    .join('\n');
+  const segs = d.segments
+    .map((s) => `        <article class="biz-seg__card">
+          <img src="/assets/business/${s.img}.webp" alt="" loading="lazy">
+          <div class="biz-seg__txt"><h2>${s.t}</h2><p>${s.x}</p></div>
+        </article>`)
+    .join('\n');
+  const inc = d.included
+    .map((x) => `        <li>${icon('check', 18)}<span>${x}</span></li>`)
+    .join('\n');
+
+  return `  <main>
+${hero('business', lang, ui, d.h1, d.lead, d.features)}
 
     <section class="wide biz-section">
       <p class="biz-label">${d.whyLabel}</p>
@@ -541,19 +604,7 @@ ${inc}
       </ul>
     </section>
 
-    <div class="wide biz-cta">
-      <div class="biz-cta__l">
-        <i>${icon('calendar', 24)}</i>
-        <p><b>${d.ctaTitle}</b>${d.ctaText}</p>
-      </div>
-      <a class="btn" href="${home(lang)}#contacts">${ui.cta}&ensp;→</a>
-    </div>
-
-    <div class="biz-trust">
-      <div class="wide biz-trust__in">
-${trust}
-      </div>
-    </div>
+${outro(d, ui, lang, d.trust)}
   </main>`;
 }
 
@@ -695,7 +746,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .lang-links a:hover { color: var(--text); }
     .lang-links__cur { background: var(--accent); color: #fff; }
 
-    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
     .page-eyebrow {
       font-family: var(--heading-font);
       font-size: 10px;
@@ -713,26 +763,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       line-height: 1.15;
       margin-bottom: 20px;
     }
-    .page-lead {
-      font-size: 16px;
-      line-height: 1.75;
-      color: var(--body);
-      margin-bottom: 48px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--line);
-    }
-    .section-title {
-      font-family: var(--heading-font);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin: 48px 0 16px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
     h3 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
     p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
     ul { padding-left: 20px; margin-bottom: 16px; }
@@ -756,14 +786,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .ptable td:first-child { color: var(--muted); white-space: nowrap; }
     .ptable b { color: var(--text); }
 
-    .page-cta {
-      margin-top: 56px;
-      padding: 28px 30px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .03);
-    }
-    .page-cta p { margin-bottom: 18px; }
     .btn {
       display: inline-block;
       padding: 14px 26px;
@@ -799,7 +821,6 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .header-inner { width: calc(100% - 32px); gap: 10px 16px; padding: 10px 0; }
       .page-nav { order: 3; width: 100%; gap: 16px; font-size: 12px; padding-top: 2px; }
       .lang-links a, .lang-links__cur { padding: 5px 8px; }
-      .page-wrap { padding: 40px 16px 80px; }
       .page-footer { padding: 24px 16px; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
@@ -896,9 +917,16 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
-    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; padding: 0; margin: 0; }
+    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
+
+    .doc-body { max-width: 900px; margin-inline: auto; }
+    .doc-body h3:first-child { margin-top: 0; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1100px; margin-inline: auto; }
+    .faq-card { padding: 26px 28px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
+    .faq-card h2 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .faq-card p { font-size: 14px; margin: 0; }
 
     .biz-cta {
       display: flex;
@@ -950,7 +978,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .faq-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
@@ -982,7 +1010,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
 
 ${main}
 
-  <footer class="page-footer${slug === 'business' ? ' page-footer--wide' : ''}">
+  <footer class="page-footer page-footer--wide">
     <span>&copy; 2026 VMOTO · ${COMPANY} · ${ADDRESS}</span>
     <a href="${home(lang)}">${ui.home}</a>
   </footer>

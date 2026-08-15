@@ -118,7 +118,6 @@
     .lang-links a:hover { color: var(--text); }
     .lang-links__cur { background: var(--accent); color: #fff; }
 
-    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
     .page-eyebrow {
       font-family: var(--heading-font);
       font-size: 10px;
@@ -136,26 +135,6 @@
       line-height: 1.15;
       margin-bottom: 20px;
     }
-    .page-lead {
-      font-size: 16px;
-      line-height: 1.75;
-      color: var(--body);
-      margin-bottom: 48px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--line);
-    }
-    .section-title {
-      font-family: var(--heading-font);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin: 48px 0 16px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
     h3 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
     p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
     ul { padding-left: 20px; margin-bottom: 16px; }
@@ -179,14 +158,6 @@
     .ptable td:first-child { color: var(--muted); white-space: nowrap; }
     .ptable b { color: var(--text); }
 
-    .page-cta {
-      margin-top: 56px;
-      padding: 28px 30px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .03);
-    }
-    .page-cta p { margin-bottom: 18px; }
     .btn {
       display: inline-block;
       padding: 14px 26px;
@@ -222,7 +193,6 @@
       .header-inner { width: calc(100% - 32px); gap: 10px 16px; padding: 10px 0; }
       .page-nav { order: 3; width: 100%; gap: 16px; font-size: 12px; padding-top: 2px; }
       .lang-links a, .lang-links__cur { padding: 5px 8px; }
-      .page-wrap { padding: 40px 16px 80px; }
       .page-footer { padding: 24px 16px; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
@@ -319,9 +289,16 @@
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
-    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; padding: 0; margin: 0; }
+    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
+
+    .doc-body { max-width: 900px; margin-inline: auto; }
+    .doc-body h3:first-child { margin-top: 0; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1100px; margin-inline: auto; }
+    .faq-card { padding: 26px 28px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
+    .faq-card h2 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .faq-card p { font-size: 14px; margin: 0; }
 
     .biz-cta {
       display: flex;
@@ -373,7 +350,7 @@
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .faq-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
@@ -403,12 +380,28 @@
     </div>
   </header>
 
-  <main class="page-wrap">
-    <div class="page-eyebrow">ตัวแทนจำหน่าย VMoto อย่างเป็นทางการในประเทศไทย</div>
-    <h1>มอเตอร์ไซค์ไฟฟ้า CITI และ CPx</h1>
-    <p class="page-lead">มอเตอร์ไซค์ไฟฟ้าสองรุ่นสำหรับชีวิตบนเกาะ CITI เป็นรุ่นเบาสำหรับใช้งานทุกวัน ส่วน CPx เป็นรุ่นเรือธงระดับ 125 ซีซี ที่วิ่งได้ไกลกว่าและนั่งสบายกว่า ทั้งสองรุ่นมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ พร้อมการรับประกัน 3 ปี</p>
+  <main>
+    <section class="biz-hero">
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/img/hero-bg.webp" alt="" style="object-position:78% 50%" fetchpriority="high"></div>
+      <div class="biz-hero__shade" aria-hidden="true"></div>
+      <div class="wide biz-hero__inner">
+        <p class="page-eyebrow">ตัวแทนจำหน่าย VMoto อย่างเป็นทางการในประเทศไทย</p>
+        <h1>มอเตอร์ไซค์ไฟฟ้า CITI และ CPx</h1>
+        <p class="biz-hero__lead">มอเตอร์ไซค์ไฟฟ้าสองรุ่นสำหรับชีวิตบนเกาะ CITI เป็นรุ่นเบาสำหรับใช้งานทุกวัน ส่วน CPx เป็นรุ่นเรือธงระดับ 125 ซีซี ที่วิ่งได้ไกลกว่าและนั่งสบายกว่า ทั้งสองรุ่นมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ พร้อมการรับประกัน 3 ปี</p>
+        <div class="biz-feats">
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg></i><span>ระยะทางสูงสุด 130 กม.</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></i><span>ชาร์จเร็ว 20 นาที</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></i><span>รับประกัน 3 ปี</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="15" height="10" rx="2"/><path d="M21 10.5v3"/><path d="M7 10.5v3M11 10.5v3"/></svg></i><span>แบตเตอรี่ถอดได้ 2 ก้อน</span></div>
+        </div>
+        <a class="btn" href="/th#contacts">จองทดลองขับ&ensp;→</a>
+      </div>
+    </section>
 
-      <h2 class="section-title">1. เปรียบเทียบ</h2>
+    <section class="wide biz-section">
+      <h2 class="biz-h2">เปรียบเทียบ</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="doc-body">
       <div class="table-wrap"><table class="ptable">
         <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPx</th></tr>
         <tr><td>ราคา</td><td><b>฿95,000</b></td><td><b>฿120,000</b></td></tr>
@@ -419,8 +412,13 @@
         <tr><td>แบตเตอรี่</td><td colspan="2"><b>แบตเตอรี่ถอดได้ 2 ก้อน พร้อมที่ชาร์จ</b></td></tr>
         <tr><td>การรับประกัน</td><td colspan="2"><b>3 ปีทุกชิ้นส่วน พร้อมบริการบนเกาะ</b></td></tr>
       </table></div>
+      </div>
+    </section>
 
-      <h2 class="section-title">2. เลือกรุ่นไหนดี</h2>
+    <section class="wide biz-section">
+      <h2 class="biz-h2">เลือกรุ่นไหนดี</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="doc-body">
       <h3>เลือก CITI ถ้า…</h3>
       <ul>
         <li>คุณขี่ในตัวเมืองเป็นหลัก ไปหาดแล้วกลับ</li>
@@ -433,22 +431,41 @@
         <li>คุณซ้อนสองหรือบรรทุกของ</li>
         <li>คุณต้องการบังลมสูงและการขับขี่ที่นิ่งกว่าเมื่อใช้ความเร็ว</li>
       </ul>
+      </div>
+    </section>
 
-      <h2 class="section-title">3. สิ่งที่ได้จากทั้งสองรุ่น</h2>
+    <section class="wide biz-section">
+      <h2 class="biz-h2">สิ่งที่ได้จากทั้งสองรุ่น</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="doc-body">
       <ul>
         <li><b>แรงบิดทันที</b> ออกตัวได้ดีกว่าสกูตเตอร์น้ำมัน 125 ซีซี ไม่มีเกียร์ ไม่มีดีเลย์</li>
         <li><b>ค่าไฟราววันละ ฿25</b> แทนค่าน้ำมัน ฿150–200</li>
         <li><b>เงียบสนิท</b> ไม่มีเสียงเครื่องยนต์ ไม่มีควัน คุณได้ยินเสียงของเกาะ ไม่ใช่เสียงรถ</li>
         <li><b>ดูแลรักษาน้อย</b> ไม่มีน้ำมันเครื่อง สายพาน หรือหัวเทียน</li>
       </ul>
+      </div>
+    </section>
 
-    <div class="page-cta">
-      <p>ยังไม่แน่ใจว่ารุ่นไหนเหมาะกับคุณ? ลองขี่ทั้งสองรุ่นได้เลย เรานำรถไปยังจุดนัดพบบนเกาะพะงัน ฟรีและไม่มีข้อผูกมัด</p>
+    <div class="wide biz-cta">
+      <div class="biz-cta__l">
+        <i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></i>
+        <p>ยังไม่แน่ใจว่ารุ่นไหนเหมาะกับคุณ? ลองขี่ทั้งสองรุ่นได้เลย เรานำรถไปยังจุดนัดพบบนเกาะพะงัน ฟรีและไม่มีข้อผูกมัด</p>
+      </div>
       <a class="btn" href="/th#contacts">จองทดลองขับ&ensp;→</a>
+    </div>
+
+    <div class="biz-trust">
+      <div class="wide biz-trust__in">
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>ตัวแทนจำหน่าย VMoto อย่างเป็นทางการ</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>สมุยและพะงัน</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/></svg><span>ทีมดูแลบนเกาะ</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span>รับประกันและบริการ</span></div>
+      </div>
     </div>
   </main>
 
-  <footer class="page-footer">
+  <footer class="page-footer page-footer--wide">
     <span>&copy; 2026 VMOTO · CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</span>
     <a href="/th">หน้าแรก</a>
   </footer>

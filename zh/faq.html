@@ -191,7 +191,6 @@
     .lang-links a:hover { color: var(--text); }
     .lang-links__cur { background: var(--accent); color: #fff; }
 
-    .page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 32px 100px; }
     .page-eyebrow {
       font-family: var(--heading-font);
       font-size: 10px;
@@ -209,26 +208,6 @@
       line-height: 1.15;
       margin-bottom: 20px;
     }
-    .page-lead {
-      font-size: 16px;
-      line-height: 1.75;
-      color: var(--body);
-      margin-bottom: 48px;
-      padding-bottom: 32px;
-      border-bottom: 1px solid var(--line);
-    }
-    .section-title {
-      font-family: var(--heading-font);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin: 48px 0 16px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
     h3 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin: 24px 0 8px; }
     p { font-size: 15px; color: var(--body); margin-bottom: 12px; }
     ul { padding-left: 20px; margin-bottom: 16px; }
@@ -252,14 +231,6 @@
     .ptable td:first-child { color: var(--muted); white-space: nowrap; }
     .ptable b { color: var(--text); }
 
-    .page-cta {
-      margin-top: 56px;
-      padding: 28px 30px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, .03);
-    }
-    .page-cta p { margin-bottom: 18px; }
     .btn {
       display: inline-block;
       padding: 14px 26px;
@@ -295,7 +266,6 @@
       .header-inner { width: calc(100% - 32px); gap: 10px 16px; padding: 10px 0; }
       .page-nav { order: 3; width: 100%; gap: 16px; font-size: 12px; padding-top: 2px; }
       .lang-links a, .lang-links__cur { padding: 5px 8px; }
-      .page-wrap { padding: 40px 16px 80px; }
       .page-footer { padding: 24px 16px; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
@@ -392,9 +362,16 @@
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
-    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; padding: 0; margin: 0; }
+    .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
+
+    .doc-body { max-width: 900px; margin-inline: auto; }
+    .doc-body h3:first-child { margin-top: 0; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1100px; margin-inline: auto; }
+    .faq-card { padding: 26px 28px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
+    .faq-card h2 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .faq-card p { font-size: 14px; margin: 0; }
 
     .biz-cta {
       display: flex;
@@ -446,7 +423,7 @@
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .faq-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
@@ -476,42 +453,56 @@
     </div>
   </header>
 
-  <main class="page-wrap">
-    <div class="page-eyebrow">泰国 VMoto 官方经销商</div>
-    <h1>购车前的常见问题</h1>
-    <p class="page-lead">外国人在苏梅岛或帕岸岛购买电动车前最常问的问题都在这里。没找到答案？通过 WhatsApp 联系我们，一小时内回复。</p>
+  <main>
+    <section class="biz-hero">
+      <div class="biz-hero__bg" aria-hidden="true"><img src="/assets/business/rental.webp" alt="" style="object-position:38% 50%" fetchpriority="high"></div>
+      <div class="biz-hero__shade" aria-hidden="true"></div>
+      <div class="wide biz-hero__inner">
+        <p class="page-eyebrow">泰国 VMoto 官方经销商</p>
+        <h1>购车前的常见问题</h1>
+        <p class="biz-hero__lead">外国人在苏梅岛或帕岸岛购买电动车前最常问的问题都在这里。没找到答案？通过 WhatsApp 联系我们，一小时内回复。</p>
+        <div class="biz-feats">
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/></svg></i><span>一小时内回复</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></i><span>手续由我们办理</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></i><span>苏梅岛与帕岸岛</span></div>
+        <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></i><span>3 年质保</span></div>
+        </div>
+        <a class="btn" href="/zh#contacts">预约试驾&ensp;→</a>
+      </div>
+    </section>
 
-      <h2 class="section-title">外国人可以购买吗？</h2>
-      <p>可以 — 外国人能够合法购买并持有 VMoto。所有手续由我们办理。</p>
+    <section class="wide biz-section">
+      <div class="faq-grid">
+        <article class="faq-card"><h2>外国人可以购买吗？</h2><p>可以 — 外国人能够合法购买并持有 VMoto。所有手续由我们办理。</p></article>
+        <article class="faq-card"><h2>注册与牌照怎么办？</h2><p>购车后我们会立即代为办理注册和牌照。</p></article>
+        <article class="faq-card"><h2>需要驾照吗？</h2><p>需要，与普通踏板车一样：泰国摩托车驾照或国际驾照。我们会指导如何办理本地驾照。</p></article>
+        <article class="faq-card"><h2>可以在家充电吗？</h2><p>可以 — 每块电池都能用随车充电器在普通插座充电。在我们的站点快充约 20 分钟。两块电池均可拆卸，可以拿回室内充电，无需把车停在插座旁。</p></article>
+        <article class="faq-card"><h2>在哪里保养维修？</h2><p>就在岛上：我们自己的服务点、常备配件，以及苏梅岛和帕岸岛的上门团队。电驱动无需机油、皮带和火花塞，日常保养极少。</p></article>
+        <article class="faq-card"><h2>试驾如何安排？</h2><p>我们在帕岸岛见面 — 您来找我们，或另约方便的地点。15–20 分钟，免费，无任何购买义务。</p></article>
+        <article class="faq-card"><h2>日常使用成本是多少？</h2><p>每天约 ฿25 电费，而燃油需要 ฿150–200 — 而且无需换机油和发动机保养。</p></article>
+        <article class="faq-card"><h2>质保包含哪些内容？</h2><p>整车所有部件 3 年质保，岛上提供配件与服务。</p></article>
+      </div>
+    </section>
 
-      <h2 class="section-title">注册与牌照怎么办？</h2>
-      <p>购车后我们会立即代为办理注册和牌照。</p>
-
-      <h2 class="section-title">需要驾照吗？</h2>
-      <p>需要，与普通踏板车一样：泰国摩托车驾照或国际驾照。我们会指导如何办理本地驾照。</p>
-
-      <h2 class="section-title">可以在家充电吗？</h2>
-      <p>可以 — 每块电池都能用随车充电器在普通插座充电。在我们的站点快充约 20 分钟。两块电池均可拆卸，可以拿回室内充电，无需把车停在插座旁。</p>
-
-      <h2 class="section-title">在哪里保养维修？</h2>
-      <p>就在岛上：我们自己的服务点、常备配件，以及苏梅岛和帕岸岛的上门团队。电驱动无需机油、皮带和火花塞，日常保养极少。</p>
-
-      <h2 class="section-title">试驾如何安排？</h2>
-      <p>我们在帕岸岛见面 — 您来找我们，或另约方便的地点。15–20 分钟，免费，无任何购买义务。</p>
-
-      <h2 class="section-title">日常使用成本是多少？</h2>
-      <p>每天约 ฿25 电费，而燃油需要 ฿150–200 — 而且无需换机油和发动机保养。</p>
-
-      <h2 class="section-title">质保包含哪些内容？</h2>
-      <p>整车所有部件 3 年质保，岛上提供配件与服务。</p>
-
-    <div class="page-cta">
-      <p>还在犹豫？预约免费试驾，用手感来回答这个问题。</p>
+    <div class="wide biz-cta">
+      <div class="biz-cta__l">
+        <i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></i>
+        <p>还在犹豫？预约免费试驾，用手感来回答这个问题。</p>
+      </div>
       <a class="btn" href="/zh#contacts">预约试驾&ensp;→</a>
+    </div>
+
+    <div class="biz-trust">
+      <div class="wide biz-trust__in">
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>VMoto 官方经销商</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span>苏梅岛与帕岸岛</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/><path d="M19 19v1a3 3 0 01-3 3h-3"/></svg><span>岛上支持</span></div>
+      <div class="biz-trust__i"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><span>质保与服务</span></div>
+      </div>
     </div>
   </main>
 
-  <footer class="page-footer">
+  <footer class="page-footer page-footer--wide">
     <span>&copy; 2026 VMOTO · CANVAS SPV Co., Ltd · 52/57 Moo 1, Na Jomtien, Sattahip, Chonburi 20250, Thailand</span>
     <a href="/zh">首页</a>
   </footer>
