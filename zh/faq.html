@@ -386,7 +386,6 @@
       .header-right { grid-column: 2; }
       .page-nav { order: 3; grid-column: 1 / -1; gap: 18px; }
       .page-nav a, .page-nav__cur { font-size: 11px; letter-spacing: .1em; }
-      .page-footer { padding: 24px 16px; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
       .ptable th, .ptable td { padding: 11px 6px; }
@@ -488,10 +487,6 @@
 
     .doc-body { max-width: 900px; margin-inline: auto; }
     .doc-body h3:first-child { margin-top: 0; }
-    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1100px; margin-inline: auto; }
-    .faq-card { padding: 26px 28px; border: 1px solid var(--line); border-radius: 16px; background: rgba(255, 255, 255, .03); }
-    .faq-card h2 { font-family: var(--heading-font); font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-    .faq-card p { font-size: 14px; margin: 0; }
 
     .biz-cta {
       display: flex;
@@ -543,7 +538,7 @@
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc, .faq-grid { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
