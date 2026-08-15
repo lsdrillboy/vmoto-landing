@@ -521,6 +521,46 @@
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
+    /* зарядная инфраструктура: снимок и три факта рядом */
+    .biz-charge { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: stretch; }
+    .biz-charge__photo {
+      position: relative;
+      min-height: 380px;
+      border-radius: 20px;
+      background: #0f110f center / cover no-repeat;
+      overflow: hidden;
+    }
+    .biz-charge__photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 11, 10, .1) 45%, rgba(10, 11, 10, .55) 100%);
+    }
+    .biz-charge--flat { grid-template-columns: 1fr; max-width: 900px; margin-inline: auto; }
+    .biz-charge__text { align-self: center; }
+    .biz-charge__text > p { font-size: 15px; margin-bottom: 26px; }
+    .biz-charge__facts { display: grid; gap: 18px; padding: 0; margin: 0 0 22px; list-style: none; }
+    .biz-charge__facts li { display: flex; gap: 14px; margin: 0; }
+    .biz-charge__facts i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-charge__facts b { display: block; font-size: 14px; margin-bottom: 3px; }
+    .biz-charge__facts span { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+    .biz-charge__note {
+      margin: 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: rgba(242, 241, 238, .5);
+    }
+
     .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
@@ -563,7 +603,8 @@
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .biz-charge { grid-template-columns: 1fr; }
+      .biz-charge__photo { min-height: 260px; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
@@ -1010,6 +1051,23 @@
           <img src="/assets/business/rental.webp" alt="" loading="lazy">
           <div class="biz-seg__txt"><h2>เปิดธุรกิจให้เช่า</h2><p>การเริ่มธุรกิจให้เช่ามอเตอร์ไซค์ไฟฟ้าบนเกาะมีเงื่อนไขเฉพาะ: ราคาตามจำนวน ดำเนินการจดทะเบียนให้ อบรมพนักงาน และสนับสนุนงานบริการ รถไฟฟ้าช่วยตัดสองรายจ่ายที่กินกำไรของธุรกิจเช่ามากที่สุด คือค่าน้ำมันและค่าบำรุงรักษา</p></div>
         </article>
+      </div>
+    </section>
+
+    <section class="wide biz-section">
+      <p class="biz-label">การชาร์จ</p>
+      <h2 class="biz-h2">โครงสร้างพื้นฐานการชาร์จสำหรับฟลีตของคุณ</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-charge biz-charge--flat">
+        <div class="biz-charge__text">
+          <p>รถทุกคันมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ ฟลีตจึงใช้งานได้จากปลั๊กธรรมดาตั้งแต่วันแรก ไม่ต้องก่อสร้างหรือขอไฟเพิ่ม และเมื่อคุณต้องการรองรับการชาร์จมากขึ้น เราจะแนะนำว่าควรติดตั้งจุดชาร์จตรงไหนและต้องมีกี่จุดสำหรับฟลีตขนาดของคุณ</p>
+          <ul class="biz-charge__facts">
+            <li><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3a5.5 5.5 0 0 1-11 0V8z"/><path d="M12 16.5V21"/></svg></i><div><b>ปลั๊กธรรมดา</b><span>แบตเตอรี่ชาร์จได้จากปลั๊ก 220V ทั่วไปด้วยที่ชาร์จที่ให้มาในกล่อง</span></div></li>
+            <li><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></i><div><b>20 นาที</b><span>ชาร์จเร็วที่สถานีของเรา รถกลับไปวิ่งได้ภายในเวลาพักกาแฟ</span></div></li>
+            <li><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="15" height="10" rx="2"/><path d="M21 10.5v3"/><path d="M7 10.5v3M11 10.5v3"/></svg></i><div><b>สองก้อนต่อคัน</b><span>ก้อนหนึ่งใช้วิ่ง อีกก้อนชาร์จ รถจึงไม่ต้องจอดรอที่ปลั๊ก</span></div></li>
+          </ul>
+          <p class="biz-charge__note">เครือข่ายสถานีชาร์จของเราบนเกาะสมุยและพะงันกำลังก่อสร้าง ลูกค้าฟลีตจะได้สิทธิ์เข้าใช้เมื่อเปิดบริการ</p>
+        </div>
       </div>
     </section>
 

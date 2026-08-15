@@ -7,7 +7,7 @@
    canonical, кластер hreflang, хлебные крошки и видимая навигация по
    разделам: без заметных внутренних ссылок сайтлинки не появляются.
    Запуск: node scripts/build-pages.mjs (из корня проекта). */
-import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
 import vm from 'node:vm';
 import { MENU_CSS, menuMarkup, MENU_JS } from './lib/menu.mjs';
 import { ANALYTICS, FORM_CSS, formMarkup, formJs } from './lib/leadform.mjs';
@@ -391,6 +391,56 @@ const BUSINESS = {
   },
 };
 
+/* блок о зарядной инфраструктуре на странице «Для бизнеса».
+   Фото появится само, как только файл ляжет в assets/business/ */
+const CHARGE_IMG = 'assets/business/stations.webp';
+const CHARGE = {
+  en: {
+    label: 'Charging',
+    title: 'Charging infrastructure for your fleet',
+    text: 'Every bike carries two removable batteries and a charger, so a fleet runs off ordinary sockets from day one — no construction, no separate connection. When you need more throughput, we advise where to put chargers on your property and how many a fleet of your size needs.',
+    facts: [
+      ['plug', 'Ordinary socket', 'A battery charges from any 220 V outlet with the charger in the box.'],
+      ['clock', '20 minutes', 'A fast charge at our stations — a bike is back on the road within a coffee break.'],
+      ['battery', 'Two per bike', 'One battery rides, the second charges: the unit never waits by a socket.'],
+    ],
+    note: 'Our own station network on Samui and Phangan is being built — fleet clients get access as it opens.',
+  },
+  ru: {
+    label: 'Зарядка',
+    title: 'Зарядная инфраструктура для вашего парка',
+    text: 'У каждого байка две съёмные батареи и зарядное устройство, поэтому парк работает от обычных розеток с первого дня — без стройки и отдельного подключения. Когда нужна большая пропускная способность, подскажем, где разместить зарядки на территории и сколько их нужно парку вашего размера.',
+    facts: [
+      ['plug', 'Обычная розетка', 'Батарея заряжается от любой розетки 220 В зарядным устройством из комплекта.'],
+      ['clock', '20 минут', 'Быстрая зарядка на наших станциях — байк возвращается на линию за время кофе-брейка.'],
+      ['battery', 'Две на байк', 'Одна батарея едет, вторая заряжается: техника не простаивает у розетки.'],
+    ],
+    note: 'Собственная сеть станций на Самуи и Пангане строится — клиентам с парком доступ по мере запуска.',
+  },
+  th: {
+    label: 'การชาร์จ',
+    title: 'โครงสร้างพื้นฐานการชาร์จสำหรับฟลีตของคุณ',
+    text: 'รถทุกคันมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ ฟลีตจึงใช้งานได้จากปลั๊กธรรมดาตั้งแต่วันแรก ไม่ต้องก่อสร้างหรือขอไฟเพิ่ม และเมื่อคุณต้องการรองรับการชาร์จมากขึ้น เราจะแนะนำว่าควรติดตั้งจุดชาร์จตรงไหนและต้องมีกี่จุดสำหรับฟลีตขนาดของคุณ',
+    facts: [
+      ['plug', 'ปลั๊กธรรมดา', 'แบตเตอรี่ชาร์จได้จากปลั๊ก 220V ทั่วไปด้วยที่ชาร์จที่ให้มาในกล่อง'],
+      ['clock', '20 นาที', 'ชาร์จเร็วที่สถานีของเรา รถกลับไปวิ่งได้ภายในเวลาพักกาแฟ'],
+      ['battery', 'สองก้อนต่อคัน', 'ก้อนหนึ่งใช้วิ่ง อีกก้อนชาร์จ รถจึงไม่ต้องจอดรอที่ปลั๊ก'],
+    ],
+    note: 'เครือข่ายสถานีชาร์จของเราบนเกาะสมุยและพะงันกำลังก่อสร้าง ลูกค้าฟลีตจะได้สิทธิ์เข้าใช้เมื่อเปิดบริการ',
+  },
+  zh: {
+    label: '充电',
+    title: '为您的车队配套充电方案',
+    text: '每台车配两块可拆卸电池和充电器，因此车队从第一天起就能用普通插座运转 — 无需施工，也不必单独报装。当吞吐量需要提升时，我们会建议充电桩应该装在场地的哪个位置、您这种规模的车队需要几台。',
+    facts: [
+      ['plug', '普通插座', '用随车充电器即可在任意 220V 插座充电。'],
+      ['clock', '20 分钟', '在我们的站点快充 — 一杯咖啡的时间，车就能重新上路。'],
+      ['battery', '每车两块', '一块在路上，一块在充电：车不必停在插座旁等待。'],
+    ],
+    note: '我们在苏梅岛与帕岸岛的自建充电网络正在建设中，车队客户将在开通后获得接入权。',
+  },
+};
+
 /* иконки шапки преимуществ — контурные, наследуют цвет */
 const ICONS = {
   shield: '<path d="M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
@@ -404,6 +454,7 @@ const ICONS = {
   pin: '<path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>',
+  plug: '<path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3a5.5 5.5 0 0 1-11 0V8z"/><path d="M12 16.5V21"/>',
   battery: '<rect x="3" y="7" width="15" height="10" rx="2"/><path d="M21 10.5v3"/><path d="M7 10.5v3M11 10.5v3"/>',
 };
 const icon = (name, size = 20) =>
@@ -603,6 +654,15 @@ function bizMain(d, ui, lang) {
   const inc = d.included
     .map((x) => `        <li>${icon('check', 18)}<span>${x}</span></li>`)
     .join('\n');
+  const c = CHARGE[lang];
+  const facts = c.facts
+    .map(([ic, t, x]) => `            <li><i>${icon(ic, 20)}</i><div><b>${t}</b><span>${x}</span></div></li>`)
+    .join('\n');
+  /* пока снимка нет — колонка с фото не выводится, текст идёт в одну колонку */
+  const hasPhoto = existsSync(CHARGE_IMG);
+  const chargePhoto = hasPhoto
+    ? `        <div class="biz-charge__photo" style="background-image:url('/${CHARGE_IMG}')" aria-hidden="true"></div>\n`
+    : '';
 
   return `  <main>
 ${hero('business', lang, ui, d.h1, d.lead, d.features)}
@@ -622,6 +682,21 @@ ${cards}
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="biz-seg">
 ${segs}
+      </div>
+    </section>
+
+    <section class="wide biz-section">
+      <p class="biz-label">${c.label}</p>
+      <h2 class="biz-h2">${c.title}</h2>
+      <div class="biz-rule" aria-hidden="true"></div>
+      <div class="biz-charge${hasPhoto ? '' : ' biz-charge--flat'}">
+${chargePhoto}        <div class="biz-charge__text">
+          <p>${c.text}</p>
+          <ul class="biz-charge__facts">
+${facts}
+          </ul>
+          <p class="biz-charge__note">${c.note}</p>
+        </div>
       </div>
     </section>
 
@@ -1157,6 +1232,46 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
+    /* зарядная инфраструктура: снимок и три факта рядом */
+    .biz-charge { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: stretch; }
+    .biz-charge__photo {
+      position: relative;
+      min-height: 380px;
+      border-radius: 20px;
+      background: #0f110f center / cover no-repeat;
+      overflow: hidden;
+    }
+    .biz-charge__photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 11, 10, .1) 45%, rgba(10, 11, 10, .55) 100%);
+    }
+    .biz-charge--flat { grid-template-columns: 1fr; max-width: 900px; margin-inline: auto; }
+    .biz-charge__text { align-self: center; }
+    .biz-charge__text > p { font-size: 15px; margin-bottom: 26px; }
+    .biz-charge__facts { display: grid; gap: 18px; padding: 0; margin: 0 0 22px; list-style: none; }
+    .biz-charge__facts li { display: flex; gap: 14px; margin: 0; }
+    .biz-charge__facts i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-charge__facts b { display: block; font-size: 14px; margin-bottom: 3px; }
+    .biz-charge__facts span { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+    .biz-charge__note {
+      margin: 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: rgba(242, 241, 238, .5);
+    }
+
     .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
@@ -1199,7 +1314,8 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .biz-charge { grid-template-columns: 1fr; }
+      .biz-charge__photo { min-height: 260px; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }

@@ -594,6 +594,46 @@
     .biz-seg__txt h2 { font-family: var(--heading-font); font-size: 20px; font-weight: 600; margin-bottom: 10px; }
     .biz-seg__txt p { font-size: 14px; margin: 0; }
 
+    /* зарядная инфраструктура: снимок и три факта рядом */
+    .biz-charge { display: grid; grid-template-columns: 1.05fr .95fr; gap: 28px; align-items: stretch; }
+    .biz-charge__photo {
+      position: relative;
+      min-height: 380px;
+      border-radius: 20px;
+      background: #0f110f center / cover no-repeat;
+      overflow: hidden;
+    }
+    .biz-charge__photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 11, 10, .1) 45%, rgba(10, 11, 10, .55) 100%);
+    }
+    .biz-charge--flat { grid-template-columns: 1fr; max-width: 900px; margin-inline: auto; }
+    .biz-charge__text { align-self: center; }
+    .biz-charge__text > p { font-size: 15px; margin-bottom: 26px; }
+    .biz-charge__facts { display: grid; gap: 18px; padding: 0; margin: 0 0 22px; list-style: none; }
+    .biz-charge__facts li { display: flex; gap: 14px; margin: 0; }
+    .biz-charge__facts i {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(217, 79, 61, .45);
+      border-radius: 50%;
+      color: var(--accent);
+    }
+    .biz-charge__facts b { display: block; font-size: 14px; margin-bottom: 3px; }
+    .biz-charge__facts span { font-size: 13.5px; color: var(--muted); line-height: 1.55; }
+    .biz-charge__note {
+      margin: 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: rgba(242, 241, 238, .5);
+    }
+
     .biz-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; max-width: 860px; padding: 0; margin: 0 auto; }
     .biz-inc li { display: flex; gap: 12px; align-items: flex-start; list-style: none; margin: 0; }
     .biz-inc svg { flex: none; margin-top: 3px; color: var(--accent); }
@@ -636,7 +676,8 @@
       .biz-hero__shade { background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.92) 45%, rgba(10,11,10,.55) 78%, rgba(10,11,10,.2) 100%); }
     }
     @media (max-width: 900px) {
-      .biz-cards, .biz-seg, .biz-inc { grid-template-columns: 1fr; }
+      .biz-cards, .biz-seg, .biz-inc, .biz-charge { grid-template-columns: 1fr; }
+      .biz-charge__photo { min-height: 260px; }
     }
     @media (max-width: 700px) {
       .wide { width: calc(100% - 32px); }
