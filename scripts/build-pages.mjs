@@ -557,11 +557,13 @@ const HERO_TILES = {
   },
 };
 
-/* фон героя и точка кадрирования: текст должен лечь на затемнённую часть */
+/* фон героя и точка кадрирования: текст должен лечь на затемнённую часть.
+   Для «Вопросов» ждём отдельный кадр; пока его нет — остаётся прокат. */
+const FAQ_HERO = 'assets/business/faq-hero.avif';
 const HERO_IMG = {
   models: ['/assets/img/hero-bg.avif', '78% 50%'],
   business: ['/assets/business/retreat.avif', '72% 50%'],
-  faq: ['/assets/business/rental.avif', '38% 50%'],
+  faq: [existsSync(FAQ_HERO) ? `/${FAQ_HERO}` : '/assets/business/rental.avif', '58% 50%'],
 };
 
 const CONTENT = {
