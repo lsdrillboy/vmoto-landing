@@ -7,7 +7,26 @@
    canonical, кластер hreflang, хлебные крошки и видимая навигация по
    разделам: без заметных внутренних ссылок сайтлинки не появляются.
    Запуск: node scripts/build-pages.mjs (из корня проекта). */
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import vm from 'node:vm';
+
+/* словарь лендинга: подписи подвала уже переведены там */
+const sandbox = {
+  window: {},
+  navigator: { languages: ['en'], language: 'en' },
+  localStorage: { getItem: () => null, setItem: () => {} },
+  document: {
+    documentElement: { getAttribute: () => null, setAttribute: () => {}, lang: 'en' },
+    title: '', querySelector: () => null, querySelectorAll: () => [],
+    getElementById: () => null, addEventListener: () => {},
+  },
+};
+sandbox.globalThis = sandbox;
+vm.createContext(sandbox);
+vm.runInContext(readFileSync('i18n.js', 'utf8'), sandbox);
+const DICT = sandbox.window.__DICT;
+if (!DICT || !DICT.ru) throw new Error('DICT не извлечён из i18n.js');
+const t = (lang, key) => (DICT[lang] && DICT[lang][key]) || DICT.en[key] || key;
 
 const SITE = 'https://www.vmotobikes.com';
 const LANGS = ['en', 'ru', 'th', 'zh'];
@@ -532,12 +551,15 @@ function docMain(d, ui, lang, slug) {
   const trust = BUSINESS[lang].trust;
   let body;
   if (slug === 'faq') {
-    const cards = d.sections
-      .map((s) => `        <article class="faq-card"><h2>${s.h}</h2>${s.body.trim().replace(/^<p>|<\/p>$/g, (m) => (m === '<p>' ? '<p>' : '</p>'))}</article>`)
+    const rows = d.sections
+      .map((s, i) => `        <div class="qa__row">
+          <div class="qa__q"><i>${String(i + 1).padStart(2, '0')}</i><h2>${s.h}</h2></div>
+          <p class="qa__a">${s.body.replace(/<\/?p>/g, '').trim()}</p>
+        </div>`)
       .join('\n');
     body = `    <section class="wide biz-section">
-      <div class="faq-grid">
-${cards}
+      <div class="qa">
+${rows}
       </div>
     </section>`;
   } else {
@@ -643,9 +665,8 @@ function render(slug, lang) {
     ? `<span class="page-nav__cur">${ui.nav[s]}</span>`
     : `<a href="${path(lang, s)}">${ui.nav[s]}</a>`)).join('');
 
-  const langLinks = LANGS.map((l) => (l === lang
-    ? `<span class="lang-links__cur">${l === 'zh' ? 'CN' : l.toUpperCase()}</span>`
-    : `<a href="${path(l, slug)}" hreflang="${l}">${l === 'zh' ? 'CN' : l.toUpperCase()}</a>`)).join('');
+  const LABEL = { en: 'EN', ru: 'RU', th: 'ไทย', zh: '中文' };
+  const langLinks = LANGS.map((l) => `<li><a href="${path(l, slug)}" hreflang="${l}"${l === lang ? ' class="is-active" aria-current="true"' : ''}>${LABEL[l]}</a></li>`).join('');
 
   const main = slug === 'business' ? bizMain(d, ui, lang) : docMain(d, ui, lang, slug);
 
@@ -693,28 +714,31 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
     }
+    /* шапка повторяет лендинг: фиксированная, прозрачная над фото */
     .site-header {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      inset: 0 0 auto 0;
       z-index: 100;
-      background: rgba(10, 11, 10, .82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s;
     }
-    /* контейнер и логотип — те же метрики, что в шапке лендинга */
+    .site-header.is-scrolled {
+      background: rgba(10, 11, 10, .82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom-color: var(--line);
+    }
     .header-inner {
       width: min(1360px, 100% - 72px);
       margin-inline: auto;
-      min-height: 72px;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      padding: 12px 0;
+      gap: 24px;
+      padding: 26px 0;
     }
     .logo {
+      justify-self: start;
       display: inline-flex;
       align-items: center;
       gap: .5em;
@@ -727,24 +751,88 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       color: var(--text);
     }
     .logo img { height: 1.15em; width: auto; display: block; transform: translateY(-.04em); }
-    .page-nav { display: flex; gap: 22px; font-size: 13px; }
-    .page-nav a, .page-nav__cur { text-decoration: none; white-space: nowrap; }
-    .page-nav a { color: var(--muted); transition: color .2s; }
+    .page-nav { display: flex; gap: 32px; }
+    .page-nav a, .page-nav__cur {
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color .2s;
+    }
+    .page-nav a { color: var(--text); }
     .page-nav a:hover { color: var(--accent); }
-    .page-nav__cur { color: var(--text); }
-    .lang-links { display: flex; gap: 4px; padding: 3px; background: rgba(255, 255, 255, .05); border-radius: 8px; }
-    .lang-links a, .lang-links__cur {
+    .page-nav__cur { color: var(--accent); }
+    .header-right { justify-self: end; display: flex; align-items: center; gap: 14px; }
+
+    /* переключатель языка: вид как на лендинге, но обычными ссылками */
+    .lang { position: relative; }
+    .lang__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 999px;
+      background: rgba(10, 11, 10, .42);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      color: var(--text);
+      font-family: inherit;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: .06em;
-      padding: 6px 10px;
-      border-radius: 6px;
+      letter-spacing: .08em;
+      transition: color .2s, border-color .2s;
+    }
+    .lang__btn:hover { color: var(--accent); border-color: rgba(217, 79, 61, .6); }
+    .lang__btn > svg:first-child, .lang__chev { color: var(--accent); }
+    .lang__chev { transition: transform .25s; }
+    .lang:hover .lang__chev, .lang:focus-within .lang__chev { transform: rotate(180deg); }
+    .lang__list {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      min-width: 74px;
+      padding: 6px;
+      margin: 0;
+      list-style: none;
+      background: rgba(12, 13, 12, .92);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -6px);
+      transition: opacity .25s, visibility .25s, transform .25s;
+      z-index: 200;
+    }
+    .lang:hover .lang__list, .lang:focus-within .lang__list { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+    .lang__list a {
+      display: block;
+      padding: 9px 12px;
+      border-radius: 9px;
+      text-align: center;
       text-decoration: none;
       color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
       transition: color .2s, background .2s;
     }
-    .lang-links a:hover { color: var(--text); }
-    .lang-links__cur { background: var(--accent); color: #fff; }
+    .lang__list a:hover { color: var(--text); background: rgba(255, 255, 255, .06); }
+    .lang__list .is-active { color: var(--accent); }
+    .header-social {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(10, 11, 10, .42);
+      backdrop-filter: blur(8px);
+      color: var(--accent);
+      transition: color .2s, border-color .2s, transform .2s;
+    }
+    .header-social:hover { color: var(--text); border-color: rgba(217, 79, 61, .6); transform: translateY(-1px); }
 
     .page-eyebrow {
       font-family: var(--heading-font);
@@ -801,26 +889,79 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     }
     .btn:hover { filter: brightness(1.1); }
 
-    .page-footer {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 32px;
-      border-top: 1px solid var(--line);
+    /* подвал: те же колонки, что в подвале лендинга */
+    .site-footer { border-top: 1px solid var(--line); padding: 56px 0 34px; }
+    .foot-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+    .foot-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .foot-grid ul { list-style: none; padding: 0; margin: 0; }
+    .foot-grid li { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+    .foot-grid a { color: var(--muted); text-decoration: none; transition: color .2s; }
+    .foot-grid a:hover { color: var(--accent); }
+    .foot-bottom {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px 24px;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
+      gap: 18px 36px;
+      margin-top: 46px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
     }
-    .page-footer span { font-size: 12px; color: var(--muted); }
-    .page-footer a { font-size: 13px; color: var(--muted); text-decoration: none; }
-    .page-footer a:hover { color: var(--text); }
+    .foot-bottom p { margin: 0; font-size: 12px; color: var(--muted); }
+    .foot-law { margin-top: 6px !important; opacity: .72; }
+    .foot-end { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .foot-legal { display: flex; gap: 22px; }
+    .foot-legal a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .foot-legal a:hover { color: var(--accent); }
+    .foot-slogan {
+      font-family: var(--heading-font);
+      font-size: 12px !important;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(242, 241, 238, .35) !important;
+    }
 
+    /* вопросы: минималистичный список «вопрос — ответ» */
+    .qa { max-width: 1020px; margin-inline: auto; border-top: 1px solid var(--line); }
+    .qa__row {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 20px 56px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .qa__q { display: flex; gap: 14px; }
+    .qa__q i {
+      font-family: var(--heading-font);
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      color: var(--accent);
+      padding-top: 5px;
+    }
+    .qa__q h2 { font-family: var(--heading-font); font-size: 18px; font-weight: 600; line-height: 1.4; margin: 0; }
+    .qa__a { font-size: 15px; color: var(--body); margin: 0; }
+
+    @media (max-width: 900px) {
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 760px) {
+      .qa__row { grid-template-columns: 1fr; gap: 10px; padding: 26px 0; }
+    }
     @media (max-width: 700px) {
       /* логотип и языки в одну строку, разделы — во вторую */
-      .header-inner { width: calc(100% - 32px); gap: 10px 16px; padding: 10px 0; }
-      .page-nav { order: 3; width: 100%; gap: 16px; font-size: 12px; padding-top: 2px; }
-      .lang-links a, .lang-links__cur { padding: 5px 8px; }
+      .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
+      .header-right { grid-column: 2; }
+      .page-nav { order: 3; grid-column: 1 / -1; gap: 18px; }
+      .page-nav a, .page-nav__cur { font-size: 11px; letter-spacing: .1em; }
       .page-footer { padding: 24px 16px; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
@@ -838,7 +979,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       inset: 0;
       background: linear-gradient(90deg, rgba(10,11,10,.96) 0%, rgba(10,11,10,.9) 42%, rgba(10,11,10,.5) 68%, rgba(10,11,10,.12) 100%);
     }
-    .biz-hero__inner { position: relative; padding: 76px 0; }
+    .biz-hero__inner { position: relative; padding: 132px 0 76px; }
     /* текстовая колонка не выходит за затемнённую часть кадра */
     .biz-hero__inner > * { max-width: 820px; }
     .biz-hero h1 {
@@ -957,7 +1098,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
 
     .biz-trust { margin-top: 84px; border-top: 1px solid var(--line); }
     /* подвал во всю ширину — под посадочную вёрстку */
-    .page-footer--wide { max-width: none; width: min(1360px, 100% - 72px); padding-left: 0; padding-right: 0; }
+
     .biz-trust__in { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 26px 0; }
     .biz-trust__i {
       display: flex;
@@ -985,7 +1126,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-hero { min-height: 0; }
       .biz-hero__bg img { object-position: 66% 50%; }
       .biz-hero__shade { background: linear-gradient(180deg, rgba(10,11,10,.86) 0%, rgba(10,11,10,.9) 45%, rgba(10,11,10,.96) 100%); }
-      .biz-hero__inner { padding: 48px 0 44px; }
+      .biz-hero__inner { padding: 118px 0 44px; }
       .biz-hero h1 { max-width: none; }
       .biz-feats { grid-template-columns: 1fr 1fr; gap: 18px 14px; max-width: none; }
       .biz-feat { padding: 0; border-left: none; }
@@ -995,7 +1136,9 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-trust { margin-top: 56px; }
       .biz-trust__in { justify-content: flex-start; gap: 12px 0; }
       .biz-trust__i { padding: 0 14px 0 0; border-left: none; }
-      .page-footer--wide { width: calc(100% - 32px); }
+      .site-footer { padding: 40px 0 28px; }
+      .foot-bottom { margin-top: 34px; }
+      .foot-end { align-items: flex-start; }
     }
   </style>
 </head>
@@ -1004,16 +1147,79 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
     <div class="header-inner">
       <a href="${home(lang)}" class="logo" aria-label="VMOTO"><img src="/assets/img/logo-mark.png" alt="">VMOTO</a>
       <nav class="page-nav">${nav}</nav>
-      <div class="lang-links">${langLinks}</div>
+      <div class="header-right">
+        <div class="lang">
+          <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="${t(lang, 'lang.aria')}">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8c2.6 2.4 4 5.6 4 9.2s-1.4 6.8-4 9.2c-2.6-2.4-4-5.6-4-9.2s1.4-6.8 4-9.2z"/></svg>
+            <span>${LABEL[lang]}</span>
+            <svg class="lang__chev" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <ul class="lang__list">${langLinks}</ul>
+        </div>
+        <a class="header-social" href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8.5V7c0-.8.7-1.5 1.5-1.5H17V2.6h-2.8C11.9 2.6 10 4.5 10 6.8v1.7H7.5V12H10v9.4h4V12h2.6l.6-3.5H14z"/></svg>
+        </a>
+      </div>
     </div>
   </header>
 
 ${main}
 
-  <footer class="page-footer page-footer--wide">
-    <span>&copy; 2026 VMOTO · ${COMPANY} · ${ADDRESS}</span>
-    <a href="${home(lang)}">${ui.home}</a>
+  <footer class="site-footer">
+    <div class="wide">
+      <div class="foot-grid">
+        <div>
+          <p class="foot-label">${t(lang, 'footer.locations')}</p>
+          <ul><li>${t(lang, 'loc.samui')}</li><li>${t(lang, 'loc.phangan')}</li></ul>
+        </div>
+        <div>
+          <p class="foot-label">${t(lang, 'footer.contacts')}</p>
+          <ul><li><a href="tel:+66962244666">+66 96 224 4666</a></li></ul>
+        </div>
+        <div>
+          <p class="foot-label">${t(lang, 'footer.messengers')}</p>
+          <ul>
+            <li><a href="https://t.me/+66962244666" target="_blank" rel="noopener">Telegram&ensp;↗</a></li>
+            <li><a href="https://wa.me/66962244666" target="_blank" rel="noopener">WhatsApp&ensp;↗</a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook&ensp;↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="foot-label">${t(lang, 'footer.navigation')}</p>
+          <ul>
+            <li><a href="${home(lang)}">${ui.home}</a></li>
+            <li><a href="${path(lang, 'models')}">${t(lang, 'footer.compare')}</a></li>
+            <li><a href="${path(lang, 'business')}">${t(lang, 'footer.fleets')}</a></li>
+            <li><a href="${path(lang, 'faq')}">${t(lang, 'footer.faqPage')}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <div>
+          <p>${t(lang, 'footer.copy')}</p>
+          <p class="foot-law">${ui.dealer} · ${COMPANY} · ${ADDRESS}</p>
+        </div>
+        <div class="foot-end">
+          <div class="foot-legal">
+            <a href="/privacy">${t(lang, 'footer.privacy')}</a>
+            <a href="/terms">${t(lang, 'footer.terms')}</a>
+          </div>
+          <p class="foot-slogan">Silent. Electric. Free.</p>
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    /* фон шапки появляется при прокрутке — как на лендинге */
+    (() => {
+      const h = document.querySelector('.site-header');
+      const onScroll = () => h.classList.toggle('is-scrolled', window.scrollY > 12);
+      addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+  </script>
 </body>
 </html>
 `;
