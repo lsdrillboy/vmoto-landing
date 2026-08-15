@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>电动车 CITI 与 CPx — 价格与参数 | VMOTO</title>
-  <meta name="description" content="VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPx（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。">
+  <title>电动车 CITI 与 CPX — 价格与参数 | VMOTO</title>
+  <meta name="description" content="VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPX（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。">
   <link rel="canonical" href="https://www.vmotobikes.com/zh/models">
   <link rel="alternate" hreflang="en" href="https://www.vmotobikes.com/models">
   <link rel="alternate" hreflang="ru" href="https://www.vmotobikes.com/ru/models">
@@ -14,8 +14,8 @@
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VMOTO">
-  <meta property="og:title" content="电动车 CITI 与 CPx — 价格与参数 | VMOTO">
-  <meta property="og:description" content="VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPx（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。">
+  <meta property="og:title" content="电动车 CITI 与 CPX — 价格与参数 | VMOTO">
+  <meta property="og:description" content="VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPX（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。">
   <meta property="og:url" content="https://www.vmotobikes.com/zh/models">
   <meta property="og:image" content="https://www.vmotobikes.com/assets/img/og-cover-3.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -718,8 +718,17 @@
       /* семь пунктов в строку не помещаются — уходим в бургер раньше */
       .page-nav, .header-social { display: none; }
       .header-inner { grid-template-columns: auto 1fr; }
-      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
-      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+      /* место под бургер: 46 px кнопки + 14 px просвета до переключателя */
+      .header-right { grid-column: 2; justify-self: end; margin-right: 60px; }
+      .menu-fab {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        top: 9px;
+        right: clamp(16px, 4vw, 40px);
+      }
     }
     @media (max-width: 700px) {
       .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
@@ -781,8 +790,8 @@
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
         <p class="page-eyebrow">泰国 VMoto 官方经销商</p>
-        <h1>电动车 CITI 与 CPx</h1>
-        <p class="biz-hero__lead">两款适合海岛生活的电动车。CITI 轻便，适合日常代步；CPx 是 125cc 级别的旗舰，续航更长、乘坐更舒适。两款均配备两块可拆卸电池和充电器，享 3 年质保。</p>
+        <h1>电动车 CITI 与 CPX</h1>
+        <p class="biz-hero__lead">两款适合海岛生活的电动车。CITI 轻便，适合日常代步；CPX 是 125cc 级别的旗舰，续航更长、乘坐更舒适。两款均配备两块可拆卸电池和充电器，享 3 年质保。</p>
         <div class="biz-feats">
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg></i><span>续航最高 130 公里</span></div>
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></i><span>20 分钟快充</span></div>
@@ -798,7 +807,7 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="doc-body">
       <div class="table-wrap"><table class="ptable">
-        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPx</th></tr>
+        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPX</th></tr>
         <tr><td>价格</td><td><b>฿95,000</b></td><td><b>฿120,000</b></td></tr>
         <tr><td>续航</td><td><b>107 公里</b></td><td><b>130 公里</b></td></tr>
         <tr><td>最高时速</td><td><b>80 公里/小时</b></td><td><b>90 公里/小时</b></td></tr>
@@ -820,7 +829,7 @@
         <li>您想要最轻便、好操控好停放的车；</li>
         <li>预算在 ฿95,000 左右。</li>
       </ul>
-      <h3>选择 CPx，如果…</h3>
+      <h3>选择 CPX，如果…</h3>
       <ul>
         <li>您每天穿越全岛，希望续航有余量；</li>
         <li>您经常载人或带货；</li>
@@ -879,7 +888,7 @@
           <p class="footer__label">导航</p>
           <ul>
             <li><a href="/zh">首页</a></li>
-            <li><a href="/zh/models">CITI 与 CPx 对比</a></li>
+            <li><a href="/zh/models">CITI 与 CPX 对比</a></li>
             <li><a href="/zh/business">企业车队</a></li>
             <li><a href="/zh/faq">购车常见问题</a></li>
           </ul>

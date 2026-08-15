@@ -718,8 +718,17 @@
       /* семь пунктов в строку не помещаются — уходим в бургер раньше */
       .page-nav, .header-social { display: none; }
       .header-inner { grid-template-columns: auto 1fr; }
-      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
-      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+      /* место под бургер: 46 px кнопки + 14 px просвета до переключателя */
+      .header-right { grid-column: 2; justify-self: end; margin-right: 60px; }
+      .menu-fab {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        top: 9px;
+        right: clamp(16px, 4vw, 40px);
+      }
     }
     @media (max-width: 700px) {
       .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
@@ -824,7 +833,7 @@
       <h2 class="biz-h2">What a fleet package includes</h2>
       <div class="biz-rule" aria-hidden="true"></div>
       <ul class="biz-inc">
-        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>volume pricing on VMoto CITI and CPx</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>volume pricing on VMoto CITI and CPX</span></li>
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>registration and plates arranged for every unit</span></li>
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>delivery across Koh Samui and Koh Phangan</span></li>
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.4 2.4 4.6-5"/></svg><span>service and spare parts on the island, mobile team for fleets</span></li>
@@ -870,7 +879,7 @@
           <p class="footer__label">Navigation</p>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/models">CITI vs CPx — compare</a></li>
+            <li><a href="/models">CITI vs CPX — compare</a></li>
             <li><a href="/business">Fleets for business</a></li>
             <li><a href="/faq">Buyer FAQ</a></li>
           </ul>

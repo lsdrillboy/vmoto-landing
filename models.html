@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Electric bikes CITI and CPx — prices and specs | VMOTO</title>
-  <meta name="description" content="VMoto CITI (฿95,000, 107 km) and VMoto CPx (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.">
+  <title>Electric bikes CITI and CPX — prices and specs | VMOTO</title>
+  <meta name="description" content="VMoto CITI (฿95,000, 107 km) and VMoto CPX (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.">
   <link rel="canonical" href="https://www.vmotobikes.com/models">
   <link rel="alternate" hreflang="en" href="https://www.vmotobikes.com/models">
   <link rel="alternate" hreflang="ru" href="https://www.vmotobikes.com/ru/models">
@@ -14,8 +14,8 @@
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VMOTO">
-  <meta property="og:title" content="Electric bikes CITI and CPx — prices and specs | VMOTO">
-  <meta property="og:description" content="VMoto CITI (฿95,000, 107 km) and VMoto CPx (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.">
+  <meta property="og:title" content="Electric bikes CITI and CPX — prices and specs | VMOTO">
+  <meta property="og:description" content="VMoto CITI (฿95,000, 107 km) and VMoto CPX (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.">
   <meta property="og:url" content="https://www.vmotobikes.com/models">
   <meta property="og:image" content="https://www.vmotobikes.com/assets/img/og-cover-3.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -718,8 +718,17 @@
       /* семь пунктов в строку не помещаются — уходим в бургер раньше */
       .page-nav, .header-social { display: none; }
       .header-inner { grid-template-columns: auto 1fr; }
-      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
-      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+      /* место под бургер: 46 px кнопки + 14 px просвета до переключателя */
+      .header-right { grid-column: 2; justify-self: end; margin-right: 60px; }
+      .menu-fab {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        top: 9px;
+        right: clamp(16px, 4vw, 40px);
+      }
     }
     @media (max-width: 700px) {
       .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
@@ -781,8 +790,8 @@
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
         <p class="page-eyebrow">Official VMoto dealer in Thailand</p>
-        <h1>Electric bikes CITI and CPx</h1>
-        <p class="biz-hero__lead">Two electric bikes for island life. CITI is the light everyday commuter; CPx is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.</p>
+        <h1>Electric bikes CITI and CPX</h1>
+        <p class="biz-hero__lead">Two electric bikes for island life. CITI is the light everyday commuter; CPX is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.</p>
         <div class="biz-feats">
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg></i><span>Range up to 130 km</span></div>
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></i><span>20-minute fast charge</span></div>
@@ -798,7 +807,7 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="doc-body">
       <div class="table-wrap"><table class="ptable">
-        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPx</th></tr>
+        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPX</th></tr>
         <tr><td>Price</td><td><b>฿95,000</b></td><td><b>฿120,000</b></td></tr>
         <tr><td>Range</td><td><b>107 km</b></td><td><b>130 km</b></td></tr>
         <tr><td>Top speed</td><td><b>80 km/h</b></td><td><b>90 km/h</b></td></tr>
@@ -820,7 +829,7 @@
         <li>you want the lightest bike to handle and park;</li>
         <li>฿95,000 is the budget you had in mind.</li>
       </ul>
-      <h3>Take the CPx if…</h3>
+      <h3>Take the CPX if…</h3>
       <ul>
         <li>you cross the island daily and want range to spare;</li>
         <li>you ride two-up or carry cargo;</li>
@@ -879,7 +888,7 @@
           <p class="footer__label">Navigation</p>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/models">CITI vs CPx — compare</a></li>
+            <li><a href="/models">CITI vs CPX — compare</a></li>
             <li><a href="/business">Fleets for business</a></li>
             <li><a href="/faq">Buyer FAQ</a></li>
           </ul>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Электробайки CITI и CPx — цены и характеристики | VMOTO</title>
-  <meta name="description" content="Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPx (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.">
+  <title>Электробайки CITI и CPX — цены и характеристики | VMOTO</title>
+  <meta name="description" content="Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPX (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.">
   <link rel="canonical" href="https://www.vmotobikes.com/ru/models">
   <link rel="alternate" hreflang="en" href="https://www.vmotobikes.com/models">
   <link rel="alternate" hreflang="ru" href="https://www.vmotobikes.com/ru/models">
@@ -14,8 +14,8 @@
   <meta name="robots" content="index, follow">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VMOTO">
-  <meta property="og:title" content="Электробайки CITI и CPx — цены и характеристики | VMOTO">
-  <meta property="og:description" content="Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPx (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.">
+  <meta property="og:title" content="Электробайки CITI и CPX — цены и характеристики | VMOTO">
+  <meta property="og:description" content="Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPX (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.">
   <meta property="og:url" content="https://www.vmotobikes.com/ru/models">
   <meta property="og:image" content="https://www.vmotobikes.com/assets/img/og-cover-3.jpg">
   <meta name="twitter:card" content="summary_large_image">
@@ -718,8 +718,17 @@
       /* семь пунктов в строку не помещаются — уходим в бургер раньше */
       .page-nav, .header-social { display: none; }
       .header-inner { grid-template-columns: auto 1fr; }
-      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
-      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+      /* место под бургер: 46 px кнопки + 14 px просвета до переключателя */
+      .header-right { grid-column: 2; justify-self: end; margin-right: 60px; }
+      .menu-fab {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        top: 9px;
+        right: clamp(16px, 4vw, 40px);
+      }
     }
     @media (max-width: 700px) {
       .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
@@ -781,8 +790,8 @@
       <div class="biz-hero__shade" aria-hidden="true"></div>
       <div class="wide biz-hero__inner">
         <p class="page-eyebrow">Официальный дилер VMoto в Таиланде</p>
-        <h1>Электробайки CITI и CPx</h1>
-        <p class="biz-hero__lead">Два электробайка для жизни на острове. CITI — лёгкий байк на каждый день, CPx — флагман класса 125 кубов с большим запасом хода и комфортом. У обоих две съёмные батареи и зарядка в комплекте, гарантия 3 года.</p>
+        <h1>Электробайки CITI и CPX</h1>
+        <p class="biz-hero__lead">Два электробайка для жизни на острове. CITI — лёгкий байк на каждый день, CPX — флагман класса 125 кубов с большим запасом хода и комфортом. У обоих две съёмные батареи и зарядка в комплекте, гарантия 3 года.</p>
         <div class="biz-feats">
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z"/></svg></i><span>Запас хода до 130 км</span></div>
         <div class="biz-feat"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></i><span>Зарядка 20 минут</span></div>
@@ -798,7 +807,7 @@
       <div class="biz-rule" aria-hidden="true"></div>
       <div class="doc-body">
       <div class="table-wrap"><table class="ptable">
-        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPx</th></tr>
+        <tr><th>&nbsp;</th><th>VMoto CITI</th><th>VMoto CPX</th></tr>
         <tr><td>Цена</td><td><b>95 000 ฿</b></td><td><b>120 000 ฿</b></td></tr>
         <tr><td>Запас хода</td><td><b>107 км</b></td><td><b>130 км</b></td></tr>
         <tr><td>Максимальная скорость</td><td><b>80 км/ч</b></td><td><b>90 км/ч</b></td></tr>
@@ -820,7 +829,7 @@
         <li>нужен самый лёгкий байк — удобнее в управлении и парковке;</li>
         <li>бюджет 95 000 ฿.</li>
       </ul>
-      <h3>Берите CPx, если…</h3>
+      <h3>Берите CPX, если…</h3>
       <ul>
         <li>каждый день пересекаете остров и хотите запас хода с запасом;</li>
         <li>ездите вдвоём или возите груз;</li>
@@ -879,7 +888,7 @@
           <p class="footer__label">Навигация</p>
           <ul>
             <li><a href="/ru">Главная</a></li>
-            <li><a href="/ru/models">CITI и CPx — сравнение</a></li>
+            <li><a href="/ru/models">CITI и CPX — сравнение</a></li>
             <li><a href="/ru/business">Парки для бизнеса</a></li>
             <li><a href="/ru/faq">Вопросы покупателя</a></li>
           </ul>

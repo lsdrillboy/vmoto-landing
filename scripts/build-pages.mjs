@@ -81,12 +81,12 @@ ${rows.map((r) => (r.length === 2
 
 const MODELS = {
   en: {
-    title: 'Electric bikes CITI and CPx — prices and specs | VMOTO',
-    desc: 'VMoto CITI (฿95,000, 107 km) and VMoto CPx (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.',
-    h1: 'Electric bikes CITI and CPx',
-    lead: 'Two electric bikes for island life. CITI is the light everyday commuter; CPx is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.',
+    title: 'Electric bikes CITI and CPX — prices and specs | VMOTO',
+    desc: 'VMoto CITI (฿95,000, 107 km) and VMoto CPX (฿120,000, 130 km) compared: range, speed, charging, weight. Official dealer on Koh Samui and Koh Phangan.',
+    h1: 'Electric bikes CITI and CPX',
+    lead: 'Two electric bikes for island life. CITI is the light everyday commuter; CPX is the 125cc-class flagship with more range and more comfort. Both come with two removable batteries and a charger, and both carry a 3-year warranty.',
     sections: [
-      { h: 'Side by side', body: table(['VMoto CITI', 'VMoto CPx'], [
+      { h: 'Side by side', body: table(['VMoto CITI', 'VMoto CPX'], [
         ['Price', '฿95,000', '฿120,000'],
         ['Range', '107 km', '130 km'],
         ['Top speed', '80 km/h', '90 km/h'],
@@ -99,7 +99,7 @@ const MODELS = {
         'you ride mostly around town, to the beach and back;',
         'you want the lightest bike to handle and park;',
         '฿95,000 is the budget you had in mind.',
-      ) + `\n      <h3>Take the CPx if…</h3>\n` + ul(
+      ) + `\n      <h3>Take the CPX if…</h3>\n` + ul(
         'you cross the island daily and want range to spare;',
         'you ride two-up or carry cargo;',
         'you want the taller screen and the calmer ride at speed.',
@@ -114,12 +114,12 @@ const MODELS = {
     cta: 'Not sure which model fits? Ride both — we bring the bikes to a meeting point on Koh Phangan, free and with no obligation.',
   },
   ru: {
-    title: 'Электробайки CITI и CPx — цены и характеристики | VMOTO',
-    desc: 'Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPx (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.',
-    h1: 'Электробайки CITI и CPx',
-    lead: 'Два электробайка для жизни на острове. CITI — лёгкий байк на каждый день, CPx — флагман класса 125 кубов с большим запасом хода и комфортом. У обоих две съёмные батареи и зарядка в комплекте, гарантия 3 года.',
+    title: 'Электробайки CITI и CPX — цены и характеристики | VMOTO',
+    desc: 'Сравнение VMoto CITI (95 000 ฿, 107 км) и VMoto CPX (120 000 ฿, 130 км): запас хода, скорость, зарядка, вес. Официальный дилер на Самуи и Пангане.',
+    h1: 'Электробайки CITI и CPX',
+    lead: 'Два электробайка для жизни на острове. CITI — лёгкий байк на каждый день, CPX — флагман класса 125 кубов с большим запасом хода и комфортом. У обоих две съёмные батареи и зарядка в комплекте, гарантия 3 года.',
     sections: [
-      { h: 'Сравнение', body: table(['VMoto CITI', 'VMoto CPx'], [
+      { h: 'Сравнение', body: table(['VMoto CITI', 'VMoto CPX'], [
         ['Цена', '95 000 ฿', '120 000 ฿'],
         ['Запас хода', '107 км', '130 км'],
         ['Максимальная скорость', '80 км/ч', '90 км/ч'],
@@ -132,7 +132,7 @@ const MODELS = {
         'ездите в основном по посёлку, до пляжа и обратно;',
         'нужен самый лёгкий байк — удобнее в управлении и парковке;',
         'бюджет 95 000 ฿.',
-      ) + `\n      <h3>Берите CPx, если…</h3>\n` + ul(
+      ) + `\n      <h3>Берите CPX, если…</h3>\n` + ul(
         'каждый день пересекаете остров и хотите запас хода с запасом;',
         'ездите вдвоём или возите груз;',
         'важнее высокое ветровое стекло и спокойный ход на скорости.',
@@ -147,12 +147,12 @@ const MODELS = {
     cta: 'Не знаете, какая модель ваша? Прокатитесь на обеих — привезём байки в удобное место на Пангане, бесплатно и без обязательств.',
   },
   th: {
-    title: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPx — ราคาและสเปก | VMOTO',
-    desc: 'เปรียบเทียบ VMoto CITI (฿95,000 ระยะทาง 107 กม.) กับ VMoto CPx (฿120,000 ระยะทาง 130 กม.): ระยะทาง ความเร็ว การชาร์จ น้ำหนัก ตัวแทนจำหน่ายอย่างเป็นทางการบนเกาะสมุยและเกาะพะงัน',
-    h1: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPx',
-    lead: 'มอเตอร์ไซค์ไฟฟ้าสองรุ่นสำหรับชีวิตบนเกาะ CITI เป็นรุ่นเบาสำหรับใช้งานทุกวัน ส่วน CPx เป็นรุ่นเรือธงระดับ 125 ซีซี ที่วิ่งได้ไกลกว่าและนั่งสบายกว่า ทั้งสองรุ่นมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ พร้อมการรับประกัน 3 ปี',
+    title: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPX — ราคาและสเปก | VMOTO',
+    desc: 'เปรียบเทียบ VMoto CITI (฿95,000 ระยะทาง 107 กม.) กับ VMoto CPX (฿120,000 ระยะทาง 130 กม.): ระยะทาง ความเร็ว การชาร์จ น้ำหนัก ตัวแทนจำหน่ายอย่างเป็นทางการบนเกาะสมุยและเกาะพะงัน',
+    h1: 'มอเตอร์ไซค์ไฟฟ้า CITI และ CPX',
+    lead: 'มอเตอร์ไซค์ไฟฟ้าสองรุ่นสำหรับชีวิตบนเกาะ CITI เป็นรุ่นเบาสำหรับใช้งานทุกวัน ส่วน CPX เป็นรุ่นเรือธงระดับ 125 ซีซี ที่วิ่งได้ไกลกว่าและนั่งสบายกว่า ทั้งสองรุ่นมาพร้อมแบตเตอรี่ถอดได้สองก้อนและที่ชาร์จ พร้อมการรับประกัน 3 ปี',
     sections: [
-      { h: 'เปรียบเทียบ', body: table(['VMoto CITI', 'VMoto CPx'], [
+      { h: 'เปรียบเทียบ', body: table(['VMoto CITI', 'VMoto CPX'], [
         ['ราคา', '฿95,000', '฿120,000'],
         ['ระยะทางต่อการชาร์จ', '107 กม.', '130 กม.'],
         ['ความเร็วสูงสุด', '80 กม./ชม.', '90 กม./ชม.'],
@@ -165,7 +165,7 @@ const MODELS = {
         'คุณขี่ในตัวเมืองเป็นหลัก ไปหาดแล้วกลับ',
         'คุณต้องการรถที่เบาที่สุด ควบคุมและจอดง่าย',
         'งบประมาณของคุณคือ ฿95,000',
-      ) + `\n      <h3>เลือก CPx ถ้า…</h3>\n` + ul(
+      ) + `\n      <h3>เลือก CPX ถ้า…</h3>\n` + ul(
         'คุณข้ามเกาะทุกวันและอยากได้ระยะทางเผื่อไว้',
         'คุณซ้อนสองหรือบรรทุกของ',
         'คุณต้องการบังลมสูงและการขับขี่ที่นิ่งกว่าเมื่อใช้ความเร็ว',
@@ -180,12 +180,12 @@ const MODELS = {
     cta: 'ยังไม่แน่ใจว่ารุ่นไหนเหมาะกับคุณ? ลองขี่ทั้งสองรุ่นได้เลย เรานำรถไปยังจุดนัดพบบนเกาะพะงัน ฟรีและไม่มีข้อผูกมัด',
   },
   zh: {
-    title: '电动车 CITI 与 CPx — 价格与参数 | VMOTO',
-    desc: 'VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPx（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。',
-    h1: '电动车 CITI 与 CPx',
-    lead: '两款适合海岛生活的电动车。CITI 轻便，适合日常代步；CPx 是 125cc 级别的旗舰，续航更长、乘坐更舒适。两款均配备两块可拆卸电池和充电器，享 3 年质保。',
+    title: '电动车 CITI 与 CPX — 价格与参数 | VMOTO',
+    desc: 'VMoto CITI（฿95,000，续航 107 公里）与 VMoto CPX（฿120,000，续航 130 公里）对比：续航、速度、充电、重量。苏梅岛与帕岸岛官方经销商。',
+    h1: '电动车 CITI 与 CPX',
+    lead: '两款适合海岛生活的电动车。CITI 轻便，适合日常代步；CPX 是 125cc 级别的旗舰，续航更长、乘坐更舒适。两款均配备两块可拆卸电池和充电器，享 3 年质保。',
     sections: [
-      { h: '参数对比', body: table(['VMoto CITI', 'VMoto CPx'], [
+      { h: '参数对比', body: table(['VMoto CITI', 'VMoto CPX'], [
         ['价格', '฿95,000', '฿120,000'],
         ['续航', '107 公里', '130 公里'],
         ['最高时速', '80 公里/小时', '90 公里/小时'],
@@ -198,7 +198,7 @@ const MODELS = {
         '您主要在镇上代步，往返海滩；',
         '您想要最轻便、好操控好停放的车；',
         '预算在 ฿95,000 左右。',
-      ) + `\n      <h3>选择 CPx，如果…</h3>\n` + ul(
+      ) + `\n      <h3>选择 CPX，如果…</h3>\n` + ul(
         '您每天穿越全岛，希望续航有余量；',
         '您经常载人或带货；',
         '您需要更高的风挡和高速下更稳的行驶质感。',
@@ -243,7 +243,7 @@ const BUSINESS = {
     ],
     incTitle: 'What a fleet package includes',
     included: [
-      'volume pricing on VMoto CITI and CPx',
+      'volume pricing on VMoto CITI and CPX',
       'registration and plates arranged for every unit',
       'delivery across Koh Samui and Koh Phangan',
       'service and spare parts on the island, mobile team for fleets',
@@ -283,7 +283,7 @@ const BUSINESS = {
     ],
     incTitle: 'Что входит в условия для парка',
     included: [
-      'цена за объём на VMoto CITI и CPx',
+      'цена за объём на VMoto CITI и CPX',
       'регистрация и номера на каждую единицу',
       'доставка по Самуи и Пангану',
       'сервис и запчасти на острове, выездная бригада',
@@ -323,7 +323,7 @@ const BUSINESS = {
     ],
     incTitle: 'แพ็กเกจฟลีตประกอบด้วย',
     included: [
-      'ราคาตามจำนวนสำหรับ VMoto CITI และ CPx',
+      'ราคาตามจำนวนสำหรับ VMoto CITI และ CPX',
       'จดทะเบียนและป้ายทะเบียนให้ทุกคัน',
       'จัดส่งทั่วเกาะสมุยและเกาะพะงัน',
       'บริการและอะไหล่บนเกาะ พร้อมทีมเคลื่อนที่',
@@ -363,7 +363,7 @@ const BUSINESS = {
     ],
     incTitle: '车队方案包含',
     included: [
-      'VMoto CITI 与 CPx 的批量价格',
+      'VMoto CITI 与 CPX 的批量价格',
       '每台车的注册与牌照办理',
       '苏梅岛与帕岸岛全岛配送',
       '岛上服务与备件，车队上门团队',

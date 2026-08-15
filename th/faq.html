@@ -791,8 +791,17 @@
       /* семь пунктов в строку не помещаются — уходим в бургер раньше */
       .page-nav, .header-social { display: none; }
       .header-inner { grid-template-columns: auto 1fr; }
-      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
-      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+      /* место под бургер: 46 px кнопки + 14 px просвета до переключателя */
+      .header-right { grid-column: 2; justify-self: end; margin-right: 60px; }
+      .menu-fab {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        width: 46px;
+        height: 46px;
+        top: 9px;
+        right: clamp(16px, 4vw, 40px);
+      }
     }
     @media (max-width: 700px) {
       .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
@@ -940,7 +949,7 @@
           <p class="footer__label">เมนู</p>
           <ul>
             <li><a href="/th">หน้าแรก</a></li>
-            <li><a href="/th/models">เทียบ CITI กับ CPx</a></li>
+            <li><a href="/th/models">เทียบ CITI กับ CPX</a></li>
             <li><a href="/th/business">ฟลีตสำหรับธุรกิจ</a></li>
             <li><a href="/th/faq">คำถามก่อนซื้อ</a></li>
           </ul>
