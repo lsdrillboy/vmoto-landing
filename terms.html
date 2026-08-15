@@ -322,23 +322,212 @@
       .footer__grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 700px) {
-      .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
+      .header-inner { width: calc(100% - 32px); padding: 16px 0; }
       .logo { font-size: 13px; letter-spacing: .12em; }
-      .header-right { grid-column: 2; }
-      /* семь разделов в одну прокручиваемую строку: две строки съедали экран */
-      .page-nav {
-        order: 3;
-        grid-column: 1 / -1;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        gap: 18px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-      }
-      .page-nav::-webkit-scrollbar { display: none; }
-      .page-nav a { font-size: 11px; letter-spacing: .1em; }
-      .page-wrap { padding: 132px 16px 80px; }
+      .page-wrap { padding: 108px 16px 80px; }
+    }
+
+
+    /* шапка уезжает вверх при прокрутке — её место занимает бургер */
+    .site-header { transition: transform .5s cubic-bezier(.22, 1, .36, 1), background .3s, border-color .3s; }
+    .site-header.is-hidden { transform: translateY(-100%); }
+
+    .menu-fab {
+      position: fixed;
+      top: 22px;
+      right: clamp(20px, 2.5vw, 40px);
+      z-index: 320;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .22);
+      background: rgba(10, 11, 10, .55);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity .35s, visibility .35s, transform .35s, border-color .25s, background .25s;
+    }
+    .menu-fab.is-show, .menu-fab.is-open { opacity: 1; visibility: visible; transform: none; }
+    .menu-fab:hover { border-color: var(--accent); background: rgba(217, 79, 61, .15); }
+    .menu-fab span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      grid-area: 1 / 1;
+      transition: transform .35s cubic-bezier(.22, 1, .36, 1);
+    }
+    .menu-fab span:first-child { transform: translateY(-4px); }
+    .menu-fab span:last-child { transform: translateY(4px); }
+    .menu-fab.is-open span:first-child { transform: rotate(45deg); }
+    .menu-fab.is-open span:last-child { transform: rotate(-45deg); }
+
+    /* занавес: раскрывается сверху вниз, закрывается обратно вверх */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 310;
+      background:
+        radial-gradient(60% 50% at 78% 20%, rgba(217, 79, 61, .08), transparent 65%),
+        linear-gradient(rgba(8, 9, 8, .82), rgba(8, 9, 8, .82)),
+        #080908 url('/assets/poster/menu.jpg') center / cover no-repeat;
+      backdrop-filter: blur(18px);
+      clip-path: inset(0 0 100% 0);
+      visibility: hidden;
+      transition: clip-path .8s cubic-bezier(.76, 0, .24, 1), visibility 0s linear .8s;
+    }
+    .menu-overlay.is-open {
+      clip-path: inset(0 0 0% 0);
+      visibility: visible;
+      transition: clip-path 1s cubic-bezier(.16, 1, .3, 1);
+    }
+    /* акцентная нить бежит по нижней кромке занавеса */
+    .menu-overlay::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent) 18%, #fff 50%, var(--accent) 82%, transparent);
+      box-shadow: 0 0 26px rgba(217, 79, 61, .85);
+      opacity: 0;
+      transform: translateY(0);
+      pointer-events: none;
+      z-index: 2;
+      transition: transform .8s cubic-bezier(.76, 0, .24, 1), opacity .3s ease .5s;
+    }
+    .menu-overlay.is-open::after {
+      opacity: 1;
+      transform: translateY(100vh);
+      transition: transform 1s cubic-bezier(.16, 1, .3, 1), opacity .25s ease;
+    }
+    .menu-overlay__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(1.1);
+      transition: opacity .35s ease, transform .5s ease;
+    }
+    .menu-overlay.is-open .menu-overlay__media {
+      opacity: 1;
+      transform: none;
+      transition: opacity .9s ease .15s, transform 1.6s cubic-bezier(.16, 1, .3, 1) .15s;
+    }
+    .menu-overlay__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .menu-overlay__media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8, 9, 8, .78) 0%, rgba(8, 9, 8, .35) 55%, rgba(8, 9, 8, .2) 100%),
+        linear-gradient(180deg, rgba(8, 9, 8, .45) 0%, transparent 30%, transparent 62%, rgba(8, 9, 8, .72) 100%);
+    }
+    .menu-overlay__inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      width: min(1240px, 100% - 48px);
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-rows: 1fr auto;
+      align-items: center;
+      gap: 40px clamp(40px, 6vw, 96px);
+      padding: 90px 0 44px;
+    }
+    .menu-overlay__nav { display: grid; gap: clamp(6px, 1.6vh, 16px); grid-column: 1; grid-row: 1; }
+    .menu-overlay__nav a { display: block; width: fit-content; text-decoration: none; }
+    /* пункты проявляются светом, когда занавес прошёл треть пути */
+    .menu-overlay__nav b {
+      display: inline-block;
+      font-family: var(--heading-font);
+      font-weight: 500;
+      font-size: clamp(30px, 5.4vh, 60px);
+      line-height: 1.08;
+      color: rgba(242, 241, 238, .82);
+      opacity: 0;
+      filter: blur(12px) brightness(2.2);
+      transform: translateY(26px);
+      transition: opacity .3s ease, filter .3s ease, transform .3s ease, color .25s;
+    }
+    .menu-overlay.is-lit .menu-overlay__nav b {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition:
+        opacity .95s ease var(--d, 0s),
+        filter .95s ease var(--d, 0s),
+        transform 1.05s cubic-bezier(.16, 1, .3, 1) var(--d, 0s),
+        color .25s;
+    }
+    .menu-overlay__nav a:hover b { color: var(--accent); }
+    .menu-overlay__nav a:nth-child(1) b { --d: 0s; }
+    .menu-overlay__nav a:nth-child(2) b { --d: .09s; }
+    .menu-overlay__nav a:nth-child(3) b { --d: .18s; }
+    .menu-overlay__nav a:nth-child(4) b { --d: .27s; }
+    .menu-overlay__nav a:nth-child(5) b { --d: .36s; }
+    .menu-overlay__nav a:nth-child(6) b { --d: .45s; }
+    .menu-overlay__nav a:nth-child(7) b { --d: .54s; }
+    .menu-overlay__aside {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .5s ease .3s, transform .5s cubic-bezier(.22, 1, .36, 1) .3s;
+    }
+    .menu-overlay.is-lit .menu-overlay__aside { opacity: 1; transform: none; }
+    .menu-overlay__label {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .menu-overlay__social { margin: 0; font-size: 13px; color: var(--muted); }
+    .menu-overlay__social a { color: inherit; text-decoration: none; transition: color .2s; }
+    .menu-overlay__social a:hover { color: var(--accent); }
+    .menu-overlay__lang { display: flex; gap: 8px; }
+    .menu-overlay__lang button, .menu-overlay__lang a {
+      display: inline-block;
+      min-width: 44px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      transition: color .2s, border-color .2s;
+    }
+    .menu-overlay__lang button:hover, .menu-overlay__lang a:hover { color: var(--text); border-color: rgba(255, 255, 255, .45); }
+    .menu-overlay__lang .is-active { color: var(--accent); border-color: var(--accent); }
+
+    @media (max-width: 880px) {
+      /* семь пунктов в строку не помещаются — уходим в бургер раньше */
+      .page-nav, .header-social { display: none; }
+      .header-inner { grid-template-columns: auto 1fr; }
+      .header-right { grid-column: 2; justify-self: end; margin-right: 52px; }
+      .menu-fab { opacity: 1; visibility: visible; transform: none; top: 12px; }
+    }
+    @media (max-width: 700px) {
+      .menu-overlay__inner { grid-template-columns: 1fr; padding: 96px 0 36px; }
     }
 
     .lang-content { display: none; }
@@ -378,6 +567,33 @@
       </div>
     </div>
   </header>
+
+  <button class="menu-fab" id="menuFab" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="menu-overlay__media" aria-hidden="true">
+      <video id="menuVideo" src="/assets/video/menu.mp4" poster="/assets/poster/menu.jpg" muted playsinline preload="none"></video>
+    </div>
+    <div class="menu-overlay__inner">
+      <nav class="menu-overlay__nav">
+        <a href="/#benefits" data-anchor="benefits"><b data-f="nav.benefits"></b></a>
+        <a href="/#models" data-anchor="models"><b data-f="nav.models"></b></a>
+        <a href="/#gallery" data-anchor="gallery"><b data-f="nav.gallery"></b></a>
+        <a href="/#stations" data-anchor="stations"><b data-f="st.label"></b></a>
+        <a href="/#business" data-anchor="business"><b data-f="b2b.label"></b></a>
+        <a href="/#faq" data-anchor="faq"><b>FAQ</b></a>
+        <a href="/#contacts" data-anchor="contacts"><b data-f="nav.contacts"></b></a>
+      </nav>
+      <div class="menu-overlay__aside">
+        <p class="menu-overlay__label" data-f="menu.label"></p>
+        <div class="menu-overlay__lang"><button type="button" data-lang="en">EN</button><button type="button" data-lang="ru">RU</button><button type="button" data-lang="th">ไทย</button><button type="button" data-lang="zh">中文</button></div>
+        <p class="menu-overlay__social"><a href="https://www.facebook.com/profile.php?id=61592273703567" target="_blank" rel="noopener">Facebook</a></p>
+      </div>
+    </div>
+  </div>
+
 
   <main class="page-wrap">
     <div class="lang-content active" data-lang-content="en">
@@ -600,11 +816,12 @@
   <script>
     (() => {
       const LANGS = ['en', 'th', 'ru', 'zh'];
-      const FOOT = {"en":{"footer.locations":"Locations","loc.samui":"Samui","loc.phangan":"Phangan","footer.contacts":"Contacts","footer.messengers":"Messengers","footer.navigation":"Navigation","footer.compare":"CITI vs CPx — compare","footer.fleets":"Fleets for business","footer.faqPage":"Buyer FAQ","footer.copy":"© 2026 VMoto — Thailand","footer.dealer":"Official VMoto dealer in Thailand","footer.privacy":"Privacy Policy","footer.terms":"Terms of Use","footer.top":"Back to top","lang.aria":"Change language","nav.benefits":"Benefits","nav.models":"Models","nav.gallery":"Gallery","st.label":"Infrastructure","b2b.label":"For business","nav.contacts":"Contacts","home":"Home","faq":"FAQ"},"th":{"footer.locations":"สถานที่","loc.samui":"สมุย","loc.phangan":"พะงัน","footer.contacts":"ติดต่อ","footer.messengers":"ช่องทางแชท","footer.navigation":"เมนู","footer.compare":"เทียบ CITI กับ CPx","footer.fleets":"ฟลีตสำหรับธุรกิจ","footer.faqPage":"คำถามก่อนซื้อ","footer.copy":"© 2026 VMoto — ประเทศไทย","footer.dealer":"ตัวแทนจำหน่าย VMoto อย่างเป็นทางการในประเทศไทย","footer.privacy":"นโยบายความเป็นส่วนตัว","footer.terms":"ข้อกำหนดการใช้งาน","footer.top":"กลับขึ้นบน","lang.aria":"เปลี่ยนภาษา","nav.benefits":"ข้อดี","nav.models":"รุ่นรถ","nav.gallery":"แกลเลอรี","st.label":"โครงสร้างพื้นฐาน","b2b.label":"สำหรับธุรกิจ","nav.contacts":"ติดต่อ","home":"หน้าแรก","faq":"คำถามที่พบบ่อย"},"ru":{"footer.locations":"Локации","loc.samui":"Самуи","loc.phangan":"Панган","footer.contacts":"Контакты","footer.messengers":"Мессенджеры","footer.navigation":"Навигация","footer.compare":"CITI и CPx — сравнение","footer.fleets":"Парки для бизнеса","footer.faqPage":"Вопросы покупателя","footer.copy":"© 2026 VMoto — Таиланд","footer.dealer":"Официальный дилер VMoto в Таиланде","footer.privacy":"Политика конфиденциальности","footer.terms":"Пользовательское соглашение","footer.top":"Наверх","lang.aria":"Сменить язык","nav.benefits":"Преимущества","nav.models":"Модели","nav.gallery":"Галерея","st.label":"Инфраструктура","b2b.label":"Для бизнеса","nav.contacts":"Контакты","home":"Главная","faq":"Вопросы"},"zh":{"footer.locations":"服务地点","loc.samui":"苏梅岛","loc.phangan":"帕岸岛","footer.contacts":"联系方式","footer.messengers":"聊天工具","footer.navigation":"导航","footer.compare":"CITI 与 CPx 对比","footer.fleets":"企业车队","footer.faqPage":"购车常见问题","footer.copy":"© 2026 VMoto — 泰国","footer.dealer":"VMoto 泰国官方经销商","footer.privacy":"隐私政策","footer.terms":"使用条款","footer.top":"回到顶部","lang.aria":"切换语言","nav.benefits":"优势","nav.models":"车型","nav.gallery":"图库","st.label":"基础设施","b2b.label":"商业合作","nav.contacts":"联系","home":"首页","faq":"常见问题"}};
+      const FOOT = {"en":{"footer.locations":"Locations","loc.samui":"Samui","loc.phangan":"Phangan","footer.contacts":"Contacts","footer.messengers":"Messengers","footer.navigation":"Navigation","footer.compare":"CITI vs CPx — compare","footer.fleets":"Fleets for business","footer.faqPage":"Buyer FAQ","footer.copy":"© 2026 VMoto — Thailand","footer.dealer":"Official VMoto dealer in Thailand","footer.privacy":"Privacy Policy","footer.terms":"Terms of Use","footer.top":"Back to top","lang.aria":"Change language","nav.benefits":"Benefits","nav.models":"Models","nav.gallery":"Gallery","st.label":"Infrastructure","b2b.label":"For business","nav.contacts":"Contacts","menu.aria":"Menu","menu.label":"Samui — Phangan","home":"Home","faq":"FAQ"},"th":{"footer.locations":"สถานที่","loc.samui":"สมุย","loc.phangan":"พะงัน","footer.contacts":"ติดต่อ","footer.messengers":"ช่องทางแชท","footer.navigation":"เมนู","footer.compare":"เทียบ CITI กับ CPx","footer.fleets":"ฟลีตสำหรับธุรกิจ","footer.faqPage":"คำถามก่อนซื้อ","footer.copy":"© 2026 VMoto — ประเทศไทย","footer.dealer":"ตัวแทนจำหน่าย VMoto อย่างเป็นทางการในประเทศไทย","footer.privacy":"นโยบายความเป็นส่วนตัว","footer.terms":"ข้อกำหนดการใช้งาน","footer.top":"กลับขึ้นบน","lang.aria":"เปลี่ยนภาษา","nav.benefits":"ข้อดี","nav.models":"รุ่นรถ","nav.gallery":"แกลเลอรี","st.label":"โครงสร้างพื้นฐาน","b2b.label":"สำหรับธุรกิจ","nav.contacts":"ติดต่อ","menu.aria":"เมนู","menu.label":"สมุย — พะงัน","home":"หน้าแรก","faq":"คำถามที่พบบ่อย"},"ru":{"footer.locations":"Локации","loc.samui":"Самуи","loc.phangan":"Панган","footer.contacts":"Контакты","footer.messengers":"Мессенджеры","footer.navigation":"Навигация","footer.compare":"CITI и CPx — сравнение","footer.fleets":"Парки для бизнеса","footer.faqPage":"Вопросы покупателя","footer.copy":"© 2026 VMoto — Таиланд","footer.dealer":"Официальный дилер VMoto в Таиланде","footer.privacy":"Политика конфиденциальности","footer.terms":"Пользовательское соглашение","footer.top":"Наверх","lang.aria":"Сменить язык","nav.benefits":"Преимущества","nav.models":"Модели","nav.gallery":"Галерея","st.label":"Инфраструктура","b2b.label":"Для бизнеса","nav.contacts":"Контакты","menu.aria":"Меню","menu.label":"Самуи — Панган","home":"Главная","faq":"Вопросы"},"zh":{"footer.locations":"服务地点","loc.samui":"苏梅岛","loc.phangan":"帕岸岛","footer.contacts":"联系方式","footer.messengers":"聊天工具","footer.navigation":"导航","footer.compare":"CITI 与 CPx 对比","footer.fleets":"企业车队","footer.faqPage":"购车常见问题","footer.copy":"© 2026 VMoto — 泰国","footer.dealer":"VMoto 泰国官方经销商","footer.privacy":"隐私政策","footer.terms":"使用条款","footer.top":"回到顶部","lang.aria":"切换语言","nav.benefits":"优势","nav.models":"车型","nav.gallery":"图库","st.label":"基础设施","b2b.label":"商业合作","nav.contacts":"联系","menu.aria":"菜单","menu.label":"苏梅 — 帕岸","home":"首页","faq":"常见问题"}};
       const stored = localStorage.getItem('vmoto-lang');
       switchLang(LANGS.includes(stored) ? stored : 'en');
 
-      document.getElementById('lang-toggle').addEventListener('click', (e) => {
+      /* кнопки языка есть и в шапке, и в полноэкранном меню */
+      document.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-lang]');
         if (!btn) return;
         switchLang(btn.dataset.lang);
@@ -615,6 +832,9 @@
         document.querySelectorAll('.lang__list button').forEach((b) => {
           b.classList.toggle('active', b.dataset.lang === l);
         });
+        document.querySelectorAll('.menu-overlay__lang button').forEach((b) => {
+          b.classList.toggle('is-active', b.dataset.lang === l);
+        });
         document.querySelector('.lang__cur').textContent = l === 'zh' ? 'CN' : l.toUpperCase();
         document.querySelectorAll('.lang-content').forEach((c) => {
           c.classList.toggle('active', c.dataset.langContent === l);
@@ -623,6 +843,7 @@
         const f = FOOT[l] || FOOT.en;
         document.querySelectorAll('[data-f]').forEach((e) => { e.textContent = f[e.dataset.f]; });
         document.querySelectorAll('[data-f-aria]').forEach((e) => { e.setAttribute('aria-label', f[e.dataset.fAria]); });
+        document.getElementById('menuFab').setAttribute('aria-label', f['menu.aria']);
         const base = l === 'en' ? '' : '/' + l;
         document.querySelectorAll('[data-nav]').forEach((a) => {
           a.href = a.dataset.nav === 'home' ? (base || '/') : base + '/' + a.dataset.nav;
@@ -634,11 +855,42 @@
         document.documentElement.lang = l;
       }
 
-      /* фон шапки появляется при прокрутке — как на лендинге */
+
       const header = document.querySelector('.site-header');
-      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
+      const fab = document.getElementById('menuFab');
+      const overlay = document.getElementById('menuOverlay');
+      const menuVideo = document.getElementById('menuVideo');
+      let litTimer = null;
+
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle('is-scrolled', y > 40);
+        header.classList.toggle('is-hidden', y > 120 && !overlay.classList.contains('is-open'));
+        fab.classList.toggle('is-show', y > 160);
+      };
       addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+
+      function setMenu(open) {
+        overlay.classList.toggle('is-open', open);
+        fab.classList.toggle('is-open', open);
+        fab.setAttribute('aria-expanded', String(open));
+        overlay.setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open ? 'hidden' : '';
+        clearTimeout(litTimer);
+        overlay.classList.remove('is-lit');
+        if (open) {
+          if (menuVideo) { try { menuVideo.currentTime = 0; } catch (e) {} menuVideo.play().catch(() => {}); }
+          litTimer = setTimeout(() => overlay.classList.add('is-lit'), 320);
+        } else if (menuVideo) {
+          menuVideo.pause();
+        }
+      }
+
+      fab.addEventListener('click', () => setMenu(!overlay.classList.contains('is-open')));
+      overlay.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+      addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
       document.querySelector('.footer__up')
         .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();

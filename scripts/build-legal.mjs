@@ -6,6 +6,7 @@
    лендинге ('vmoto-lang'). Запуск: node scripts/build-legal.mjs */
 import { writeFileSync, readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { MENU_CSS, menuMarkup, MENU_JS } from './lib/menu.mjs';
 
 const LANGS_ALL = ['en', 'th', 'ru', 'zh'];
 
@@ -31,7 +32,8 @@ const FOOT_KEYS = ['footer.locations', 'loc.samui', 'loc.phangan', 'footer.conta
   'footer.messengers', 'footer.navigation', 'footer.compare', 'footer.fleets',
   'footer.faqPage', 'footer.copy', 'footer.dealer', 'footer.privacy', 'footer.terms',
   'footer.top', 'lang.aria',
-  'nav.benefits', 'nav.models', 'nav.gallery', 'st.label', 'b2b.label', 'nav.contacts'];
+  'nav.benefits', 'nav.models', 'nav.gallery', 'st.label', 'b2b.label', 'nav.contacts',
+  'menu.aria', 'menu.label'];
 const HOME = { en: 'Home', ru: 'Главная', th: 'หน้าแรก', zh: '首页' };
 const FAQ_NAV = { en: 'FAQ', ru: 'Вопросы', th: 'คำถามที่พบบ่อย', zh: '常见问题' };
 const FOOT = Object.fromEntries(LANGS_ALL.map((l) => [l, {
@@ -376,25 +378,12 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       .footer__grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 700px) {
-      .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
+      .header-inner { width: calc(100% - 32px); padding: 16px 0; }
       .logo { font-size: 13px; letter-spacing: .12em; }
-      .header-right { grid-column: 2; }
-      /* семь разделов в одну прокручиваемую строку: две строки съедали экран */
-      .page-nav {
-        order: 3;
-        grid-column: 1 / -1;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        gap: 18px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-      }
-      .page-nav::-webkit-scrollbar { display: none; }
-      .page-nav a { font-size: 11px; letter-spacing: .1em; }
-      .page-wrap { padding: 132px 16px 80px; }
+      .page-wrap { padding: 108px 16px 80px; }
     }
 
+${MENU_CSS}
     .lang-content { display: none; }
     .lang-content.active { display: block; }
   </style>
@@ -432,6 +421,21 @@ const shell = ({ slug, title, desc, docs }) => `<!DOCTYPE html>
       </div>
     </div>
   </header>
+
+${menuMarkup({
+    links: [
+      { href: '/#benefits', anchor: 'benefits', key: 'nav.benefits', label: '' },
+      { href: '/#models', anchor: 'models', key: 'nav.models', label: '' },
+      { href: '/#gallery', anchor: 'gallery', key: 'nav.gallery', label: '' },
+      { href: '/#stations', anchor: 'stations', key: 'st.label', label: '' },
+      { href: '/#business', anchor: 'business', key: 'b2b.label', label: '' },
+      { href: '/#faq', anchor: 'faq', key: null, label: 'FAQ' },
+      { href: '/#contacts', anchor: 'contacts', key: 'nav.contacts', label: '' },
+    ],
+    lang: ['en', 'ru', 'th', 'zh'].map((l) => `<button type="button" data-lang="${l}">${{ en: 'EN', ru: 'RU', th: 'ไทย', zh: '中文' }[l]}</button>`).join(''),
+    label: { key: 'menu.label', text: '' },
+    menuAria: FOOT.en['menu.aria'],
+  })}
 
   <main class="page-wrap">
 ${docs}
@@ -496,7 +500,8 @@ ${docs}
       const stored = localStorage.getItem('vmoto-lang');
       switchLang(LANGS.includes(stored) ? stored : 'en');
 
-      document.getElementById('lang-toggle').addEventListener('click', (e) => {
+      /* кнопки языка есть и в шапке, и в полноэкранном меню */
+      document.addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-lang]');
         if (!btn) return;
         switchLang(btn.dataset.lang);
@@ -507,6 +512,9 @@ ${docs}
         document.querySelectorAll('.lang__list button').forEach((b) => {
           b.classList.toggle('active', b.dataset.lang === l);
         });
+        document.querySelectorAll('.menu-overlay__lang button').forEach((b) => {
+          b.classList.toggle('is-active', b.dataset.lang === l);
+        });
         document.querySelector('.lang__cur').textContent = l === 'zh' ? 'CN' : l.toUpperCase();
         document.querySelectorAll('.lang-content').forEach((c) => {
           c.classList.toggle('active', c.dataset.langContent === l);
@@ -515,6 +523,7 @@ ${docs}
         const f = FOOT[l] || FOOT.en;
         document.querySelectorAll('[data-f]').forEach((e) => { e.textContent = f[e.dataset.f]; });
         document.querySelectorAll('[data-f-aria]').forEach((e) => { e.setAttribute('aria-label', f[e.dataset.fAria]); });
+        document.getElementById('menuFab').setAttribute('aria-label', f['menu.aria']);
         const base = l === 'en' ? '' : '/' + l;
         document.querySelectorAll('[data-nav]').forEach((a) => {
           a.href = a.dataset.nav === 'home' ? (base || '/') : base + '/' + a.dataset.nav;
@@ -526,11 +535,7 @@ ${docs}
         document.documentElement.lang = l;
       }
 
-      /* фон шапки появляется при прокрутке — как на лендинге */
-      const header = document.querySelector('.site-header');
-      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 12);
-      addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+${MENU_JS}
       document.querySelector('.footer__up')
         .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();

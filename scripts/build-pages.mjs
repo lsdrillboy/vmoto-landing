@@ -9,6 +9,7 @@
    Запуск: node scripts/build-pages.mjs (из корня проекта). */
 import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { MENU_CSS, menuMarkup, MENU_JS } from './lib/menu.mjs';
 
 /* словарь лендинга: подписи подвала уже переведены там */
 const sandbox = {
@@ -1008,11 +1009,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .qa__row { grid-template-columns: 1fr; gap: 10px; padding: 26px 0; }
     }
     @media (max-width: 700px) {
-      /* логотип и языки в одну строку, разделы — во вторую */
-      .header-inner { width: calc(100% - 32px); grid-template-columns: auto 1fr; gap: 10px 16px; padding: 14px 0; }
-      .header-right { grid-column: 2; }
-      .page-nav { order: 3; grid-column: 1 / -1; gap: 18px; }
-      .page-nav a, .page-nav__cur { font-size: 11px; letter-spacing: .1em; }
+      .header-inner { width: calc(100% - 32px); padding: 16px 0; }
       /* таблица целиком влезает в экран: подписи переносятся, значения — нет */
       .ptable { min-width: 0; font-size: 13px; }
       .ptable th, .ptable td { padding: 11px 6px; }
@@ -1165,6 +1162,7 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       .biz-section { padding-top: 56px; }
       .biz-cta { margin-top: 56px; padding: 26px 22px; }
     }
+${MENU_CSS}
   </style>
 </head>
 <body>
@@ -1187,6 +1185,21 @@ ${schemas.map((s) => `  <script type="application/ld+json">\n${JSON.stringify(s,
       </div>
     </div>
   </header>
+
+${menuMarkup({
+    links: [
+      { href: `${home(lang)}#benefits`, label: t(lang, 'nav.benefits') },
+      { href: `${home(lang)}#models`, label: t(lang, 'nav.models') },
+      { href: `${home(lang)}#gallery`, label: t(lang, 'nav.gallery') },
+      { href: `${home(lang)}#stations`, label: t(lang, 'st.label') },
+      { href: `${home(lang)}#business`, label: t(lang, 'b2b.label') },
+      { href: `${home(lang)}#faq`, label: 'FAQ' },
+      { href: `${home(lang)}#contacts`, label: t(lang, 'nav.contacts') },
+    ],
+    lang: LANGS.map((l) => `<a href="${path(l, slug)}" hreflang="${l}"${l === lang ? ' class="is-active"' : ''}>${LABEL[l]}</a>`).join(''),
+    label: { text: t(lang, 'menu.label') },
+    menuAria: t(lang, 'menu.aria'),
+  })}
 
 ${main}
 
@@ -1243,12 +1256,8 @@ ${main}
   </footer>
 
   <script>
-    /* фон шапки появляется при прокрутке — как на лендинге */
     (() => {
-      const h = document.querySelector('.site-header');
-      const onScroll = () => h.classList.toggle('is-scrolled', window.scrollY > 12);
-      addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
+${MENU_JS}
       document.querySelector('.footer__up')
         .addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
     })();
